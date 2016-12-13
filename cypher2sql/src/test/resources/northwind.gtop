@@ -1,0 +1,873 @@
+{
+  "version" : "1.0",
+  "abstractionLevel" : {
+    "abstractionNodes" : [ {
+      "synonyms" : [ "orders" ],
+      "attributes" : [ "OrderID", "OrderDate", "RequiredDate", "ShippedDate", "Freight", "ShipName", "ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry" ]
+    }, {
+      "synonyms" : [ "products" ],
+      "attributes" : [ "ProductID", "ProductName", "QuantityPerUnit", "UnitPrice", "UnitsInStock", "UnitsOnOrder", "ReorderLevel", "Discontinued" ]
+    }, {
+      "synonyms" : [ "categories" ],
+      "attributes" : [ "CategoryID", "CategoryName", "Description", "Picture" ]
+    }, {
+      "synonyms" : [ "shippers" ],
+      "attributes" : [ "ShipperID", "CompanyName", "Phone" ]
+    }, {
+      "synonyms" : [ "employees" ],
+      "attributes" : [ "EmployeeID", "LastName", "FirstName", "Title", "TitleOfCourtesy", "BirthDate", "HireDate", "Address", "City", "Region", "PostalCode", "Country", "HomePhone", "Extension", "Photo", "Notes", "PhotoPath" ]
+    }, {
+      "synonyms" : [ "regions" ],
+      "attributes" : [ "RegionID", "RegionDescription" ]
+    }, {
+      "synonyms" : [ "territories" ],
+      "attributes" : [ "TerritoryID", "TerritoryDescription" ]
+    }, {
+      "synonyms" : [ "customerdemographics" ],
+      "attributes" : [ "CustomerTypeID", "CustomerDesc" ]
+    }, {
+      "synonyms" : [ "suppliers" ],
+      "attributes" : [ "SupplierID", "CompanyName", "ContactName", "ContactTitle", "Address", "City", "Region", "PostalCode", "Country", "Phone", "Fax", "HomePage" ]
+    }, {
+      "synonyms" : [ "customers" ],
+      "attributes" : [ "CustomerID", "CompanyName", "ContactName", "ContactTitle", "Address", "City", "Region", "PostalCode", "Country", "Phone", "Fax" ]
+    } ],
+    "abstractionEdges" : [ {
+      "synonyms" : [ "customerid_orders_employeeid" ],
+      "attributes" : [ "OrderDate", "RequiredDate", "ShippedDate", "Freight", "ShipName", "ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry" ],
+      "sourceType" : [ "Customers" ],
+      "destinationType" : [ "Employees" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "employeeid_orders_shipvia" ],
+      "attributes" : [ "OrderDate", "RequiredDate", "ShippedDate", "Freight", "ShipName", "ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry" ],
+      "sourceType" : [ "Employees" ],
+      "destinationType" : [ "Shippers" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "customerid_orders_shipvia" ],
+      "attributes" : [ "OrderDate", "RequiredDate", "ShippedDate", "Freight", "ShipName", "ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry" ],
+      "sourceType" : [ "Customers" ],
+      "destinationType" : [ "Shippers" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "employees_employeeid_orders_employeeid" ],
+      "attributes" : [ ],
+      "sourceType" : [ "Orders" ],
+      "destinationType" : [ "Employees" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "customers_customerid_orders_customerid" ],
+      "attributes" : [ ],
+      "sourceType" : [ "Orders" ],
+      "destinationType" : [ "Customers" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "shipvia_shipvia_shippers_shipperid" ],
+      "attributes" : [ ],
+      "sourceType" : [ "Orders" ],
+      "destinationType" : [ "Shippers" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "categoryid_products_supplierid" ],
+      "attributes" : [ "ProductName", "QuantityPerUnit", "UnitPrice", "UnitsInStock", "UnitsOnOrder", "ReorderLevel", "Discontinued" ],
+      "sourceType" : [ "Categories" ],
+      "destinationType" : [ "Suppliers" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "categories_categoryid_products_categoryid" ],
+      "attributes" : [ ],
+      "sourceType" : [ "Products" ],
+      "destinationType" : [ "Categories" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "supplierid_supplierid_suppliers_supplierid" ],
+      "attributes" : [ ],
+      "sourceType" : [ "Products" ],
+      "destinationType" : [ "Suppliers" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "employees_employeeid_employees_reportsto" ],
+      "attributes" : [ ],
+      "sourceType" : [ "Employees" ],
+      "destinationType" : [ "Employees" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "regions_regionid_territories_regionid" ],
+      "attributes" : [ ],
+      "sourceType" : [ "Territories" ],
+      "destinationType" : [ "Regions" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "customerid_customercustomerdemo_customerid" ],
+      "attributes" : [ ],
+      "sourceType" : [ "Customers" ],
+      "destinationType" : [ "CustomerDemographics" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "employeeid_employeeterritories_employeeid" ],
+      "attributes" : [ ],
+      "sourceType" : [ "Employees" ],
+      "destinationType" : [ "Territories" ],
+      "directed" : false
+    }, {
+      "synonyms" : [ "orderid_orderdetails_orderid" ],
+      "attributes" : [ "UnitPrice", "Quantity", "Discount" ],
+      "sourceType" : [ "Orders" ],
+      "destinationType" : [ "Products" ],
+      "directed" : false
+    } ]
+  },
+  "implementationLevel" : {
+    "graphMetadata" : {
+      "storageLayout" : "IGNORETIME"
+    },
+    "implementationNodes" : [ {
+      "synonyms" : [ "orders" ],
+      "tableName" : "Orders",
+      "id" : [ {
+        "columnName" : "OrderID",
+        "datatype" : "INTEGER",
+        "concatenationPosition" : 1
+      } ],
+      "attributes" : [ {
+        "columnName" : "OrderID",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "OrderID"
+      }, {
+        "columnName" : "OrderDate",
+        "dataType" : "DATETIME",
+        "abstractionLevelName" : "OrderDate"
+      }, {
+        "columnName" : "RequiredDate",
+        "dataType" : "DATETIME",
+        "abstractionLevelName" : "RequiredDate"
+      }, {
+        "columnName" : "ShippedDate",
+        "dataType" : "DATETIME",
+        "abstractionLevelName" : "ShippedDate"
+      }, {
+        "columnName" : "Freight",
+        "dataType" : "NUMERIC",
+        "abstractionLevelName" : "Freight"
+      }, {
+        "columnName" : "ShipName",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "ShipName"
+      }, {
+        "columnName" : "ShipAddress",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "ShipAddress"
+      }, {
+        "columnName" : "ShipCity",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "ShipCity"
+      }, {
+        "columnName" : "ShipRegion",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "ShipRegion"
+      }, {
+        "columnName" : "ShipPostalCode",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "ShipPostalCode"
+      }, {
+        "columnName" : "ShipCountry",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "ShipCountry"
+      } ],
+      "restrictions" : [ ]
+    }, {
+      "synonyms" : [ "products" ],
+      "tableName" : "Products",
+      "id" : [ {
+        "columnName" : "ProductID",
+        "datatype" : "INTEGER",
+        "concatenationPosition" : 1
+      } ],
+      "attributes" : [ {
+        "columnName" : "ProductID",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "ProductID"
+      }, {
+        "columnName" : "ProductName",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "ProductName"
+      }, {
+        "columnName" : "QuantityPerUnit",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "QuantityPerUnit"
+      }, {
+        "columnName" : "UnitPrice",
+        "dataType" : "NUMERIC",
+        "abstractionLevelName" : "UnitPrice"
+      }, {
+        "columnName" : "UnitsInStock",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "UnitsInStock"
+      }, {
+        "columnName" : "UnitsOnOrder",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "UnitsOnOrder"
+      }, {
+        "columnName" : "ReorderLevel",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "ReorderLevel"
+      }, {
+        "columnName" : "Discontinued",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Discontinued"
+      } ],
+      "restrictions" : [ ]
+    }, {
+      "synonyms" : [ "categories" ],
+      "tableName" : "Categories",
+      "id" : [ {
+        "columnName" : "CategoryID",
+        "datatype" : "INTEGER",
+        "concatenationPosition" : 1
+      } ],
+      "attributes" : [ {
+        "columnName" : "CategoryID",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "CategoryID"
+      }, {
+        "columnName" : "CategoryName",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "CategoryName"
+      }, {
+        "columnName" : "Description",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Description"
+      }, {
+        "columnName" : "Picture",
+        "dataType" : "BLOB",
+        "abstractionLevelName" : "Picture"
+      } ],
+      "restrictions" : [ ]
+    }, {
+      "synonyms" : [ "shippers" ],
+      "tableName" : "Shippers",
+      "id" : [ {
+        "columnName" : "ShipperID",
+        "datatype" : "INTEGER",
+        "concatenationPosition" : 1
+      } ],
+      "attributes" : [ {
+        "columnName" : "ShipperID",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "ShipperID"
+      }, {
+        "columnName" : "CompanyName",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "CompanyName"
+      }, {
+        "columnName" : "Phone",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Phone"
+      } ],
+      "restrictions" : [ ]
+    }, {
+      "synonyms" : [ "employees" ],
+      "tableName" : "Employees",
+      "id" : [ {
+        "columnName" : "EmployeeID",
+        "datatype" : "INTEGER",
+        "concatenationPosition" : 1
+      } ],
+      "attributes" : [ {
+        "columnName" : "EmployeeID",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "EmployeeID"
+      }, {
+        "columnName" : "LastName",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "LastName"
+      }, {
+        "columnName" : "FirstName",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "FirstName"
+      }, {
+        "columnName" : "Title",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Title"
+      }, {
+        "columnName" : "TitleOfCourtesy",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "TitleOfCourtesy"
+      }, {
+        "columnName" : "BirthDate",
+        "dataType" : "DATE",
+        "abstractionLevelName" : "BirthDate"
+      }, {
+        "columnName" : "HireDate",
+        "dataType" : "DATE",
+        "abstractionLevelName" : "HireDate"
+      }, {
+        "columnName" : "Address",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Address"
+      }, {
+        "columnName" : "City",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "City"
+      }, {
+        "columnName" : "Region",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Region"
+      }, {
+        "columnName" : "PostalCode",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "PostalCode"
+      }, {
+        "columnName" : "Country",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Country"
+      }, {
+        "columnName" : "HomePhone",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "HomePhone"
+      }, {
+        "columnName" : "Extension",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Extension"
+      }, {
+        "columnName" : "Photo",
+        "dataType" : "BLOB",
+        "abstractionLevelName" : "Photo"
+      }, {
+        "columnName" : "Notes",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Notes"
+      }, {
+        "columnName" : "PhotoPath",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "PhotoPath"
+      } ],
+      "restrictions" : [ ]
+    }, {
+      "synonyms" : [ "regions" ],
+      "tableName" : "Regions",
+      "id" : [ {
+        "columnName" : "RegionID",
+        "datatype" : "INTEGER",
+        "concatenationPosition" : 1
+      } ],
+      "attributes" : [ {
+        "columnName" : "RegionID",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "RegionID"
+      }, {
+        "columnName" : "RegionDescription",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "RegionDescription"
+      } ],
+      "restrictions" : [ ]
+    }, {
+      "synonyms" : [ "territories" ],
+      "tableName" : "Territories",
+      "id" : [ {
+        "columnName" : "TerritoryID",
+        "datatype" : "TEXT",
+        "concatenationPosition" : 1
+      } ],
+      "attributes" : [ {
+        "columnName" : "TerritoryID",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "TerritoryID"
+      }, {
+        "columnName" : "TerritoryDescription",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "TerritoryDescription"
+      } ],
+      "restrictions" : [ ]
+    }, {
+      "synonyms" : [ "customerdemographics" ],
+      "tableName" : "CustomerDemographics",
+      "id" : [ {
+        "columnName" : "CustomerTypeID",
+        "datatype" : "TEXT",
+        "concatenationPosition" : 1
+      } ],
+      "attributes" : [ {
+        "columnName" : "CustomerTypeID",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "CustomerTypeID"
+      }, {
+        "columnName" : "CustomerDesc",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "CustomerDesc"
+      } ],
+      "restrictions" : [ ]
+    }, {
+      "synonyms" : [ "suppliers" ],
+      "tableName" : "Suppliers",
+      "id" : [ {
+        "columnName" : "SupplierID",
+        "datatype" : "INTEGER",
+        "concatenationPosition" : 1
+      } ],
+      "attributes" : [ {
+        "columnName" : "SupplierID",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "SupplierID"
+      }, {
+        "columnName" : "CompanyName",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "CompanyName"
+      }, {
+        "columnName" : "ContactName",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "ContactName"
+      }, {
+        "columnName" : "ContactTitle",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "ContactTitle"
+      }, {
+        "columnName" : "Address",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Address"
+      }, {
+        "columnName" : "City",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "City"
+      }, {
+        "columnName" : "Region",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Region"
+      }, {
+        "columnName" : "PostalCode",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "PostalCode"
+      }, {
+        "columnName" : "Country",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Country"
+      }, {
+        "columnName" : "Phone",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Phone"
+      }, {
+        "columnName" : "Fax",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Fax"
+      }, {
+        "columnName" : "HomePage",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "HomePage"
+      } ],
+      "restrictions" : [ ]
+    }, {
+      "synonyms" : [ "customers" ],
+      "tableName" : "Customers",
+      "id" : [ {
+        "columnName" : "CustomerID",
+        "datatype" : "TEXT",
+        "concatenationPosition" : 1
+      } ],
+      "attributes" : [ {
+        "columnName" : "CustomerID",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "CustomerID"
+      }, {
+        "columnName" : "CompanyName",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "CompanyName"
+      }, {
+        "columnName" : "ContactName",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "ContactName"
+      }, {
+        "columnName" : "ContactTitle",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "ContactTitle"
+      }, {
+        "columnName" : "Address",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Address"
+      }, {
+        "columnName" : "City",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "City"
+      }, {
+        "columnName" : "Region",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Region"
+      }, {
+        "columnName" : "PostalCode",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "PostalCode"
+      }, {
+        "columnName" : "Country",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Country"
+      }, {
+        "columnName" : "Phone",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Phone"
+      }, {
+        "columnName" : "Fax",
+        "dataType" : "TEXT",
+        "abstractionLevelName" : "Fax"
+      } ],
+      "restrictions" : [ ]
+    } ],
+    "implementationEdges" : [ {
+      "synonyms" : [ "customerid_orders_employeeid" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Customers",
+          "sourceTableColumn" : "CustomerID",
+          "joinTableSourceColumn" : "CustomerID",
+          "joinTableName" : "Orders",
+          "joinTableDestinationColumn" : "EmployeeID",
+          "destinationTableColumn" : "EmployeeID",
+          "destinationTableName" : "Employees",
+          "attributes" : [ {
+            "columnName" : "OrderDate",
+            "dataType" : "DATETIME",
+            "abstractionLevelName" : "OrderDate"
+          }, {
+            "columnName" : "RequiredDate",
+            "dataType" : "DATETIME",
+            "abstractionLevelName" : "RequiredDate"
+          }, {
+            "columnName" : "ShippedDate",
+            "dataType" : "DATETIME",
+            "abstractionLevelName" : "ShippedDate"
+          }, {
+            "columnName" : "Freight",
+            "dataType" : "NUMERIC",
+            "abstractionLevelName" : "Freight"
+          }, {
+            "columnName" : "ShipName",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipName"
+          }, {
+            "columnName" : "ShipAddress",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipAddress"
+          }, {
+            "columnName" : "ShipCity",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipCity"
+          }, {
+            "columnName" : "ShipRegion",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipRegion"
+          }, {
+            "columnName" : "ShipPostalCode",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipPostalCode"
+          }, {
+            "columnName" : "ShipCountry",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipCountry"
+          } ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "employeeid_orders_shipvia" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Employees",
+          "sourceTableColumn" : "EmployeeID",
+          "joinTableSourceColumn" : "EmployeeID",
+          "joinTableName" : "Orders",
+          "joinTableDestinationColumn" : "ShipVia",
+          "destinationTableColumn" : "ShipperID",
+          "destinationTableName" : "Shippers",
+          "attributes" : [ {
+            "columnName" : "OrderDate",
+            "dataType" : "DATETIME",
+            "abstractionLevelName" : "OrderDate"
+          }, {
+            "columnName" : "RequiredDate",
+            "dataType" : "DATETIME",
+            "abstractionLevelName" : "RequiredDate"
+          }, {
+            "columnName" : "ShippedDate",
+            "dataType" : "DATETIME",
+            "abstractionLevelName" : "ShippedDate"
+          }, {
+            "columnName" : "Freight",
+            "dataType" : "NUMERIC",
+            "abstractionLevelName" : "Freight"
+          }, {
+            "columnName" : "ShipName",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipName"
+          }, {
+            "columnName" : "ShipAddress",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipAddress"
+          }, {
+            "columnName" : "ShipCity",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipCity"
+          }, {
+            "columnName" : "ShipRegion",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipRegion"
+          }, {
+            "columnName" : "ShipPostalCode",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipPostalCode"
+          }, {
+            "columnName" : "ShipCountry",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipCountry"
+          } ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "customerid_orders_shipvia" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Customers",
+          "sourceTableColumn" : "CustomerID",
+          "joinTableSourceColumn" : "CustomerID",
+          "joinTableName" : "Orders",
+          "joinTableDestinationColumn" : "ShipVia",
+          "destinationTableColumn" : "ShipperID",
+          "destinationTableName" : "Shippers",
+          "attributes" : [ {
+            "columnName" : "OrderDate",
+            "dataType" : "DATETIME",
+            "abstractionLevelName" : "OrderDate"
+          }, {
+            "columnName" : "RequiredDate",
+            "dataType" : "DATETIME",
+            "abstractionLevelName" : "RequiredDate"
+          }, {
+            "columnName" : "ShippedDate",
+            "dataType" : "DATETIME",
+            "abstractionLevelName" : "ShippedDate"
+          }, {
+            "columnName" : "Freight",
+            "dataType" : "NUMERIC",
+            "abstractionLevelName" : "Freight"
+          }, {
+            "columnName" : "ShipName",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipName"
+          }, {
+            "columnName" : "ShipAddress",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipAddress"
+          }, {
+            "columnName" : "ShipCity",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipCity"
+          }, {
+            "columnName" : "ShipRegion",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipRegion"
+          }, {
+            "columnName" : "ShipPostalCode",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipPostalCode"
+          }, {
+            "columnName" : "ShipCountry",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ShipCountry"
+          } ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "employees_employeeid_orders_employeeid" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Orders",
+          "sourceTableColumn" : "EmployeeID",
+          "joinTableSourceColumn" : "",
+          "joinTableName" : "",
+          "joinTableDestinationColumn" : "",
+          "destinationTableColumn" : "EmployeeID",
+          "destinationTableName" : "Employees",
+          "attributes" : [ ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "customers_customerid_orders_customerid" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Orders",
+          "sourceTableColumn" : "CustomerID",
+          "joinTableSourceColumn" : "",
+          "joinTableName" : "",
+          "joinTableDestinationColumn" : "",
+          "destinationTableColumn" : "CustomerID",
+          "destinationTableName" : "Customers",
+          "attributes" : [ ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "shipvia_shipvia_shippers_shipperid" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Orders",
+          "sourceTableColumn" : "ShipVia",
+          "joinTableSourceColumn" : "",
+          "joinTableName" : "",
+          "joinTableDestinationColumn" : "",
+          "destinationTableColumn" : "ShipperID",
+          "destinationTableName" : "Shippers",
+          "attributes" : [ ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "categoryid_products_supplierid" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Categories",
+          "sourceTableColumn" : "CategoryID",
+          "joinTableSourceColumn" : "CategoryID",
+          "joinTableName" : "Products",
+          "joinTableDestinationColumn" : "SupplierID",
+          "destinationTableColumn" : "SupplierID",
+          "destinationTableName" : "Suppliers",
+          "attributes" : [ {
+            "columnName" : "ProductName",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "ProductName"
+          }, {
+            "columnName" : "QuantityPerUnit",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "QuantityPerUnit"
+          }, {
+            "columnName" : "UnitPrice",
+            "dataType" : "NUMERIC",
+            "abstractionLevelName" : "UnitPrice"
+          }, {
+            "columnName" : "UnitsInStock",
+            "dataType" : "INTEGER",
+            "abstractionLevelName" : "UnitsInStock"
+          }, {
+            "columnName" : "UnitsOnOrder",
+            "dataType" : "INTEGER",
+            "abstractionLevelName" : "UnitsOnOrder"
+          }, {
+            "columnName" : "ReorderLevel",
+            "dataType" : "INTEGER",
+            "abstractionLevelName" : "ReorderLevel"
+          }, {
+            "columnName" : "Discontinued",
+            "dataType" : "TEXT",
+            "abstractionLevelName" : "Discontinued"
+          } ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "categories_categoryid_products_categoryid" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Products",
+          "sourceTableColumn" : "CategoryID",
+          "joinTableSourceColumn" : "",
+          "joinTableName" : "",
+          "joinTableDestinationColumn" : "",
+          "destinationTableColumn" : "CategoryID",
+          "destinationTableName" : "Categories",
+          "attributes" : [ ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "supplierid_supplierid_suppliers_supplierid" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Products",
+          "sourceTableColumn" : "SupplierID",
+          "joinTableSourceColumn" : "",
+          "joinTableName" : "",
+          "joinTableDestinationColumn" : "",
+          "destinationTableColumn" : "SupplierID",
+          "destinationTableName" : "Suppliers",
+          "attributes" : [ ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "employees_employeeid_employees_reportsto" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Employees",
+          "sourceTableColumn" : "ReportsTo",
+          "joinTableSourceColumn" : "",
+          "joinTableName" : "",
+          "joinTableDestinationColumn" : "",
+          "destinationTableColumn" : "EmployeeID",
+          "destinationTableName" : "Employees",
+          "attributes" : [ ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "regions_regionid_territories_regionid" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Territories",
+          "sourceTableColumn" : "RegionID",
+          "joinTableSourceColumn" : "",
+          "joinTableName" : "",
+          "joinTableDestinationColumn" : "",
+          "destinationTableColumn" : "RegionID",
+          "destinationTableName" : "Regions",
+          "attributes" : [ ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "customerid_customercustomerdemo_customerid" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Customers",
+          "sourceTableColumn" : "CustomerID",
+          "joinTableSourceColumn" : "CustomerID",
+          "joinTableName" : "CustomerCustomerDemo",
+          "joinTableDestinationColumn" : "CustomerTypeID",
+          "destinationTableColumn" : "CustomerTypeID",
+          "destinationTableName" : "CustomerDemographics",
+          "attributes" : [ ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "employeeid_employeeterritories_employeeid" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Employees",
+          "sourceTableColumn" : "EmployeeID",
+          "joinTableSourceColumn" : "EmployeeID",
+          "joinTableName" : "EmployeeTerritories",
+          "joinTableDestinationColumn" : "TerritoryID",
+          "destinationTableColumn" : "TerritoryID",
+          "destinationTableName" : "Territories",
+          "attributes" : [ ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "orderid_orderdetails_orderid" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "Orders",
+          "sourceTableColumn" : "OrderID",
+          "joinTableSourceColumn" : "OrderID",
+          "joinTableName" : "[Order Details]",
+          "joinTableDestinationColumn" : "ProductID",
+          "destinationTableColumn" : "ProductID",
+          "destinationTableName" : "Products",
+          "attributes" : [ {
+            "columnName" : "UnitPrice",
+            "dataType" : "NUMERIC",
+            "abstractionLevelName" : "UnitPrice"
+          }, {
+            "columnName" : "Quantity",
+            "dataType" : "INTEGER",
+            "abstractionLevelName" : "Quantity"
+          }, {
+            "columnName" : "Discount",
+            "dataType" : "REAL",
+            "abstractionLevelName" : "Discount"
+          } ]
+        } ]
+      } ]
+    } ]
+  }
+}
+

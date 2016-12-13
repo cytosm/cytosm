@@ -1,0 +1,144 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"graphMetadata": {
+			"type": "object",
+			"storageLayout": {
+				"type": "string",
+				"enum": [
+					"GRANULAR_INDEPENDENT"
+				]
+			},
+			"temporalGranularity": {
+				"type": "integer"
+			},
+			"temporalGranularityUnit": {
+				"type": "string",
+				"enum": [
+					"second",
+					"minute",
+					"hour",
+					"day",
+					"week",
+					"month"
+				]
+			}
+		},
+		"nodes": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"properties": {
+					"tableName": {
+						"type": "string"
+					},
+					"idColumn": {
+						"type": "string"
+					},
+					"attributes": {
+						"type": "array",
+						"items": {
+							"columnName": "string",
+							"fieldName": "string",
+							"dataType": {
+								"type": "string",
+								"enum": [
+									"INTEGER",
+									"VARCHAR*",
+									"BOOLEAN",
+									"STRING",
+									"TIMESTAMP",
+									"DATE"
+								]
+							}
+						}
+					},
+					"synonyms": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"restrictions": {
+						"type": "array",
+						"optional": true,
+						"items": {
+							"dataLocationTable": "string",
+							"dataLocationColumn": "string",
+							"matchingRegex": "string"
+						}
+					}
+				}
+			}
+		},
+		"edges": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"properties": {
+					"edgeMappedTable": {
+						"type": "string"
+					},
+					"sourceMappedColumn": {
+						"type": "string"
+					},
+					"destinationMappedColumn": {
+						"type": "string"
+					},
+					"sourceTableName": {
+						"type": "string"
+					},
+					"sourceTableColumn": {
+						"type": "string"
+					},
+					"destinationTableName": {
+						"type": "string"
+					},
+					"destinationTableColumn": {
+						"type": "string"
+					},
+					"attributes": {
+						"type": "array",
+						"items": {
+							"columnName": "string",
+							"fieldName": "string",
+							"dataType": {
+								"type": "string",
+								"enum": [
+									"INTEGER",
+									"VARCHAR*",
+									"BOOLEAN",
+									"STRING",
+									"TIMESTAMP",
+									"DATE"
+								]
+							}
+						}
+					},
+					"synonyms": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"directed": {
+						"type": "boolean",
+						"optional": true
+					},
+					"restrictions": {
+						"type": "array",
+						"optional": true,
+						"items": {
+							"dataLocationTable": "string",
+							"dataLocationColumn": "string",
+							"matchingRegex": "string"
+						}
+					}
+				}
+			}
+		}
+	}
+}

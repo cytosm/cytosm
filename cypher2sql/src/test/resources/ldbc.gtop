@@ -1,0 +1,774 @@
+{
+	"version": "1.0",
+	"abstractionLevel": {
+		"abstractionNodes": [{
+			"synonyms": ["person"],
+			"attributes": ["id", "creationDate", "firstName", "lastName", "gender", "birthday", "browserUsed", "locationIP"]
+		}, {
+			"synonyms": ["university"],
+			"attributes": ["id", "name"]
+		}, {
+			"synonyms": ["company"],
+			"attributes": ["id", "name"]
+		}, {
+			"synonyms": ["city"],
+			"attributes": ["id", "name"]
+		}, {
+			"synonyms": ["country"],
+			"attributes": ["id", "name"]
+		}, {
+			"synonyms": ["continent"],
+			"attributes": ["id", "name"]
+		}, {
+			"synonyms": ["comment", "message"],
+			"attributes": ["id", "creationDate", "browserUsed", "locationIP", "content", "length"]
+		}, {
+			"synonyms": ["post", "message"],
+			"attributes": ["id", "creationDate", "browserUsed", "locationIP", "content", "length", "language", "imageFile"]
+		}, {
+			"synonyms": ["forum"],
+			"attributes": ["id", "title", "creationDate"]
+		}, {
+			"synonyms": ["tag"],
+			"attributes": ["id", "name"]
+		}, {
+			"synonyms": ["tagclass"],
+			"attributes": ["id", "name"]
+		}],
+		"abstractionEdges": [{
+			"synonyms": ["knows"],
+			"attributes": ["creationDate"],
+			"sourceType": ["person"],
+			"destinationType": ["person"],
+			"directed": true
+		}, {
+			"synonyms": ["has_interest"],
+			"attributes": [],
+			"sourceType": ["person"],
+			"destinationType": ["tag"],
+			"directed": true
+		}, {
+			"synonyms": ["has_type"],
+			"attributes": [],
+			"sourceType": ["tag"],
+			"destinationType": ["tagclass"],
+			"directed": true
+		}, {
+			"synonyms": ["has_moderator"],
+			"attributes": [],
+			"sourceType": ["forum"],
+			"destinationType": ["person"],
+			"directed": true
+		}, {
+			"synonyms": ["has_member"],
+			"attributes": ["joinDate"],
+			"sourceType": ["forum"],
+			"destinationType": ["person"],
+			"directed": true
+		}, {
+			"synonyms": ["container_of"],
+			"attributes": [],
+			"sourceType": ["forum"],
+			"destinationType": ["post"],
+			"directed": true
+		}, {
+			"synonyms": ["has_tag"],
+			"attributes": [],
+			"sourceType": ["post"],
+			"destinationType": ["tag"],
+			"directed": true
+		}, {
+			"synonyms": ["has_tag"],
+			"attributes": [],
+			"sourceType": ["comment"],
+			"destinationType": ["tag"],
+			"directed": true
+		},{
+			"synonyms": ["is_subclass_of"],
+			"attributes": [],
+			"sourceType": ["tagclass"],
+			"destinationType": ["tagclass"],
+			"directed": true
+		}, {
+			"synonyms": ["has_creator"],
+			"attributes": [],
+			"sourceType": ["post"],
+			"destinationType": ["person"],
+			"directed": true
+		}, {
+			"synonyms": ["has_creator"],
+			"attributes": [],
+			"sourceType": ["comment"],
+			"destinationType": ["person"],
+			"directed": true
+		}, {
+			"synonyms": ["likes"],
+			"attributes": ["creationDate"],
+			"sourceType": ["person"],
+			"destinationType": ["post"],
+			"directed": true
+		},{
+			"synonyms": ["likes"],
+			"attributes": ["creationDate"],
+			"sourceType": ["person"],
+			"destinationType": ["comment"],
+			"directed": true
+		}, {
+			"synonyms": ["reply_of"],
+			"attributes": [],
+			"sourceType": ["comment"],
+			"destinationType": ["post"],
+			"directed": true
+		},{
+			"synonyms": ["reply_of"],
+			"attributes": [],
+			"sourceType": ["comment"],
+			"destinationType": ["comment"],
+			"directed": true
+		}, {
+			"synonyms": ["is_located_in"],
+			"attributes": [],
+			"sourceType": ["post"],
+			"destinationType": ["country"],
+			"directed": true
+		}, {
+			"synonyms": ["is_located_in"],
+			"attributes": [],
+			"sourceType": ["comment"],
+			"destinationType": ["country"],
+			"directed": true
+		}, {
+			"synonyms": ["works_at"],
+			"attributes": ["workFrom"],
+			"sourceType": ["person"],
+			"destinationType": ["company"],
+			"directed": true
+		}, {
+			"synonyms": ["study_at"],
+			"attributes": ["classYear"],
+			"sourceType": ["person"],
+			"destinationType": ["university"],
+			"directed": true
+		}, {
+			"synonyms": ["is_located_in"],
+			"attributes": [],
+			"sourceType": ["university"],
+			"destinationType": ["city"],
+			"directed": true
+		}, {
+			"synonyms": ["is_located_in"],
+			"attributes": [],
+			"sourceType": ["company"],
+			"destinationType": ["country"],
+			"directed": true
+		}, {
+			"synonyms": ["is_located_in"],
+			"attributes": [],
+			"sourceType": ["person"],
+			"destinationType": ["city"],
+			"directed": true
+		}, {
+			"synonyms": ["is_part_of"],
+			"attributes": [],
+			"sourceType": ["city"],
+			"destinationType": ["country"],
+			"directed": true
+		}, {
+			"synonyms": ["is_part_of"],
+			"attributes": [],
+			"sourceType": ["country"],
+			"destinationType": ["continent"],
+			"directed": true
+		}]
+	},
+	"implementationLevel": {
+		"graphMetadata": {
+			"storageLayout": "IGNORETIME"
+		},
+		"implementationNodes": [{
+			"synonyms": ["Person"],
+			"tableName": "Person",
+			"id": [{
+				"columnName": "id",
+				"datatype": "INTEGER",
+				"concatenationPosition": 1
+			}],
+			"attributes": [{
+				"columnName": "creationDate",
+				"dataType": "DATE",
+				"abstractionLevelName": "creationDate"
+			}, {
+				"columnName": "firstName",
+				"dataType": "VARCHAR(100)",
+				"abstractionLevelName": "firstName"
+			}, {
+				"columnName": "lastName",
+				"dataType": "VARCHAR(100)",
+				"abstractionLevelName": "lastName"
+			}, {
+				"columnName": "gender",
+				"dataType": "VARCHAR(10)",
+				"abstractionLevelName": "gender"
+			}, {
+				"columnName": "birthday",
+				"dataType": "Date",
+				"abstractionLevelName": "birthday"
+			}, {
+				"columnName": "browserUsed",
+				"dataType": "VARCHAR(40)",
+				"abstractionLevelName": "browserUsed"
+			}, {
+				"columnName": "locationIP",
+				"dataType": "VARCHAR(15)",
+				"abstractionLevelName": "locationIP"
+			}],
+			"restrictions": []
+		}, {
+			"synonyms": ["university"],
+			"tableName": "University",
+			"id": [{
+				"columnName": "id",
+				"datatype": "INTEGER",
+				"concatenationPosition": 1
+			}],
+			"attributes": [{
+				"columnName": "name",
+				"dataType": "VARCHAR(40)",
+				"abstractionLevelName": "name"
+			}],
+			"restrictions": []
+		}, {
+			"synonyms": ["company"],
+			"tableName": "Company",
+			"id": [{
+				"columnName": "id",
+				"datatype": "INTEGER",
+				"concatenationPosition": 1
+			}],
+			"attributes": [{
+				"columnName": "name",
+				"dataType": "VARCHAR(40)",
+				"abstractionLevelName": "name"
+			}],
+			"restrictions": []
+		}, {
+			"synonyms": ["city"],
+			"tableName": "City",
+			"id": [{
+				"columnName": "id",
+				"datatype": "INTEGER",
+				"concatenationPosition": 1
+			}],
+			"attributes": [{
+				"columnName": "name",
+				"dataType": "VARCHAR(40)",
+				"abstractionLevelName": "name"
+			}],
+			"restrictions": []
+		}, {
+			"synonyms": ["country"],
+			"tableName": "Country",
+			"id": [{
+				"columnName": "id",
+				"datatype": "INTEGER",
+				"concatenationPosition": 1
+			}],
+			"attributes": [{
+				"columnName": "name",
+				"dataType": "VARCHAR(40)",
+				"abstractionLevelName": "name"
+			}],
+			"restrictions": []
+		}, {
+			"synonyms": ["continent"],
+			"tableName": "Continent",
+			"id": [{
+				"columnName": "id",
+				"datatype": "INTEGER",
+				"concatenationPosition": 1
+			}],
+			"attributes": [{
+				"columnName": "name",
+				"dataType": "VARCHAR(40)",
+				"abstractionLevelName": "name"
+			}],
+			"restrictions": []
+		}, {
+			"synonyms": ["forum"],
+			"tableName": "Forum",
+			"id": [{
+				"columnName": "id",
+				"datatype": "INTEGER",
+				"concatenationPosition": 1
+			}],
+			"attributes": [{
+				"columnName": "title",
+				"dataType": "VARCHAR(100)",
+				"abstractionLevelName": "title"
+			}, {
+				"columnName": "creationDate",
+				"dataType": "DATE",
+				"abstractionLevelName": "creationDate"
+			}],
+			"restrictions": []
+		}, {
+			"synonyms": ["tag"],
+			"tableName": "Tag",
+			"id": [{
+				"columnName": "id",
+				"datatype": "INTEGER",
+				"concatenationPosition": 1
+			}],
+			"attributes": [{
+				"columnName": "name",
+				"dataType": "VARCHAR(40)",
+				"abstractionLevelName": "name"
+			}],
+			"restrictions": []
+		}, {
+			"synonyms": ["tagclass"],
+			"tableName": "TagClass",
+			"id": [{
+				"columnName": "id",
+				"datatype": "INTEGER",
+				"concatenationPosition": 1
+			}],
+			"attributes": [{
+				"columnName": "name",
+				"dataType": "VARCHAR(40)",
+				"abstractionLevelName": "name"
+			}],
+			"restrictions": []
+		}, {
+			"synonyms": ["post", "message"],
+			"tableName": "Post",
+			"id": [{
+				"columnName": "id",
+				"datatype": "INTEGER",
+				"concatenationPosition": 1
+			}],
+			"attributes": [{
+				"columnName": "creationDate",
+				"dataType": "DATE",
+				"abstractionLevelName": "creationDate"
+			}, {
+				"columnName": "browser",
+				"dataType": "VARCHAR(50)",
+				"abstractionLevelName": "browser"
+			}, {
+				"columnName": "locationIP",
+				"dataType": "VARCHAR(100)",
+				"abstractionLevelName": "locationIP"
+			}, {
+				"columnName": "context",
+				"dataType": "VARCHAR(500)",
+				"abstractionLevelName": "context"
+			}, {
+				"columnName": "length",
+				"dataType": "INTEGER",
+				"abstractionLevelName": "length"
+			}, {
+				"columnName": "language",
+				"dataType": "VARCHAR(2)",
+				"abstractionLevelName": "language"
+			}, {
+				"columnName": "imageFile",
+				"dataType": "VARCHAR(100)",
+				"abstractionLevelName": "imageFile"
+			}],
+			"restrictions": []
+		}, {
+			"synonyms": ["comment", "message"],
+			"tableName": "Comment",
+			"id": [{
+				"columnName": "id",
+				"datatype": "INTEGER",
+				"concatenationPosition": 1
+			}],
+			"attributes": [{
+				"columnName": "creationDate",
+				"dataType": "DATE",
+				"abstractionLevelName": "creationDate"
+			}, {
+				"columnName": "browserUsed",
+				"dataType": "VARCHAR(40)",
+				"abstractionLevelName": "browserUsed"
+			}, {
+				"columnName": "locationIP",
+				"dataType": "VARCHAR(15)",
+				"abstractionLevelName": "locationIP"
+			}, {
+				"columnName": "context",
+				"dataType": "VARCHAR(500)",
+				"abstractionLevelName": "context"
+			}, {
+				"columnName": "length",
+				"dataType": "INTEGER",
+				"abstractionLevelName": "length"
+			}],
+			"restrictions": []
+		}],
+		"implementationEdges": [{
+				"synonyms": ["knows"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Person",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "person_id",
+						"joinTableName": "person_knows_person",
+						"joinTableDestinationColumn": "other_person_id",
+						"destinationTableName": "Person",
+						"destinationTableColumn": "id",
+						"attributes": [{
+							"columnName": "creationDate",
+							"dataType": "Date",
+							"abstractionLevelName": "creationDate"
+						}]
+					}]
+				}]
+			}, {
+				"synonyms": ["has_interest"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Person",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "person_id",
+						"joinTableName": "person_hasInterest_tag",
+						"joinTableDestinationColumn": "tag_id",
+						"destinationTableName": "Tag",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			}, {
+				"synonyms": ["has_moderator"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Forum",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "forum_id",
+						"joinTableName": "forum_hasModerator_person",
+						"joinTableDestinationColumn": "person_id",
+						"destinationTableName": "Person",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			},
+
+			{
+				"synonyms": ["has_member"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Forum",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "forum_id",
+						"joinTableName": "forum_hasMember_person",
+						"joinTableDestinationColumn": "person_id",
+						"destinationTableName": "Person",
+						"destinationTableColumn": "id",
+						"attributes": [{
+							"columnName": "joinDate",
+							"dataType": "Date",
+							"abstractionLevelName": "joinDate"
+						}]
+					}]
+				}]
+			},
+
+			{
+				"synonyms": ["likes"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Person",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "person_id",
+						"joinTableName": "person_likes_post",
+						"joinTableDestinationColumn": "post_id",
+						"destinationTableName": "Post",
+						"destinationTableColumn": "id",
+						"attributes": [{
+							"columnName": "creationDate",
+							"dataType": "Date",
+							"abstractionLevelName": "creationDate"
+						}]
+					}]
+				}]
+			},
+			{
+				"synonyms": ["likes"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Person",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "person_id",
+						"joinTableName": "person_likes_comment",
+						"joinTableDestinationColumn": "comment_id",
+						"destinationTableName": "Comment",
+						"destinationTableColumn": "id",
+						"attributes": [{
+							"columnName": "creationDate",
+							"dataType": "Date",
+							"abstractionLevelName": "creationDate"
+						}]
+					}]
+				}]
+			},
+			{
+				"synonyms": ["has_type"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Tag",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "tag_id",
+						"joinTableName": "tag_hasType_tagclass",
+						"joinTableDestinationColumn": "tagclass_id",
+						"destinationTableName": "TagClass",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			}, {
+				"synonyms": ["is_subclass_of"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "TagClass",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "tagclass_id",
+						"joinTableName": "tagclass_isSubclassOf_tagclass",
+						"joinTableDestinationColumn": "other_tagclass_id",
+						"destinationTableName": "TagClass",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			}, {
+				"synonyms": ["has_creator"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Post",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "post_id",
+						"joinTableName": "post_hasCreator_person",
+						"joinTableDestinationColumn": "person_id",
+						"destinationTableName": "Person",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			}, {
+				"synonyms": ["has_creator"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Comment",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "comment_id",
+						"joinTableName": "comment_hasCreator_person",
+						"joinTableDestinationColumn": "person_id",
+						"destinationTableName": "Person",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			}, {
+				"synonyms": ["is_located_in"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Comment",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "comment_id",
+						"joinTableName": "comment_isLocatedIn_country",
+						"joinTableDestinationColumn": "country_id",
+						"destinationTableName": "Country",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			},{
+				"synonyms": ["is_located_in"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Post",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "post_id",
+						"joinTableName": "post_isLocatedIn_country",
+						"joinTableDestinationColumn": "country_id",
+						"destinationTableName": "Country",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			}, {
+				"synonyms": ["reply_of"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Comment",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "comment_id",
+						"joinTableName": "comment_replyOf_post",
+						"joinTableDestinationColumn": "post_id",
+						"destinationTableName": "Post",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			},  {
+				"synonyms": ["reply_of"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Comment",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "comment_id",
+						"joinTableName": "comment_replyOf_comment",
+						"joinTableDestinationColumn": "other_comment_id",
+						"destinationTableName": "Comment",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			}, {
+				"synonyms": ["has_tag"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Post",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "post_id",
+						"joinTableName": "post_hasTag_tag",
+						"joinTableDestinationColumn": "tag_id",
+						"destinationTableName": "Tag",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			}, {
+				"synonyms": ["has_tag"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Comment",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "comment_id",
+						"joinTableName": "comment_hasTag_tag",
+						"joinTableDestinationColumn": "tag_id",
+						"destinationTableName": "Tag",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			},{
+				"synonyms": ["is_located_in"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Company",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "company_id",
+						"joinTableName": "company_isLocatedIn_country",
+						"joinTableDestinationColumn": "country_id",
+						"destinationTableName": "Country",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			}, {
+				"synonyms": ["is_located_in"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "University",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "university_id",
+						"joinTableName": "university_isLocatedIn_city",
+						"joinTableDestinationColumn": "city_id",
+						"destinationTableName": "City",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			},
+
+			{
+				"synonyms": ["is_part_of"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "City",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "city_id",
+						"joinTableName": "city_isPartOf_country",
+						"joinTableDestinationColumn": "other_country_id",
+						"destinationTableName": "Country",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			},
+
+			{
+				"synonyms": ["is_part_of"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Country",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "country_id",
+						"joinTableName": "country_isPartOf_continent",
+						"joinTableDestinationColumn": "other_continent_id",
+						"destinationTableName": "Continent",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			},
+
+			{
+				"synonyms": ["is_located_in"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Person",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "person_id",
+						"joinTableName": "person_isLocatedIn_city",
+						"joinTableDestinationColumn": "city_id",
+						"destinationTableName": "City",
+						"destinationTableColumn": "id",
+						"attributes": []
+					}]
+				}]
+			}, {
+				"synonyms": ["works_at"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Person",
+						"sourceTableColumn": "id",
+
+						"joinTableSourceColumn": "person_id",
+						"joinTableName": "person_workAt_company",
+						"joinTableDestinationColumn": "company_id",
+						"destinationTableName": "Company",
+						"destinationTableColumn": "id",
+						"attributes": [{
+							"columnName": "workFrom",
+							"dataType": "INTEGER",
+							"abstractionLevelName": "workFrom"
+						}]
+
+					}]
+				}]
+			}, {
+				"synonyms": ["study_at"],
+				"paths": [{
+					"traversalHops": [{
+						"sourceTableName": "Person",
+						"sourceTableColumn": "id",
+						"joinTableSourceColumn": "person_id",
+						"joinTableName": "person_studyAt_university",
+						"joinTableDestinationColumn": "university_id",
+						"destinationTableName": "University",
+						"destinationTableColumn": "id",
+						"attributes": [{
+							"columnName": "classYear",
+							"dataType": "INTEGER",
+							"abstractionLevelName": "classYear"
+						}]
+					}]
+				}]
+			}
+		]
+	}
+}

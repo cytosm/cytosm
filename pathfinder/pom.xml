@@ -1,0 +1,99 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.cytosm</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>pathfinder</artifactId>
+	<packaging>jar</packaging>
+
+	<name>pathfinder</name>
+
+	<licenses>
+		<license>
+			<name>Apache 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>MarcoLotz</id>
+			<name>Marco Aurelio B. F. Gomes Lotz</name>
+			<email>contact@marcolotz.com</email>
+			<timezone>0</timezone>
+		</developer>
+		<developer>
+      <id>alzindiq</id>
+			<name>Luis Miguel Vaquero Gonzalez</name>
+			<email>alzindiq@gmail.com</email>
+			<timezone>0</timezone>
+		</developer>
+		<developer>
+			<name>James Brook</name>
+			<email>jmbrook@gmail.com</email>
+			<timezone>0</timezone>
+		</developer>
+		<developer>
+			<id>Nemikolh</id>
+			<name>Joan Varvenne</name>
+			<email>joan.varvenne@gmail.com</email>
+			<timezone>0</timezone>
+		</developer>
+	</developers>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<checkstyle.config.location>${project.parent.basedir}/config/cytosm_checkstyle.xml</checkstyle.config.location>
+		<property key="checkstyle.suppressions.file" value="config/suppressions.xml"/>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.cytosm</groupId>
+			<artifactId>common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+		</dependency>
+				
+	</dependencies>
+
+	<build>
+		<finalName>pathfinder</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+</project>

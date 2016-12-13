@@ -1,0 +1,9 @@
+# Generated antlr4 files
+*.tokens
+
+target/
+.classpath/
+.project/
+.settings/
+logs/
+doc/
