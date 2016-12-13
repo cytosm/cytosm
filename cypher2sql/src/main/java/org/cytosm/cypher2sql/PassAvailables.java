@@ -102,13 +102,23 @@ public class PassAvailables {
         // TODO: Add a pass here that converts Return Expression returning variables
         // TODO: into a usable form.
 
+        // This pass converts all "count" functions calls into an appropriate
+        // form. This mean any ScopeSelect that leaves in the tree will
+        // be turned into a "count" and everything that is above will
+        // be turned into a "sum".
+        TransformFunctions.convertCypherCountFn(tree, gTopInterface);
+
         // We can now unwrap every property access that we see in the tree.
         // This means essentially unwrapping property access on aliases.
         UnwrapPropertyAccess.unwrapPropertyAccess(tree);
 
-        // TODO: Add a pass here that transform length(p) function calls into
-        // TODO: the value stored on the PathVar p. Or throw an error, if
-        // TODO: p is not a PathVar.
+        // This pass here transforms length(p) function calls into
+        // the value stored on the PathVar p otherwise it does nothing.
+        TransformFunctions.convertPathLength(tree);
+
+        // Unwrap alias expr and compute constant expression
+        // where possible.
+        UnwrapAliasVar.unwrapConstants(tree);
 
         // TODO: Add a pass here that copy the latest ORDER BY in
         // TODO: the ScopeSelect.ret SimpleSelect.

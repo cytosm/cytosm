@@ -4,6 +4,7 @@ import org.cytosm.cypher2sql.lowering.typeck.AvailableVariables;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
 import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
 import org.cytosm.cypher2sql.cypher.visitor.Walk;
+import org.cytosm.cypher2sql.lowering.typeck.var.constexpr.ConstVal;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
@@ -97,7 +98,7 @@ public class ExprTreeBuilder {
             while (iter.hasNext()) {
                 args.add(Walk.foldExpression(this, iter.next()));
             }
-            return new ExprTree.Fn(expression.functionName.name, args);
+            return new ExprFn(expression.functionName.name, args);
         }
 
         // =========================================================

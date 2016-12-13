@@ -268,25 +268,6 @@ public class PopulateJoins {
             );
         }
 
-        private static NodeVar resolveVar(Var var) throws Cypher2SqlException {
-            if (var instanceof NodeVar) {
-                return (NodeVar) var;
-            } else if (var instanceof AliasVar) {
-
-                // This is valid because cypher only allow names in nodes.
-                // The following is invalid cypher:
-                //
-                //      MATCH (a.b.c)
-                //
-                if (((AliasVar) var).aliased instanceof Var) {
-                    Var v = (Var) ((AliasVar) var).aliased;
-                    return resolveVar(v);
-                }
-                throw new TypeError("Alias '" + var.name + "' does not alias a Node.");
-            }
-            throw new TypeError("Variable '" + var.name + "' should be Node.");
-        }
-
         private static String getOriginTableName(Var var, FromItem sourceForVar) throws Cypher2SqlException {
             return getOrigin(var, sourceForVar).sourceTableName;
         }

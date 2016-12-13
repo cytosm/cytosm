@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import org.cytosm.cypher2sql.cypher.parser.ASTBuilder;
-import org.cytosm.cypher2sql.cypher.constexpr.ConstExprFolder;
+import org.cytosm.cypher2sql.cypher.constexpr.ConstExpressionFolder;
 import org.cytosm.pathfinder.input.CanonicalConverter;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -123,7 +123,7 @@ public class CypherConverter extends CanonicalConverter {
         // {id: {b: "test"}}
         if (edge.properties.isPresent()) {
             MapExpression expr = edge.properties.get();
-            Map<String, Object> res = ConstExprFolder.evalMapExpression(expr);
+            Map<String, Object> res = ConstExpressionFolder.evalMapExpression(expr);
 
             // With a MapExpression such as the one given previously, we
             // would collect id as a string.
@@ -219,7 +219,7 @@ public class CypherConverter extends CanonicalConverter {
         // {id: {b: "test"}}
         if (node.properties.isPresent()) {
             MapExpression expr = (MapExpression) node.properties.get();
-            Map<String, Object> res = ConstExprFolder.evalMapExpression(expr);
+            Map<String, Object> res = ConstExpressionFolder.evalMapExpression(expr);
 
             // With a MapExpression such as the one given previously, we
             // would collect id as a string.
