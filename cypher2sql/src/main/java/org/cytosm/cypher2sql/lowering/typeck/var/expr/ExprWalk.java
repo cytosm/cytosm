@@ -3,6 +3,7 @@ package org.cytosm.cypher2sql.lowering.typeck.var.expr;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
 import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.var.constexpr.ConstVal;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -28,7 +29,7 @@ public class ExprWalk {
         void visitVariable(Var expr);
         void visitMapExpr(ExprTree.MapExpr expr);
         void visitLiteral(ConstVal.Literal expr);
-        void visitFn(ExprTree.Fn expr);
+        void visitFn(ExprFn expr);
         void visitCaseExpr(ExprTree.CaseExpr expr);
         void visitAliasExpr(ExprTree.AliasExpr expr);
     }
@@ -51,7 +52,7 @@ public class ExprWalk {
         }
 
         @Override
-        public void visitFn(ExprTree.Fn expr) {
+        public void visitFn(ExprFn expr) {
             expr.args.forEach(x -> walk(this, x));
         }
 
@@ -97,8 +98,8 @@ public class ExprWalk {
             visitor.visitUnaryOperator((ExprTree.Unary) expr);
         } else if (expr instanceof ExprTree.PropertyAccess) {
             visitor.visitPropertyAccess((ExprTree.PropertyAccess) expr);
-        } else if (expr instanceof ExprTree.Fn) {
-            visitor.visitFn((ExprTree.Fn) expr);
+        } else if (expr instanceof ExprFn) {
+            visitor.visitFn((ExprFn) expr);
         } else if (expr instanceof ConstVal.Literal) {
             visitor.visitLiteral((ConstVal.Literal) expr);
         } else if (expr instanceof ExprTree.MapExpr) {
@@ -126,7 +127,7 @@ public class ExprWalk {
         T foldVariable(Var expr) throws E;
         T foldMapExpr(ExprTree.MapExpr expr) throws E;
         T foldLiteral(ConstVal.Literal expr) throws E;
-        T foldFn(ExprTree.Fn expr) throws E;
+        T foldFn(ExprFn expr) throws E;
         T foldCaseExpr(ExprTree.CaseExpr expr) throws E;
         T foldAliasExpr(ExprTree.AliasExpr expr) throws E;
     }
@@ -174,13 +175,13 @@ public class ExprWalk {
         }
 
         @Override
-        public Expr foldFn(ExprTree.Fn expr) throws E {
+        public Expr foldFn(ExprFn expr) throws E {
             List<Expr> args = new ArrayList<>();
 
             for (Expr oldArg: expr.args) {
                 args.add(fold(this, oldArg));
             }
-            return new ExprTree.Fn(expr.name, args);
+            return new ExprFn(expr.name, args);
         }
 
         @Override
@@ -252,14 +253,16 @@ public class ExprWalk {
     }
     
     public static <T, E extends Throwable> T fold(Folder<T, E> folder, Expr expr) throws E {
-        if (expr instanceof ExprTree.LhsRhs) {
+        if (expr == null) {
+            return null;
+        } else if (expr instanceof ExprTree.LhsRhs) {
             return folder.foldBinaryOperator((ExprTree.LhsRhs) expr);
         } else if (expr instanceof ExprTree.Unary) {
             return folder.foldUnaryOperator((ExprTree.Unary) expr);
         } else if (expr instanceof ExprTree.PropertyAccess) {
             return folder.foldPropertyAccess((ExprTree.PropertyAccess) expr);
-        } else if (expr instanceof ExprTree.Fn) {
-            return folder.foldFn((ExprTree.Fn) expr);
+        } else if (expr instanceof ExprFn) {
+            return folder.foldFn((ExprFn) expr);
         } else if (expr instanceof ConstVal.Literal) {
             return folder.foldLiteral((ConstVal.Literal) expr);
         } else if (expr instanceof ExprTree.MapExpr) {

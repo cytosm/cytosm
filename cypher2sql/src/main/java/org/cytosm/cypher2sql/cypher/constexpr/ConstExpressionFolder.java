@@ -17,7 +17,7 @@ import java.util.Map;
  * Map Expression visitor that collects all the properties
  * into a hashmap.
  */
-public class ConstExprFolder implements Walk.ExpressionFolder<ConstExprFolder.ConstExprValue, ConstExprFolder.ConstExprException> {
+public class ConstExpressionFolder implements Walk.ExpressionFolder<ConstExpressionFolder.ConstExprValue, ConstExpressionFolder.ConstExprException> {
 
     public static class ConstExprException extends Exception {
         ConstExprException(final String message) {
@@ -492,7 +492,7 @@ public class ConstExprFolder implements Walk.ExpressionFolder<ConstExprFolder.Co
         }
     }
 
-    private ConstExprFolder() {}
+    private ConstExpressionFolder() {}
 
     /**
      * Eval the provided MapExpression and returns a Map of string and objects.
@@ -500,7 +500,7 @@ public class ConstExprFolder implements Walk.ExpressionFolder<ConstExprFolder.Co
      * @return Returns a Map with all values computed.
      */
     public static Map<String, Object> evalMapExpression(MapExpression mapExpression) {
-        ConstExprFolder folder = new ConstExprFolder();
+        ConstExpressionFolder folder = new ConstExpressionFolder();
         try {
             ConstExprValue value = Walk.foldExpression(folder, mapExpression);
             if (value instanceof ConstMap) {
@@ -519,7 +519,7 @@ public class ConstExprFolder implements Walk.ExpressionFolder<ConstExprFolder.Co
      * @return Returns the evaluated expression.
      */
     public static ConstExprValue eval(Expression expression) {
-        ConstExprFolder folder = new ConstExprFolder();
+        ConstExpressionFolder folder = new ConstExpressionFolder();
         try {
             return Walk.foldExpression(folder, expression);
         } catch (ConstExprException e) {

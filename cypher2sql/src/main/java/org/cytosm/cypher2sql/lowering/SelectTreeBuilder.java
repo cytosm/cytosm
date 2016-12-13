@@ -1,6 +1,6 @@
 package org.cytosm.cypher2sql.lowering;
 
-import org.cytosm.cypher2sql.cypher.constexpr.ConstExprFolder;
+import org.cytosm.cypher2sql.cypher.constexpr.ConstExpressionFolder;
 import org.cytosm.cypher2sql.lowering.sqltree.*;
 import org.cytosm.cypher2sql.lowering.typeck.ClauseId;
 import org.cytosm.cypher2sql.lowering.typeck.VarDependencies;
@@ -111,11 +111,11 @@ public class SelectTreeBuilder {
             SimpleSelect select = new SimpleSelectWithInnerJoins();
 
             if (projectionClause.limit.isPresent()) {
-                ConstExprFolder.ConstExprValue val = ConstExprFolder.eval(
+                ConstExpressionFolder.ConstExprValue val = ConstExpressionFolder.eval(
                         projectionClause.limit.get().expression);
                 try {
                     select.limit = val.asLong();
-                } catch (ConstExprFolder.ConstExprException e) {
+                } catch (ConstExpressionFolder.ConstExprException e) {
                     throw new InvalidExpression(
                             "LIMIT can only resolve to an integer and cannot refer to variables"
                     );
@@ -123,11 +123,11 @@ public class SelectTreeBuilder {
             }
 
             if (projectionClause.skip.isPresent()) {
-                ConstExprFolder.ConstExprValue val = ConstExprFolder.eval(
+                ConstExpressionFolder.ConstExprValue val = ConstExpressionFolder.eval(
                         projectionClause.skip.get().expression);
                 try {
                     select.skip = val.asLong();
-                } catch (ConstExprFolder.ConstExprException e) {
+                } catch (ConstExpressionFolder.ConstExprException e) {
                     throw new InvalidExpression(
                             "SKIP can only resolve to an integer and cannot refer to variables"
                     );

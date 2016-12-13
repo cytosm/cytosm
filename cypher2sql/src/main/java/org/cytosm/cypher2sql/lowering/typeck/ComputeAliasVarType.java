@@ -8,7 +8,8 @@ import org.cytosm.cypher2sql.lowering.typeck.types.*;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ConstVal;
+import org.cytosm.cypher2sql.lowering.typeck.var.constexpr.ConstVal;
+import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprFn;
 import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
 import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
 
@@ -110,7 +111,10 @@ public class ComputeAliasVarType {
         }
 
         @Override
-        public AType foldFn(ExprTree.Fn expr) throws Cypher2SqlException {
+        public AType foldFn(ExprFn expr) throws Cypher2SqlException {
+            if (expr.cypherName.equalsIgnoreCase("count")) {
+                return new NumberType();
+            }
             throw new Unimplemented();
         }
 

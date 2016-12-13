@@ -1,19 +1,20 @@
 package org.cytosm.cypher2sql.lowering;
 
+import org.cytosm.cypher2sql.lowering.exceptions.BugFound;
 import org.cytosm.cypher2sql.lowering.exceptions.Cypher2SqlException;
 import org.cytosm.cypher2sql.lowering.sqltree.SimpleSelect;
-import org.cytosm.cypher2sql.lowering.sqltree.SimpleSelectWithInnerJoins;
-import org.cytosm.cypher2sql.lowering.sqltree.SimpleSelectWithLeftJoins;
 import org.cytosm.cypher2sql.lowering.sqltree.ScopeSelect;
+import org.cytosm.cypher2sql.lowering.sqltree.from.FromItem;
 import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
 import org.cytosm.cypher2sql.lowering.typeck.types.VarType;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.var.Var;
 import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
 import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This pass unwrap property accesses where possible.
@@ -35,75 +36,58 @@ public class UnwrapPropertyAccess {
      * Similar case are handled when the variable is hidden behind
      * an AliasVar.
      *
-     * @param sqltree
+     * In case where a property access is made on an {@link AliasVar} of
+     * type {@link VarType}, we mutate the FromItems affected.
+     *
+     * @param sqltree is the sql tree to mutate.
      */
     public static void unwrapPropertyAccess(ScopeSelect sqltree) throws Cypher2SqlException {
         Walk.walkSQLNode(new Unwrapper(), sqltree);
     }
 
 
-    private static class Unwrapper extends Walk.BaseSQLNodeVisitor {
+    private static class Unwrapper extends Walk.BaseVisitorAndExprFolder {
 
         @Override
-        public void visitSimpleSelect(SimpleSelect simpleSelect) {
-            ExprFolder solver = new ExprFolder();
-
-            if (simpleSelect.whereCondition != null) {
-                try {
-                    simpleSelect.whereCondition = ExprWalk.fold(solver, simpleSelect.whereCondition);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            List<Expr> newValues = new ArrayList<>();
-
-            for (Expr expr: simpleSelect.exportedItems) {
-                try {
-                    newValues.add(ExprWalk.fold(solver, expr));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            simpleSelect.exportedItems = newValues;
-
-            if (simpleSelect instanceof SimpleSelectWithInnerJoins) {
-                ((SimpleSelectWithInnerJoins) simpleSelect).joins
-                        .forEach(join -> {
-                            try {
-                                join.condition = ExprWalk.fold(solver, join.condition);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        });
-            } else {
-                ((SimpleSelectWithLeftJoins) simpleSelect).joins
-                        .forEach(join -> {
-                            try {
-                                join.condition = ExprWalk.fold(solver, join.condition);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        });
-            }
+        protected ExprWalk.IdentityFolder<Cypher2SqlException> makeExprFolder(SimpleSelect context) {
+            return new ExprFolder(context.dependencies());
         }
     }
 
-    private static class ExprFolder extends ExprWalk.IdentityFolder<Exception> {
+    private static class ExprFolder extends ExprWalk.IdentityFolder<Cypher2SqlException> {
+
+        private final List<FromItem> fromItemsContext;
+
+        ExprFolder(final List<FromItem> fromItemsContext) {
+            this.fromItemsContext = fromItemsContext;
+        }
+
+        private void addVarToFromItemProvidingAlias(AliasVar aliasVar, Var var) throws Cypher2SqlException {
+            Optional<FromItem> fromItem = this.fromItemsContext.stream()
+                    .filter(x -> x.variables.stream().anyMatch(v -> v == aliasVar))
+                    .findAny();
+            if (fromItem.isPresent()) {
+                fromItem.get().variables.add(var);
+            } else {
+                throw new BugFound("AliasVar '" + aliasVar.name + "' is not exported by any FromItem");
+            }
+        }
 
         @Override
-        public Expr foldPropertyAccess(ExprTree.PropertyAccess expr) throws Exception {
+        public Expr foldPropertyAccess(ExprTree.PropertyAccess expr) throws Cypher2SqlException {
 
             if (expr.expression instanceof ExprTree.MapExpr) {
                 return ((ExprTree.MapExpr) expr.expression).props.get(expr.propertyAccessed);
 
             } else if (expr.expression instanceof AliasVar) {
-                if (((AliasVar) expr.expression).type() instanceof VarType) {
-                    return expr;
-                } else {
-                    Expr reduced = ExprWalk.fold(this, ((AliasVar) expr.expression).aliased);
-                    return foldPropertyAccess(new ExprTree.PropertyAccess(expr.propertyAccessed, reduced));
+                AliasVar aliasVar = (AliasVar) expr.expression;
+
+                if (aliasVar.type() instanceof VarType) {
+                    Var var = AliasVar.resolveAliasVar(aliasVar);
+                    this.addVarToFromItemProvidingAlias(aliasVar, var);
                 }
+                Expr reduced = ExprWalk.fold(this, aliasVar.aliased);
+                return foldPropertyAccess(new ExprTree.PropertyAccess(expr.propertyAccessed, reduced));
 
             } else if (expr.expression instanceof ExprTree.PropertyAccess) {
                 Expr reduced = foldPropertyAccess((ExprTree.PropertyAccess) expr.expression);

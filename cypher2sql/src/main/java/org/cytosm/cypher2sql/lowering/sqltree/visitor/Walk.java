@@ -1,13 +1,19 @@
 package org.cytosm.cypher2sql.lowering.sqltree.visitor;
 
 import static org.cytosm.cypher2sql.lowering.exceptions.fns.LambdaExceptionUtil.rethrowConsumer;
+import static org.cytosm.cypher2sql.lowering.exceptions.fns.LambdaExceptionUtil.rethrowFunction;
 
 import org.cytosm.cypher2sql.lowering.exceptions.Cypher2SqlException;
 import org.cytosm.cypher2sql.lowering.sqltree.*;
 import org.cytosm.cypher2sql.lowering.sqltree.join.InnerJoin;
 import org.cytosm.cypher2sql.lowering.sqltree.join.LeftJoin;
+import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
+
+import java.util.stream.Collectors;
 
 /**
+ * Walking utilities.
  */
 public class Walk {
 
@@ -42,6 +48,62 @@ public class Walk {
                 for (LeftJoin leftJoin: ((SimpleSelectWithLeftJoins) simpleSelect).joins) {
                     visitLeftJoin(leftJoin);
                 }
+            }
+        }
+
+        @Override
+        public void visitScopeSelect(ScopeSelect scopeSelect) throws Cypher2SqlException {
+            scopeSelect.withQueries.forEach(rethrowConsumer(this::visitWithSelect));
+            walkSQLNode(this, scopeSelect.ret);
+        }
+
+        @Override
+        public void visitUnionSelect(UnionSelect unionSelect) throws Cypher2SqlException {
+            for (SimpleOrScopeSelect s: unionSelect.unions) {
+                walkSQLNode(this, s);
+            }
+        }
+
+        @Override
+        public void visitWithSelect(WithSelect withSelect) throws Cypher2SqlException {
+            walkSQLNode(this, withSelect.subquery);
+        }
+    }
+
+    public static abstract class BaseVisitorAndExprFolder implements SQLNodeVisitor<Cypher2SqlException>
+    {
+
+        protected abstract ExprWalk.IdentityFolder<Cypher2SqlException> makeExprFolder(SimpleSelect context);
+
+        @Override
+        public void visitLeftJoin(LeftJoin leftJoin) throws Cypher2SqlException {}
+
+        @Override
+        public void visitInnerJoin(InnerJoin innerJoin) throws Cypher2SqlException {}
+
+        @Override
+        public void visitSimpleSelect(SimpleSelect simpleSelect) throws Cypher2SqlException {
+            ExprWalk.IdentityFolder<Cypher2SqlException> folder = makeExprFolder(simpleSelect);
+            simpleSelect.exportedItems = simpleSelect.exportedItems.stream()
+                    .<Expr>map(rethrowFunction(
+                            e -> ExprWalk.<Expr, Cypher2SqlException>fold(folder, e)
+                    )).collect(Collectors.toList());
+
+            if (simpleSelect.whereCondition != null) {
+                simpleSelect.whereCondition = ExprWalk.fold(folder, simpleSelect.whereCondition);
+            }
+            simpleSelect.orderBy.forEach(rethrowConsumer(
+                oi -> oi.item = ExprWalk.<Expr, Cypher2SqlException>fold(folder, oi.item)
+            ));
+
+            if (simpleSelect instanceof SimpleSelectWithInnerJoins) {
+                ((SimpleSelectWithInnerJoins) simpleSelect).joins.forEach(
+                        rethrowConsumer(j -> j.condition = ExprWalk.fold(folder, j.condition))
+                );
+            } else {
+                ((SimpleSelectWithLeftJoins) simpleSelect).joins.forEach(
+                        rethrowConsumer(j -> j.condition = ExprWalk.fold(folder, j.condition))
+                );
             }
         }
 

@@ -5,8 +5,6 @@ import org.cytosm.cypher2sql.lowering.typeck.AvailableVariables;
 import org.cytosm.cypher2sql.lowering.typeck.types.AType;
 import org.cytosm.cypher2sql.lowering.typeck.types.NodeType;
 import org.cytosm.cypher2sql.lowering.typeck.types.VarType;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ConstVal;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
 import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTreeBuilder;
 import org.cytosm.cypher2sql.cypher.ast.clause.projection.ReturnItem;
 
@@ -38,19 +36,23 @@ public class AliasVar extends Var {
 
     @Override
     public String toSQLString(RenderingHelper helper) {
+        // TODO: This code is not only hacky and buggy.
+        // TODO: It helped me to find the solution.
+        // TODO:
+        // TODO:    AliasVar, as NodeVar are defined in a particular Select.
+        // TODO:    Later use, must use the uniqueName of the AliasVar when being
+        // TODO:    rendered. If all property are rendered. Then we must
+        // TODO:
         if (this._type instanceof NodeType) {
-            return resolve((Var) aliased).renderPropertiesWithVarContext(helper, this);
+            return ((NodeVar) resolveAliasVar((Var) aliased)).renderPropertiesWithVarContext(helper, this);
         }
         return aliased.toSQLString(helper) + " AS " + this.name;
     }
 
-    private static NodeVar resolve(Var var) {
-        if (var instanceof NodeVar) {
-            return (NodeVar) var;
+    public static Var resolveAliasVar(Var var) {
+        if (var instanceof AliasVar && var.type() instanceof VarType) {
+            return resolveAliasVar((Var) ((AliasVar) var).aliased);
         }
-        if (var instanceof AliasVar) {
-            return resolve((Var) ((AliasVar) var).aliased);
-        }
-        return null;
+        return var;
     }
 }

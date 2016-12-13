@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Compound nodes
@@ -135,21 +136,6 @@ public class ExprTree {
                 result += "ELSE " + this.defaultExpr.toSQLString(helper);
             }
             return result;
-        }
-    }
-
-
-    public static class Fn implements Expr {
-        public String name;
-        public List<Expr> args;
-
-        Fn(final String name, final List<Expr> args) {
-            this.name = name;
-            this.args = args;
-        }
-
-        public String toSQLString(RenderingHelper helper) {
-            throw new RuntimeException("FIXME");
         }
     }
 

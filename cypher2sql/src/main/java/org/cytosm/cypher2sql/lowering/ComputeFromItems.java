@@ -129,9 +129,11 @@ public class ComputeFromItems {
 
                         // Search for the FromItem that provide the variable var
                         // The main difference with the first loop is that we are
-                        // adding `aliasVar` but the search is done on `var`.
+                        // adding `aliasVar` *and* `var` but the search is done on `var`.
+                        // TODO(Joan): Do we really need to add `aliasVar` here?
                         FromItem fromItem = new FromItem();
                         fromItem.variables.add(aliasVar);
+                        fromItem.variables.add(var);
 
                         WithSelect source = whereToGetTheVar.get(var.uniqueName);
                         fromItem.source = source;
@@ -140,6 +142,7 @@ public class ComputeFromItems {
                                 .findFirst();
                         if (existingFromItem.isPresent()) {
                             existingFromItem.get().variables.add(aliasVar);
+                            existingFromItem.get().variables.add(var);
                         } else {
                             fromItems.add(fromItem);
                         }
