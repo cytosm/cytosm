@@ -70,6 +70,58 @@ public class Walk {
         }
     }
 
+    public static abstract class BaseVisitorAndExprVisitor implements SQLNodeVisitor<Cypher2SqlException> {
+
+        protected abstract ExprWalk.Visitor makeExprVisitor();
+
+        @Override
+        public void visitLeftJoin(LeftJoin leftJoin) throws Cypher2SqlException {}
+
+        @Override
+        public void visitInnerJoin(InnerJoin innerJoin) throws Cypher2SqlException {}
+
+        @Override
+        public void visitSimpleSelect(SimpleSelect simpleSelect) throws Cypher2SqlException {
+            ExprWalk.Visitor visitor = makeExprVisitor();
+            simpleSelect.exportedItems.forEach(rethrowConsumer(e -> ExprWalk.walk(visitor, e)));
+
+            if (simpleSelect.whereCondition != null) {
+                ExprWalk.walk(visitor, simpleSelect.whereCondition);
+            }
+            simpleSelect.orderBy.forEach(rethrowConsumer(
+                    oi -> ExprWalk.walk(visitor, oi.item)
+            ));
+
+            if (simpleSelect instanceof SimpleSelectWithInnerJoins) {
+                ((SimpleSelectWithInnerJoins) simpleSelect).joins.forEach(
+                        rethrowConsumer(j -> ExprWalk.walk(visitor, j.condition))
+                );
+            } else {
+                ((SimpleSelectWithLeftJoins) simpleSelect).joins.forEach(
+                        rethrowConsumer(j -> ExprWalk.walk(visitor, j.condition))
+                );
+            }
+        }
+
+        @Override
+        public void visitScopeSelect(ScopeSelect scopeSelect) throws Cypher2SqlException {
+            scopeSelect.withQueries.forEach(rethrowConsumer(this::visitWithSelect));
+            walkSQLNode(this, scopeSelect.ret);
+        }
+
+        @Override
+        public void visitUnionSelect(UnionSelect unionSelect) throws Cypher2SqlException {
+            for (SimpleOrScopeSelect s: unionSelect.unions) {
+                walkSQLNode(this, s);
+            }
+        }
+
+        @Override
+        public void visitWithSelect(WithSelect withSelect) throws Cypher2SqlException {
+            walkSQLNode(this, withSelect.subquery);
+        }
+    }
+
     public static abstract class BaseVisitorAndExprFolder implements SQLNodeVisitor<Cypher2SqlException>
     {
 

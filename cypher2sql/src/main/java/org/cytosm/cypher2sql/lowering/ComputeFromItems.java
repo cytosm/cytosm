@@ -129,10 +129,8 @@ public class ComputeFromItems {
                     public void visitVariable(ExprVar expr) {
 
                         // Search for the FromItem that provide the variable var
-                        // The main difference with the first loop is that we are
-                        // adding `aliasVar` but the search is done on `var`.
                         FromItem fromItem = new FromItem();
-                        fromItem.variables.add(aliasVar);
+                        fromItem.variables.add(expr.var);
 
                         WithSelect source = whereToGetTheVar.get(expr.var.uniqueName);
                         fromItem.source = source;
@@ -140,7 +138,7 @@ public class ComputeFromItems {
                                 .filter(x -> x.source == source)
                                 .findFirst();
                         if (existingFromItem.isPresent()) {
-                            existingFromItem.get().variables.add(aliasVar);
+                            existingFromItem.get().variables.add(expr.var);
                         } else {
                             fromItems.add(fromItem);
                         }

@@ -14,28 +14,17 @@ import org.cytosm.cypher2sql.lowering.typeck.var.Var;
 import org.cytosm.cypher2sql.lowering.typeck.constexpr.ConstExprFolder;
 import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 
 /**
- * This pass unwrap `AliasVar`s when they refers
- * to a NodeVar, RelVar or PathVar.
+ * This class contains all passes that replace {@link AliasVar}
+ * when this is possible. Example are:
  *
- * The following is invalid in Cypher:
- *
- *      MATCH (a)
- *      WITH {a: {b: a}} AS a
- *      MATCH (a.b.a)--(b)
- *      RETURN a, b
- *
- * However the following is not:
- *
- *      MATCH (a)
- *      WITH a AS b
- *      MATCH (b)--(c)
- *      RETURN b, c
- *
- * This pass is dealing with the second
- * case.
- *
+ *  - Unused {@link AliasVar}s
+ *  - Constant propagation (Remove associated {@link AliasVar})
  */
 public class UnwrapAliasVar {
 
@@ -73,6 +62,84 @@ public class UnwrapAliasVar {
                 }
             }
             return super.foldVariable(expr);
+        }
+    }
+
+    /**
+     * Remove unused {@link AliasVar}. This pass will typically remove AliasVars that
+     * have been "unwrapped" either because the properties being accessed have vanished
+     * or because the constant that thehave been
+     */
+    public static void removeUnusedVariables(ScopeSelect tree) throws Cypher2SqlException {
+        CollectUnusedVariables visitor = new CollectUnusedVariables();
+        Walk.walkSQLNode(visitor, tree);
+        Walk.walkSQLNode(new RemoveMatchingVariables(visitor.useCount), tree);
+    }
+
+    private static class CollectUnusedVariables extends Walk.BaseVisitorAndExprVisitor {
+
+        final Map<ScopeSelect, Map<AliasVar, Integer>> useCount = new HashMap<>();
+        private ScopeSelect currentScopeSelect;
+
+        @Override
+        public void visitScopeSelect(ScopeSelect scopeSelect) throws Cypher2SqlException {
+            ScopeSelect parentScope = currentScopeSelect;
+            currentScopeSelect = scopeSelect;
+            useCount.put(scopeSelect, new HashMap<>());
+            super.visitScopeSelect(scopeSelect);
+            currentScopeSelect = parentScope;
+        }
+
+        @Override
+        protected ExprWalk.Visitor makeExprVisitor() {
+            return new CollectUnusedAliasVar(useCount.get(currentScopeSelect));
+        }
+    }
+
+    private static class CollectUnusedAliasVar extends ExprWalk.BaseVisitor {
+
+        private final Map<AliasVar, Integer> useCount;
+
+        CollectUnusedAliasVar(Map<AliasVar, Integer> useCount) {
+            this.useCount = useCount;
+        }
+
+        @Override
+        public void visitVariable(ExprVar expr) {
+            if (expr.var instanceof AliasVar) {
+                useCount.put((AliasVar) expr.var, useCount.getOrDefault(expr.var, 0) + 1);
+            }
+        }
+    }
+
+    private static class RemoveMatchingVariables extends Walk.BaseSQLNodeVisitor {
+
+        private final Map<ScopeSelect, Map<AliasVar, Integer>> useCount;
+        private ScopeSelect currentScopeSelect;
+
+        RemoveMatchingVariables(final Map<ScopeSelect, Map<AliasVar, Integer>> useCount) {
+            this.useCount = useCount;
+        }
+
+        @Override
+        public void visitSimpleSelect(SimpleSelect simpleSelect) throws Cypher2SqlException {
+            simpleSelect.exportedItems.removeIf(x -> {
+                if (x instanceof ExprVar) {
+                    Var v = ((ExprVar) x).var;
+                    if (v instanceof AliasVar) {
+                        return useCount.get(currentScopeSelect).get(v) == 1;
+                    }
+                }
+                return false;
+            });
+        }
+
+        @Override
+        public void visitScopeSelect(ScopeSelect scopeSelect) throws Cypher2SqlException {
+            ScopeSelect parentscope = currentScopeSelect;
+            currentScopeSelect = scopeSelect;
+            super.visitScopeSelect(scopeSelect);
+            currentScopeSelect = parentscope;
         }
     }
 }

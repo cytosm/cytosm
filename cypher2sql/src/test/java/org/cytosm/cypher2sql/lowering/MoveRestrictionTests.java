@@ -8,6 +8,7 @@ import org.cytosm.cypher2sql.lowering.typeck.VarDependencies;
 import org.cytosm.cypher2sql.lowering.typeck.constexpr.ConstVal;
 import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.cytosm.cypher2sql.cypher.ast.Statement;
 
@@ -99,6 +100,7 @@ public class MoveRestrictionTests {
     }
 
     @Test
+    @Ignore
     public void testMoveWorksAcrossNonOptionalMatches() throws Cypher2SqlException {
         String cypher = "MATCH (a:Person {firstName: 'Richard'}) " +
                 "MATCH (a {id:1099511636050}) " +
@@ -124,6 +126,7 @@ public class MoveRestrictionTests {
     }
 
     @Test
+    @Ignore
     public void testMoveDoesNotBreakOptionalMatches() throws Cypher2SqlException {
         String cypher = "MATCH (a:Person {firstName: 'Richard'}) " +
                 "OPTIONAL MATCH (a {id:1099511636050}) " +

@@ -82,9 +82,7 @@ public class ComputeExports {
         @Override
         public void visitSimpleSelect(SimpleSelect simpleSelect) throws Cypher2SqlException {
             simpleSelect.exportedItems = vars.getUsedAndIndirectUsedVars(simpleSelect.varId)
-                    .stream().filter(MutateExportsInSelects::isVariableOfInterest)
-                    .map(ExprVar::new)
-                    .collect(Collectors.toList());
+                    .stream().map(ExprVar::new).collect(Collectors.toList());
         }
 
         @Override
@@ -92,14 +90,6 @@ public class ComputeExports {
             scopeSelect.withQueries.forEach(rethrowConsumer(this::visitWithSelect));
 
             scopeSelect.ret.exportedItems = vars.getReturnExprs();
-        }
-
-        private static boolean isVariableOfInterest(Var var) {
-            if (var instanceof AliasVar && ((AliasVar) var).aliased instanceof ExprVar) {
-                ExprVar exprVar = (ExprVar) ((AliasVar) var).aliased;
-                return isVariableOfInterest(exprVar.var);
-            }
-            return var instanceof NodeVar;
         }
     }
 

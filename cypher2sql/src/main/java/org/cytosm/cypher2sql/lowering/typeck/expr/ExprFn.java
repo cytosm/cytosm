@@ -54,9 +54,8 @@ public class ExprFn implements Expr {
 
 
     public String toSQLString(RenderingContext ctx) {
-        RenderingContext fnCtx = new RenderingContext(ctx, RenderingContext.Location.FunctionArgs);
         String args = this.args.stream()
-                .map(x -> x.toSQLString(fnCtx))
+                .map(x -> x.toSQLString(ctx))
                 .collect(Collectors.joining(", "));
         if (name.equals(Name.COUNT)) {
             return "count(" + args + ")";

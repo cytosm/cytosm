@@ -88,8 +88,7 @@ public class UnwrapPropertyAccess {
                     AliasVar aliasVar = (AliasVar) exprVar.var;
 
                     if (aliasVar.type() instanceof VarType) {
-                        Var var = AliasVar.resolveAliasVar(aliasVar);
-                        this.addVarToFromItemProvidingAlias(aliasVar, var);
+                        return new ExprTree.PropertyAccess(expr.propertyAccessed, exprVar);
                     }
                     Expr reduced = ExprWalk.fold(this, aliasVar.aliased);
                     return foldPropertyAccess(new ExprTree.PropertyAccess(expr.propertyAccessed, reduced));

@@ -1,7 +1,15 @@
 package org.cytosm.cypher2sql.lowering.typeck.expr;
 
 import org.cytosm.cypher2sql.lowering.rendering.RenderingContext;
+import org.cytosm.cypher2sql.lowering.sqltree.from.FromItem;
+import org.cytosm.cypher2sql.lowering.typeck.types.NodeType;
+import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
+import org.cytosm.cypher2sql.lowering.typeck.var.NodeVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * This SQL node represent a variable but unlike {@link Var}
@@ -21,38 +29,25 @@ public class ExprVar implements Expr {
     }
 
     @Override
-    public String toSQLString(RenderingContext helper) {
+    public String toSQLString(RenderingContext ctx) {
+        if (ctx.location.equals(RenderingContext.Location.Export)) {
+            if (var.type() instanceof NodeType) {
+                NodeVar resolvedVar = (NodeVar) AliasVar.resolveAliasVar(var);
+                return this.renderPropertiesWithVarContext(
+                    ctx,
+                    resolvedVar.propertiesRequired.stream()
+                );
+            } else {
+                return ctx.renderVariableForExport(this);
+            }
+        } else if (ctx.location.equals(RenderingContext.Location.Other)) {
+            return ctx.renderVariableForUse(this);
+        }
         throw new RuntimeException("FIXME");
     }
 
-
-//    @Override
-//    public String toSQLString(RenderingHelper helper) {
-//        // TODO: This code is not only hacky and buggy.
-//        // TODO: It helped me to find the solution.
-//        // TODO:
-//        // TODO:    AliasVar, as NodeVar are defined in a particular Select.
-//        // TODO:    Later use, must use the uniqueName of the AliasVar when being
-//        // TODO:    rendered. If all property are rendered. Then we must
-//        // TODO:
-//        if (this._type instanceof NodeType) {
-//            return ((NodeVar) resolveAliasVar((Var) aliased)).renderPropertiesWithVarContext(helper, this);
-//        }
-//        return aliased.toSQLString(helper) + " AS " + this.name;
-//    }
-
-//    @Override
-//    public String toSQLString(RenderingHelper helper) {
-//        return renderPropertiesWithVarContext(helper, this);
-//    }
-//
-//    public String renderPropertiesWithVarContext(RenderingHelper helper, Var context) {
-//        return propertiesRequired.stream().map(prop -> helper.renderVariableForExport(context, prop))
-//                .collect(Collectors.joining(", "));
-//    }
-
-//    @Override
-//    public String toSQLString(RenderingHelper _ignored) {
-//        throw new RuntimeException("Temporary variable can't be rendered. Only property they contains can.");
-//    }
+    private String renderPropertiesWithVarContext(RenderingContext ctx, Stream<String> props) {
+        return props.map(prop -> ctx.renderVariableForExport(this, prop))
+                .collect(Collectors.joining(", "));
+    }
 }
