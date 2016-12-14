@@ -6,12 +6,13 @@ import org.cytosm.cypher2sql.lowering.sqltree.SimpleSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.ScopeSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.from.FromItem;
 import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.types.VarType;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 
 import java.util.List;
 import java.util.Optional;
@@ -79,15 +80,19 @@ public class UnwrapPropertyAccess {
             if (expr.expression instanceof ExprTree.MapExpr) {
                 return ((ExprTree.MapExpr) expr.expression).props.get(expr.propertyAccessed);
 
-            } else if (expr.expression instanceof AliasVar) {
-                AliasVar aliasVar = (AliasVar) expr.expression;
+            } else if (expr.expression instanceof ExprVar) {
+                ExprVar exprVar = (ExprVar) expr.expression;
 
-                if (aliasVar.type() instanceof VarType) {
-                    Var var = AliasVar.resolveAliasVar(aliasVar);
-                    this.addVarToFromItemProvidingAlias(aliasVar, var);
+                if (exprVar.var instanceof AliasVar) {
+
+                    AliasVar aliasVar = (AliasVar) exprVar.var;
+
+                    if (aliasVar.type() instanceof VarType) {
+                        return new ExprTree.PropertyAccess(expr.propertyAccessed, exprVar);
+                    }
+                    Expr reduced = ExprWalk.fold(this, aliasVar.aliased);
+                    return foldPropertyAccess(new ExprTree.PropertyAccess(expr.propertyAccessed, reduced));
                 }
-                Expr reduced = ExprWalk.fold(this, aliasVar.aliased);
-                return foldPropertyAccess(new ExprTree.PropertyAccess(expr.propertyAccessed, reduced));
 
             } else if (expr.expression instanceof ExprTree.PropertyAccess) {
                 Expr reduced = foldPropertyAccess((ExprTree.PropertyAccess) expr.expression);
@@ -97,9 +102,8 @@ public class UnwrapPropertyAccess {
                     return new ExprTree.PropertyAccess(expr.propertyAccessed, reduced);
                 }
 
-            } else {
-                return super.foldPropertyAccess(expr);
             }
+            return super.foldPropertyAccess(expr);
         }
     }
 }

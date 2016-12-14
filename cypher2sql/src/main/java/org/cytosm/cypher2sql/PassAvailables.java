@@ -120,6 +120,11 @@ public class PassAvailables {
         // where possible.
         UnwrapAliasVar.unwrapConstants(tree);
 
+        // Remove AliasVars that are no longer used.
+        // This should remove variables that are MapExpressions
+        // and constants on valid Cypher queries.
+        UnwrapAliasVar.removeUnusedVariables(tree);
+
         // TODO: Add a pass here that copy the latest ORDER BY in
         // TODO: the ScopeSelect.ret SimpleSelect.
 

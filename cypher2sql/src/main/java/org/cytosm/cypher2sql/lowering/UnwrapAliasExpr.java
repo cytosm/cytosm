@@ -3,7 +3,7 @@ package org.cytosm.cypher2sql.lowering;
 import org.cytosm.cypher2sql.lowering.exceptions.Cypher2SqlException;
 import org.cytosm.cypher2sql.lowering.sqltree.ScopeSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
 
 import java.util.stream.Collectors;
 

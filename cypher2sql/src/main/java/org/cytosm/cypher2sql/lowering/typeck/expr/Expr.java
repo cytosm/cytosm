@@ -1,6 +1,6 @@
-package org.cytosm.cypher2sql.lowering.typeck.var;
+package org.cytosm.cypher2sql.lowering.typeck.expr;
 
-import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
+import org.cytosm.cypher2sql.lowering.rendering.RenderingContext;
 
 /**
  * An expression that can be made of Var and constants.
@@ -28,8 +28,8 @@ public interface Expr {
      *    most of the time. When they can't, they will be returned as part of another
      *    select. Thus they should never be present in a valid SQL expression tree.
      *
-     * @param helper provides context for the rendering.
+     * @param ctx provides context for the rendering.
      * @return Returns a SQL representation or throw a runtime exception if a bug is found.
      */
-    String toSQLString(RenderingHelper helper);
+    String toSQLString(RenderingContext ctx);
 }

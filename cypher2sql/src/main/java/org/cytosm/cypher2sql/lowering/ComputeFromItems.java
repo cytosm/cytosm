@@ -7,11 +7,12 @@ import org.cytosm.cypher2sql.lowering.sqltree.WithSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.from.FromItem;
 import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
 import org.cytosm.cypher2sql.lowering.typeck.VarDependencies;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.var.NodeOrRelVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -125,24 +126,19 @@ public class ComputeFromItems {
                 Expr expr = aliasVar.aliased;
                 ExprWalk.BaseVisitor visitor = new ExprWalk.BaseVisitor() {
                     @Override
-                    public void visitVariable(Var var) {
+                    public void visitVariable(ExprVar expr) {
 
                         // Search for the FromItem that provide the variable var
-                        // The main difference with the first loop is that we are
-                        // adding `aliasVar` *and* `var` but the search is done on `var`.
-                        // TODO(Joan): Do we really need to add `aliasVar` here?
                         FromItem fromItem = new FromItem();
-                        fromItem.variables.add(aliasVar);
-                        fromItem.variables.add(var);
+                        fromItem.variables.add(expr.var);
 
-                        WithSelect source = whereToGetTheVar.get(var.uniqueName);
+                        WithSelect source = whereToGetTheVar.get(expr.var.uniqueName);
                         fromItem.source = source;
                         Optional<FromItem> existingFromItem = fromItems.stream()
                                 .filter(x -> x.source == source)
                                 .findFirst();
                         if (existingFromItem.isPresent()) {
-                            existingFromItem.get().variables.add(aliasVar);
-                            existingFromItem.get().variables.add(var);
+                            existingFromItem.get().variables.add(expr.var);
                         } else {
                             fromItems.add(fromItem);
                         }

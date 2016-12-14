@@ -1,15 +1,13 @@
 package org.cytosm.cypher2sql.lowering.sqltree;
 
-import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
+import org.cytosm.cypher2sql.lowering.rendering.RenderingContext;
 import org.cytosm.cypher2sql.lowering.sqltree.from.FromItem;
 import org.cytosm.cypher2sql.lowering.sqltree.join.BaseJoin;
-import org.cytosm.cypher2sql.lowering.typeck.var.NodeVar;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * SimpleSelect is a node
@@ -82,12 +80,13 @@ public abstract class SimpleSelect extends SimpleOrScopeSelect {
 
     @Override
     public String toSQLString() {
-        RenderingHelper helper = createHelper();
-        String result = renderExportedVariable(helper);
+        RenderingContext export = createContext(RenderingContext.Location.Export);
+        RenderingContext other = createContext(RenderingContext.Location.Other);
+        String result = renderExportedVariable(export);
         result += fromItem();
-        result += joins(helper);
-        result += renderWhereCondition();
-        result += renderOrderBy();
+        result += joins(other);
+        result += renderWhereCondition(other);
+        result += renderOrderBy(other);
         result += renderLimit();
         result += renderSkip();
         return result;
@@ -102,11 +101,11 @@ public abstract class SimpleSelect extends SimpleOrScopeSelect {
     public abstract void addJoin(BaseJoin join);
     public abstract List<BaseJoin> joinList();
 
-    private RenderingHelper createHelper() {
-        return new RenderingHelper(dependencies());
+    private RenderingContext createContext(RenderingContext.Location location) {
+        return new RenderingContext(dependencies(), location);
     }
 
-    protected String renderExportedVariable(RenderingHelper helper) {
+    protected String renderExportedVariable(RenderingContext helper) {
         return "SELECT " + renderDistinct() + exportedItems.stream()
                 .map(x -> x.toSQLString(helper))
                 .collect(Collectors.joining(", ")) +
@@ -135,11 +134,11 @@ public abstract class SimpleSelect extends SimpleOrScopeSelect {
                 .collect(Collectors.joining(", ")) + "\n";
     }
 
-    private String renderWhereCondition() {
+    private String renderWhereCondition(RenderingContext ctx) {
         if (whereCondition == null) {
             return "";
         }
-        return "WHERE " + whereCondition.toSQLString(createHelper()) + "\n";
+        return "WHERE " + whereCondition.toSQLString(ctx) + "\n";
     }
 
     private String renderLimit() {
@@ -149,15 +148,15 @@ public abstract class SimpleSelect extends SimpleOrScopeSelect {
         return "";
     }
 
-    private String renderOrderBy() {
+    private String renderOrderBy(RenderingContext ctx) {
         if (orderBy.isEmpty()) {
             return "";
         }
         return "ORDER BY " + orderBy.stream()
-                .map(oi -> oi.item.toSQLString(createHelper()) + (oi.descending ? " DESC": " ASC"))
+                .map(oi -> oi.item.toSQLString(ctx) + (oi.descending ? " DESC": " ASC"))
                 .collect(Collectors.joining(", ")) + "\n";
     }
 
-    abstract protected String joins(RenderingHelper helper);
+    abstract protected String joins(RenderingContext ctx);
     abstract protected List<FromItem> joinsFromItem();
 }

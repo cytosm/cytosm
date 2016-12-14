@@ -1,6 +1,6 @@
 package org.cytosm.cypher2sql.lowering.sqltree;
 
-import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
+import org.cytosm.cypher2sql.lowering.rendering.RenderingContext;
 import org.cytosm.cypher2sql.lowering.sqltree.from.FromItem;
 import org.cytosm.cypher2sql.lowering.sqltree.join.BaseJoin;
 import org.cytosm.cypher2sql.lowering.sqltree.join.LeftJoin;
@@ -20,12 +20,12 @@ public class SimpleSelectWithLeftJoins extends SimpleSelect {
     public List<LeftJoin> joins = new ArrayList<>();
 
     @Override
-    protected String joins(RenderingHelper helper) {
+    protected String joins(RenderingContext ctx) {
         if (joins.isEmpty()) {
             return "";
         }
         return joins.stream()
-                .map(j -> "LEFT " + j.toSQLString(helper) + "\n")
+                .map(j -> "LEFT " + j.toSQLString(ctx) + "\n")
                 .reduce("", String::concat);
     }
 

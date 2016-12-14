@@ -1,10 +1,9 @@
-package org.cytosm.cypher2sql.lowering.typeck.var.expr;
+package org.cytosm.cypher2sql.lowering.typeck.expr;
 
 import org.cytosm.cypher2sql.lowering.typeck.AvailableVariables;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
 import org.cytosm.cypher2sql.cypher.visitor.Walk;
-import org.cytosm.cypher2sql.lowering.typeck.var.constexpr.ConstVal;
+import org.cytosm.cypher2sql.lowering.typeck.constexpr.ConstVal;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
@@ -72,7 +71,7 @@ public class ExprTreeBuilder {
         public Expr foldVariable(Variable expression) throws ExprTreeException {
             Optional<Var> var = this.availablesVariables.get(expression.name);
             if (var.isPresent()) {
-                return var.get();
+                return new ExprVar(var.get());
             } else {
                 throw new UndefinedVariableException(expression.name);
             }

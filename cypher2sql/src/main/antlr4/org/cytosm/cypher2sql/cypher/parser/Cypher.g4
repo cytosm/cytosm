@@ -395,7 +395,38 @@ real
 
 
 // Common
-symbolicName returns [String res]: s=UnescapedSymbolicName { $res = $s.text; }
-                                 | s=EscapedSymbolicName   { $res = $s.text; };
+symbolicName returns [String res]: s=symbols  { $res = $s.text; };
+symbols: UnescapedSymbolicName
+       | EscapedSymbolicName
+       | UNION
+       | ALL
+       | OPTIONAL
+       | MATCH
+       | WHERE
+       | AS
+       | WITH
+       | DISTINCT
+       | RETURN
+       | ORDER
+       | BY
+       | SKIP_
+       | LIMIT
+       | DESC
+       | ASC
+       | OR
+       | XOR
+       | AND
+       | NOT
+       | IN
+       | STARTS
+       | ENDS
+       | CONTAINS
+       | IS
+       | NULL
+       | TRUE
+       | FALSE
+       | COUNT
+       | FILTER
+       | EXTRACT;
 
 sp: (WHITESPACE)+;

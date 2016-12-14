@@ -5,12 +5,13 @@ import org.cytosm.cypher2sql.lowering.sqltree.*;
 import org.cytosm.cypher2sql.lowering.sqltree.join.BaseJoin;
 import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
 import org.cytosm.cypher2sql.lowering.typeck.VarDependencies;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.NodeVar;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 
 import static org.cytosm.cypher2sql.lowering.exceptions.fns.LambdaExceptionUtil.rethrowConsumer;
 
@@ -81,8 +82,7 @@ public class ComputeExports {
         @Override
         public void visitSimpleSelect(SimpleSelect simpleSelect) throws Cypher2SqlException {
             simpleSelect.exportedItems = vars.getUsedAndIndirectUsedVars(simpleSelect.varId)
-                    .stream().filter(MutateExportsInSelects::isVariableOfInterest)
-                    .collect(Collectors.toList());
+                    .stream().map(ExprVar::new).collect(Collectors.toList());
         }
 
         @Override
@@ -90,13 +90,6 @@ public class ComputeExports {
             scopeSelect.withQueries.forEach(rethrowConsumer(this::visitWithSelect));
 
             scopeSelect.ret.exportedItems = vars.getReturnExprs();
-        }
-
-        private static boolean isVariableOfInterest(Var var) {
-            if (var instanceof AliasVar && ((AliasVar) var).aliased instanceof Var) {
-                return isVariableOfInterest((Var) ((AliasVar) var).aliased);
-            }
-            return var instanceof NodeVar;
         }
     }
 
@@ -108,15 +101,19 @@ public class ComputeExports {
 
         @Override
         public void visitPropertyAccess(ExprTree.PropertyAccess expr) {
-            if (expr.expression instanceof NodeVar) {
-                NodeVar node = (NodeVar) expr.expression;
-                node.propertiesRequired.add(expr.propertyAccessed);
-            } else if (expr.expression instanceof AliasVar) {
-                AliasVar alias = (AliasVar) expr.expression;
-                visitPropertyAccess(new ExprTree.PropertyAccess(expr.propertyAccessed, alias.aliased));
-            } else {
-                super.visitPropertyAccess(expr);
+            if (expr.expression instanceof ExprVar) {
+                ExprVar exprVar = (ExprVar) expr.expression;
+                if (exprVar.var instanceof NodeVar) {
+                    NodeVar node = (NodeVar) exprVar.var;
+                    node.propertiesRequired.add(expr.propertyAccessed);
+                    return;
+                } else if (exprVar.var instanceof AliasVar) {
+                    AliasVar alias = (AliasVar) exprVar.var;
+                    visitPropertyAccess(new ExprTree.PropertyAccess(expr.propertyAccessed, alias.aliased));
+                    return;
+                }
             }
+            super.visitPropertyAccess(expr);
         }
     }
 }

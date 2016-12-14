@@ -1,7 +1,7 @@
-package org.cytosm.cypher2sql.lowering.typeck.var.constexpr;
+package org.cytosm.cypher2sql.lowering.typeck.constexpr;
 
-import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.rendering.RenderingContext;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 
 /**
  * Const values.
@@ -75,7 +75,7 @@ public class ConstVal {
         }
 
         @Override
-        public String toSQLString(RenderingHelper helper) {
+        public String toSQLString(RenderingContext helper) {
             return helper.renderStringLiteral(value);
         }
 
@@ -119,7 +119,7 @@ public class ConstVal {
         }
 
         @Override
-        public String toSQLString(RenderingHelper _ignored) {
+        public String toSQLString(RenderingContext _ignored) {
             return String.valueOf(value);
         }
 
@@ -218,7 +218,7 @@ public class ConstVal {
         }
 
         @Override
-        public String toSQLString(RenderingHelper _ignored) {
+        public String toSQLString(RenderingContext _ignored) {
             return String.valueOf(value);
         }
 
@@ -336,7 +336,7 @@ public class ConstVal {
         }
 
         @Override
-        public String toSQLString(RenderingHelper _ignored) {
+        public String toSQLString(RenderingContext _ignored) {
             return String.valueOf(value);
         }
 

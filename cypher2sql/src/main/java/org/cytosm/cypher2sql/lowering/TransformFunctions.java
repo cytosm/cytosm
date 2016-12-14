@@ -6,12 +6,11 @@ import org.cytosm.cypher2sql.lowering.exceptions.Cypher2SqlException;
 import org.cytosm.cypher2sql.lowering.sqltree.ScopeSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.SimpleSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
+import org.cytosm.cypher2sql.lowering.typeck.expr.*;
 import org.cytosm.cypher2sql.lowering.typeck.types.PathType;
 import org.cytosm.cypher2sql.lowering.typeck.var.*;
-import org.cytosm.cypher2sql.lowering.typeck.var.constexpr.ConstVal;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprFn;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
+import org.cytosm.cypher2sql.lowering.typeck.constexpr.ConstVal;
+
 import static org.cytosm.cypher2sql.lowering.exceptions.fns.LambdaExceptionUtil.rethrowFunction;
 import static org.cytosm.cypher2sql.lowering.exceptions.fns.LambdaExceptionUtil.rethrowConsumer;
 
@@ -127,8 +126,8 @@ public class TransformFunctions {
             // FIXME: Is is always a correct way of folding the argument?
             expr.args = expr.args.stream()
                     .map(x -> {
-                        if (x instanceof Var) {
-                            return new ExprTree.PropertyAccess(getIdForVar((Var) x), x);
+                        if (x instanceof ExprVar) {
+                            return new ExprTree.PropertyAccess(getIdForVar(((ExprVar) x).var), x);
                         }
                         return x;
                     }).collect(Collectors.toList());
@@ -182,8 +181,8 @@ public class TransformFunctions {
             if (expr.cypherName.equalsIgnoreCase(LENGTH)) {
                 if (expr.args.size() == 1) {
                     Expr arg = expr.args.get(0);
-                    if (arg instanceof Var && ((Var) arg).type() instanceof PathType) {
-                        PathVar pathVar = (PathVar) AliasVar.resolveAliasVar((Var) arg);
+                    if (arg instanceof ExprVar && ((ExprVar) arg).var.type() instanceof PathType) {
+                        PathVar pathVar = (PathVar) AliasVar.resolveAliasVar(((ExprVar) arg).var);
                         return new ConstVal.LongVal(pathVar.length);
                     }
                 }

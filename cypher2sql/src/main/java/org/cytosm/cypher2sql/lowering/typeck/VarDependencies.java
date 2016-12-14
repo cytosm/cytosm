@@ -1,9 +1,11 @@
 package org.cytosm.cypher2sql.lowering.typeck;
 
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.rel.Relationship;
 import org.cytosm.cypher2sql.lowering.typeck.var.*;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTreeBuilder;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTreeBuilder;
 import org.cytosm.cypher2sql.cypher.ast.*;
 import org.cytosm.cypher2sql.cypher.ast.clause.*;
 import org.cytosm.cypher2sql.cypher.ast.clause.match.*;
@@ -245,7 +247,7 @@ public class VarDependencies {
                 ReturnItem rt = iter.next();
                 if (rt instanceof ReturnItem.Aliased) {
                     AliasVar var = new AliasVar((ReturnItem.Aliased) rt, availablesVariables);
-                    returnExprs.add(var);
+                    returnExprs.add(new ExprVar(var));
                     newAvailablesVariables.add(var);
                 } else if (rt instanceof ReturnItem.Unaliased) {
                     ReturnItem.Unaliased urt = (ReturnItem.Unaliased) rt;
@@ -292,14 +294,15 @@ public class VarDependencies {
                 newVar = new AliasVar((ReturnItem.Aliased) rt, availablesVariables);
             } else {
                 try {
-                    newVar = (Var) ExprTreeBuilder.buildFromCypherExpression(
-                            rt.expression,
-                            availablesVariables
+                    ExprVar exprVar = (ExprVar) ExprTreeBuilder.buildFromCypherExpression(
+                        rt.expression,
+                        availablesVariables
                     );
                     // If the variable is not found we get null
-                    if (newVar == null) {
+                    if (exprVar == null) {
                         throw new RuntimeException("Variable not found: " + rt.expression);
                     }
+                    newVar = exprVar.var;
                 } catch (ClassCastException e) {
                     throw new RuntimeException("Expression in WITH must be aliased.");
                 }
