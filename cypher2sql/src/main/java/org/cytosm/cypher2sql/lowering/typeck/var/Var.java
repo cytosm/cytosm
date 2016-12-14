@@ -3,6 +3,7 @@ package org.cytosm.cypher2sql.lowering.typeck.var;
 import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
 import org.cytosm.cypher2sql.lowering.typeck.NameProvider;
 import org.cytosm.cypher2sql.cypher.ast.ASTNode;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.types.AType;
 
 /**

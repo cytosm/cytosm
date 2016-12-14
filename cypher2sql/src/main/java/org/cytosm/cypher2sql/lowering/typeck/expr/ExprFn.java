@@ -1,7 +1,6 @@
-package org.cytosm.cypher2sql.lowering.typeck.var.expr;
+package org.cytosm.cypher2sql.lowering.typeck.expr;
 
 import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
 
 import java.util.List;
 import java.util.stream.Collectors;

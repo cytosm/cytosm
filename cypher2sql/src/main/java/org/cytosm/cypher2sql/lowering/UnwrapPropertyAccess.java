@@ -8,10 +8,10 @@ import org.cytosm.cypher2sql.lowering.sqltree.from.FromItem;
 import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
 import org.cytosm.cypher2sql.lowering.typeck.types.VarType;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 
 import java.util.List;
 import java.util.Optional;

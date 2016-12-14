@@ -2,7 +2,7 @@ package org.cytosm.cypher2sql.lowering.sqltree.join;
 
 import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
 import org.cytosm.cypher2sql.lowering.sqltree.from.FromItem;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 
 /**
  * BaseJoin is a sum type for:

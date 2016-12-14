@@ -1,4 +1,4 @@
-package org.cytosm.cypher2sql.lowering.typeck.var;
+package org.cytosm.cypher2sql.lowering.typeck.expr;
 
 import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
 

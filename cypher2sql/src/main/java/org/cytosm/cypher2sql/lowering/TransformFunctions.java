@@ -6,12 +6,13 @@ import org.cytosm.cypher2sql.lowering.exceptions.Cypher2SqlException;
 import org.cytosm.cypher2sql.lowering.sqltree.ScopeSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.SimpleSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.types.PathType;
 import org.cytosm.cypher2sql.lowering.typeck.var.*;
-import org.cytosm.cypher2sql.lowering.typeck.var.constexpr.ConstVal;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprFn;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
+import org.cytosm.cypher2sql.lowering.typeck.constexpr.ConstVal;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprFn;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 import static org.cytosm.cypher2sql.lowering.exceptions.fns.LambdaExceptionUtil.rethrowFunction;
 import static org.cytosm.cypher2sql.lowering.exceptions.fns.LambdaExceptionUtil.rethrowConsumer;
 

@@ -1,14 +1,12 @@
-package org.cytosm.cypher2sql.lowering.typeck.var.constexpr;
+package org.cytosm.cypher2sql.lowering.typeck.constexpr;
 
 import org.cytosm.cypher2sql.lowering.exceptions.Cypher2SqlException;
 import org.cytosm.cypher2sql.lowering.typeck.types.MapType;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.constexpr.UnknownOperation;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprFn;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree.*;
-import org.cytosm.cypher2sql.lowering.typeck.var.constexpr.ConstVal;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprFn;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree.*;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 
 /**
  */

@@ -2,14 +2,11 @@ package org.cytosm.cypher2sql.lowering.typeck;
 
 import org.cytosm.cypher2sql.PassAvailables;
 import org.cytosm.cypher2sql.cypher.ast.clause.projection.With;
-import org.cytosm.cypher2sql.lowering.typeck.AvailableVariables;
-import org.cytosm.cypher2sql.lowering.typeck.ClauseId;
-import org.cytosm.cypher2sql.lowering.typeck.VarDependencies;
 import org.cytosm.cypher2sql.lowering.typeck.rel.Relationship;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
 import org.junit.Assert;
 import org.junit.Test;
 import org.cytosm.cypher2sql.cypher.ast.*;

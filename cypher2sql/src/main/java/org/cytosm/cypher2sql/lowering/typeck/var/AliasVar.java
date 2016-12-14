@@ -2,10 +2,11 @@ package org.cytosm.cypher2sql.lowering.typeck.var;
 
 import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
 import org.cytosm.cypher2sql.lowering.typeck.AvailableVariables;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.types.AType;
 import org.cytosm.cypher2sql.lowering.typeck.types.NodeType;
 import org.cytosm.cypher2sql.lowering.typeck.types.VarType;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTreeBuilder;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTreeBuilder;
 import org.cytosm.cypher2sql.cypher.ast.clause.projection.ReturnItem;
 
 /**

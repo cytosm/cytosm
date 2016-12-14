@@ -3,13 +3,11 @@ package org.cytosm.cypher2sql.lowering.sqltree;
 import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
 import org.cytosm.cypher2sql.lowering.sqltree.from.FromItem;
 import org.cytosm.cypher2sql.lowering.sqltree.join.BaseJoin;
-import org.cytosm.cypher2sql.lowering.typeck.var.NodeVar;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * SimpleSelect is a node

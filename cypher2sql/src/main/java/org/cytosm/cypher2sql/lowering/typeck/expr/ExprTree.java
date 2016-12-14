@@ -1,15 +1,13 @@
-package org.cytosm.cypher2sql.lowering.typeck.var.expr;
+package org.cytosm.cypher2sql.lowering.typeck.expr;
 
 import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Compound nodes

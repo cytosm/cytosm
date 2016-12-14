@@ -1,15 +1,12 @@
 package org.cytosm.cypher2sql.lowering;
 
-import org.cytosm.cypher2sql.lowering.MoveRestrictionInPattern;
-import org.cytosm.cypher2sql.lowering.NameSubqueries;
 import org.cytosm.cypher2sql.PassAvailables;
-import org.cytosm.cypher2sql.lowering.SelectTreeBuilder;
 import org.cytosm.cypher2sql.lowering.exceptions.Cypher2SqlException;
 import org.cytosm.cypher2sql.lowering.sqltree.SimpleSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.ScopeSelect;
 import org.cytosm.cypher2sql.lowering.typeck.VarDependencies;
-import org.cytosm.cypher2sql.lowering.typeck.var.constexpr.ConstVal;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.constexpr.ConstVal;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
 import org.junit.Assert;
 import org.junit.Test;
 import org.cytosm.cypher2sql.cypher.ast.Statement;

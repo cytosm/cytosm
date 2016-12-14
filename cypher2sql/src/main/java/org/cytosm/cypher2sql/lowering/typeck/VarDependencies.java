@@ -1,9 +1,10 @@
 package org.cytosm.cypher2sql.lowering.typeck;
 
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.rel.Relationship;
 import org.cytosm.cypher2sql.lowering.typeck.var.*;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTreeBuilder;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTreeBuilder;
 import org.cytosm.cypher2sql.cypher.ast.*;
 import org.cytosm.cypher2sql.cypher.ast.clause.*;
 import org.cytosm.cypher2sql.cypher.ast.clause.match.*;

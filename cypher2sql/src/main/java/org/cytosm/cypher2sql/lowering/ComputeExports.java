@@ -7,10 +7,10 @@ import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
 import org.cytosm.cypher2sql.lowering.typeck.VarDependencies;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.NodeVar;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 
 import static org.cytosm.cypher2sql.lowering.exceptions.fns.LambdaExceptionUtil.rethrowConsumer;
 

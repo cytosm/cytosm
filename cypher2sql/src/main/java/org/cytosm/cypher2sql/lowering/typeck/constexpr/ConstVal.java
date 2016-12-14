@@ -1,7 +1,7 @@
-package org.cytosm.cypher2sql.lowering.typeck.var.constexpr;
+package org.cytosm.cypher2sql.lowering.typeck.constexpr;
 
 import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 
 /**
  * Const values.

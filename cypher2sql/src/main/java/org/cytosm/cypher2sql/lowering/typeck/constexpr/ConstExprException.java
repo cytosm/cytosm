@@ -1,4 +1,4 @@
-package org.cytosm.cypher2sql.lowering.typeck.var.constexpr;
+package org.cytosm.cypher2sql.lowering.typeck.constexpr;
 
 import org.cytosm.cypher2sql.lowering.exceptions.Cypher2SqlException;
 

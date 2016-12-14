@@ -1,9 +1,8 @@
-package org.cytosm.cypher2sql.lowering.typeck.var.expr;
+package org.cytosm.cypher2sql.lowering.typeck.expr;
 
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
-import org.cytosm.cypher2sql.lowering.typeck.var.constexpr.ConstVal;
+import org.cytosm.cypher2sql.lowering.typeck.constexpr.ConstVal;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -251,7 +250,7 @@ public class ExprWalk {
             return new ExprTree.AliasExpr(fold(this, expr.expr), expr.alias);
         }
     }
-    
+
     public static <T, E extends Throwable> T fold(Folder<T, E> folder, Expr expr) throws E {
         if (expr == null) {
             return null;

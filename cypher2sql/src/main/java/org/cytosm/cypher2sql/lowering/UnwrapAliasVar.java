@@ -8,10 +8,10 @@ import org.cytosm.cypher2sql.lowering.typeck.types.BoolType;
 import org.cytosm.cypher2sql.lowering.typeck.types.NumberType;
 import org.cytosm.cypher2sql.lowering.typeck.types.StringType;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.constexpr.ConstExprFolder;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
+import org.cytosm.cypher2sql.lowering.typeck.constexpr.ConstExprFolder;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 
 
 /**

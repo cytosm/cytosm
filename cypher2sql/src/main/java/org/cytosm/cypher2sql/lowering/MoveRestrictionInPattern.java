@@ -4,8 +4,8 @@ import org.cytosm.cypher2sql.lowering.sqltree.*;
 import org.cytosm.cypher2sql.lowering.typeck.VarDependencies;
 import org.cytosm.cypher2sql.lowering.typeck.var.NodeVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
 
 import java.util.List;
 import java.util.Map;

@@ -7,8 +7,8 @@ import org.cytosm.cypher2sql.lowering.exceptions.Cypher2SqlException;
 import org.cytosm.cypher2sql.lowering.sqltree.*;
 import org.cytosm.cypher2sql.lowering.sqltree.join.InnerJoin;
 import org.cytosm.cypher2sql.lowering.sqltree.join.LeftJoin;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 
 import java.util.stream.Collectors;
 

@@ -4,7 +4,7 @@ import org.cytosm.cypher2sql.PassAvailables;
 import org.cytosm.cypher2sql.lowering.sqltree.ScopeSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.SimpleOrScopeSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.UnionSelect;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -6,12 +6,12 @@ import org.cytosm.cypher2sql.lowering.exceptions.TypeError;
 import org.cytosm.cypher2sql.lowering.exceptions.Unimplemented;
 import org.cytosm.cypher2sql.lowering.typeck.types.*;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
-import org.cytosm.cypher2sql.lowering.typeck.var.constexpr.ConstVal;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprFn;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprTree;
-import org.cytosm.cypher2sql.lowering.typeck.var.expr.ExprWalk;
+import org.cytosm.cypher2sql.lowering.typeck.constexpr.ConstVal;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprFn;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 
 import static org.cytosm.cypher2sql.lowering.exceptions.fns.LambdaExceptionUtil.rethrowConsumer;
 

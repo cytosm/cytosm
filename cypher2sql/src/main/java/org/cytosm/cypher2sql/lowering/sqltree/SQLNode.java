@@ -1,6 +1,6 @@
 package org.cytosm.cypher2sql.lowering.sqltree;
 
-import org.cytosm.cypher2sql.lowering.typeck.var.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 
 /**
  * SQLNode is the base interface for all SQL nodes.
