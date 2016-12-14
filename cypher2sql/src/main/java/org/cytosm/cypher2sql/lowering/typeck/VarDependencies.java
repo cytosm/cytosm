@@ -294,14 +294,15 @@ public class VarDependencies {
                 newVar = new AliasVar((ReturnItem.Aliased) rt, availablesVariables);
             } else {
                 try {
-                    newVar = (Var) ExprTreeBuilder.buildFromCypherExpression(
-                            rt.expression,
-                            availablesVariables
+                    ExprVar exprVar = (ExprVar) ExprTreeBuilder.buildFromCypherExpression(
+                        rt.expression,
+                        availablesVariables
                     );
                     // If the variable is not found we get null
-                    if (newVar == null) {
+                    if (exprVar == null) {
                         throw new RuntimeException("Variable not found: " + rt.expression);
                     }
+                    newVar = exprVar.var;
                 } catch (ClassCastException e) {
                     throw new RuntimeException("Expression in WITH must be aliased.");
                 }

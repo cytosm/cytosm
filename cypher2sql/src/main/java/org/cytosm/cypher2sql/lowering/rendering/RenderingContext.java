@@ -126,7 +126,8 @@ public class RenderingContext {
      */
     private String getUniqueName(Var var) {
         if (var instanceof AliasVar) {
-            return getUniqueName((Var) ((AliasVar) var).aliased);
+            ExprVar exprVar = (ExprVar) ((AliasVar) var).aliased;
+            return getUniqueName(exprVar.var);
         } else {
             return var.uniqueName;
         }

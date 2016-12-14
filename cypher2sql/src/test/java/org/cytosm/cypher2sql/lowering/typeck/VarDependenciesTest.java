@@ -2,6 +2,7 @@ package org.cytosm.cypher2sql.lowering.typeck;
 
 import org.cytosm.cypher2sql.PassAvailables;
 import org.cytosm.cypher2sql.cypher.ast.clause.projection.With;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.rel.Relationship;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
@@ -42,7 +43,7 @@ public class VarDependenciesTest extends BaseVarTests {
         List<Var> matchVars = dependencies.getUsedVars(id);
         Assert.assertEquals(matchVars.size(), 1);
         Assert.assertEquals(matchVars.get(0).name, "a");
-        Assert.assertSame(matchVars.get(0), retProp.expression);
+        Assert.assertSame(matchVars.get(0), ((ExprVar) retProp.expression).var);
         Assert.assertEquals(retProp.propertyAccessed, "firstName");
     }
 
@@ -103,7 +104,7 @@ public class VarDependenciesTest extends BaseVarTests {
         // Make sure that references are the same where they should be...
         Assert.assertSame(getByName(match0, "b"), getByName(match1, "b"));
         Assert.assertSame(getByName(match0, "a"), getByName(with2, "a"));
-        Assert.assertSame(getByName(match0, "a"), retProp.expression);
+        Assert.assertSame(getByName(match0, "a"), ((ExprVar) retProp.expression).var);
         // ...and not the same where they should not be.
         Assert.assertNotSame(getByName(match0, "b"), getByName(match3, "b"));
     }
@@ -128,11 +129,11 @@ public class VarDependenciesTest extends BaseVarTests {
         Assert.assertSame(getByName(match0, "a"), getByName(with1, "a"));
         AliasVar b = (AliasVar) getByName(with1, "b");
         Assert.assertSame(getByName(match0, "a") ,
-                ((ExprTree.PropertyAccess) ((ExprTree.MapExpr)((ExprTree.MapExpr) b.aliased)
+                ((ExprVar) ((ExprTree.PropertyAccess) ((ExprTree.MapExpr)((ExprTree.MapExpr) b.aliased)
                         .props.get("b"))
                         .props.get("d"))
-                        .expression);
-        Assert.assertSame(getByName(with1, "b"), ((ExprTree.AliasExpr) ret.get(1)).expr);
+                        .expression).var);
+        Assert.assertSame(getByName(with1, "b"), ((ExprVar) ((ExprTree.AliasExpr) ret.get(1)).expr).var);
     }
 
     @Test

@@ -95,8 +95,9 @@ public class ComputeExports {
         }
 
         private static boolean isVariableOfInterest(Var var) {
-            if (var instanceof AliasVar && ((AliasVar) var).aliased instanceof Var) {
-                return isVariableOfInterest((Var) ((AliasVar) var).aliased);
+            if (var instanceof AliasVar && ((AliasVar) var).aliased instanceof ExprVar) {
+                ExprVar exprVar = (ExprVar) ((AliasVar) var).aliased;
+                return isVariableOfInterest(exprVar.var);
             }
             return var instanceof NodeVar;
         }

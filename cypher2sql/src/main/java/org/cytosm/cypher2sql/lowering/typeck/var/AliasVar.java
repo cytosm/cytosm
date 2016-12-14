@@ -2,6 +2,7 @@ package org.cytosm.cypher2sql.lowering.typeck.var;
 
 import org.cytosm.cypher2sql.lowering.typeck.AvailableVariables;
 import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.types.AType;
 import org.cytosm.cypher2sql.lowering.typeck.types.VarType;
 import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTreeBuilder;
@@ -35,7 +36,8 @@ public class AliasVar extends Var {
 
     public static Var resolveAliasVar(Var var) {
         if (var instanceof AliasVar && var.type() instanceof VarType) {
-            return resolveAliasVar((Var) ((AliasVar) var).aliased);
+            ExprVar exprVar = (ExprVar) ((AliasVar) var).aliased;
+            return resolveAliasVar(exprVar.var);
         }
         return var;
     }

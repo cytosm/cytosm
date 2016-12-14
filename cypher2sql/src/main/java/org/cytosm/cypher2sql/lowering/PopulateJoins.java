@@ -286,10 +286,12 @@ public class PopulateJoins {
                             .filter(varProvider -> varProvider.variables.stream().anyMatch(v -> v == var))
                             .findAny();
 
+                    Var resolvedVar = AliasVar.resolveAliasVar(var);
+
                     if (newSourceForVar.isPresent()) {
                         return getOrigin(var, newSourceForVar.get());
-                    } else if (var instanceof AliasVar && ((AliasVar) var).aliased instanceof Var) {
-                        return getOrigin((Var) ((AliasVar) var).aliased, origin);
+                    } else if (resolvedVar != var) {
+                        return getOrigin(resolvedVar, origin);
                     } else {
                         throw new BugFound("Variable came from nowhere!! -> '" + var.name + "'");
                     }
