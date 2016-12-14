@@ -71,7 +71,7 @@ public class ExprTreeBuilder {
         public Expr foldVariable(Variable expression) throws ExprTreeException {
             Optional<Var> var = this.availablesVariables.get(expression.name);
             if (var.isPresent()) {
-                return var.get();
+                return new ExprVar(var.get());
             } else {
                 throw new UndefinedVariableException(expression.name);
             }

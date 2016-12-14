@@ -1,15 +1,13 @@
 package org.cytosm.cypher2sql.lowering.typeck.var;
 
-import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
 import org.cytosm.cypher2sql.lowering.typeck.NameProvider;
 import org.cytosm.cypher2sql.cypher.ast.ASTNode;
-import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.types.AType;
 
 /**
  * A variable declaration in a node, or relationship.
  */
-public abstract class Var implements Expr {
+public abstract class Var {
 
 
     /**
@@ -38,9 +36,4 @@ public abstract class Var implements Expr {
 
     // This constructor is only used by temporary variables.
     protected Var() {}
-
-    @Override
-    public String toSQLString(RenderingHelper _ignored) {
-        throw new RuntimeException("We can't render var at the moment, select a column for '" + name + "'");
-    }
 }

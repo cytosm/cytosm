@@ -14,6 +14,7 @@ import org.cytosm.cypher2sql.lowering.sqltree.join.LeftJoin;
 import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
 import org.cytosm.cypher2sql.lowering.typeck.VarDependencies;
 import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.rel.Relationship;
 import org.cytosm.cypher2sql.lowering.typeck.var.*;
 import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
@@ -174,8 +175,8 @@ public class PopulateJoins {
                         leftNode, leftNodeOriginTableName,
                         rightNode, rightNodeOriginTableName);
                 Expr conditionOnSource = new ExprTree.Eq(
-                        new ExprTree.PropertyAccess(traversalHop.getSourceTableColumn(), source),
-                        new ExprTree.PropertyAccess(traversalHop.getJoinTableSourceColumn(), joinVar)
+                        new ExprTree.PropertyAccess(traversalHop.getSourceTableColumn(), new ExprVar(source)),
+                        new ExprTree.PropertyAccess(traversalHop.getJoinTableSourceColumn(), new ExprVar(joinVar))
                 );
 
                 // Condition on destination:
@@ -187,8 +188,8 @@ public class PopulateJoins {
                     destination = (destination == leftNode) ? rightNode : leftNode;
                 }
                 Expr conditionOnDestination = new ExprTree.Eq(
-                        new ExprTree.PropertyAccess(traversalHop.getDestinationTableColumn(), destination),
-                        new ExprTree.PropertyAccess(traversalHop.getJoinTableDestinationColumn(), joinVar)
+                        new ExprTree.PropertyAccess(traversalHop.getDestinationTableColumn(), new ExprVar(destination)),
+                        new ExprTree.PropertyAccess(traversalHop.getJoinTableDestinationColumn(), new ExprVar(joinVar))
                 );
 
                 // TODO(Joan): Write a test for this.

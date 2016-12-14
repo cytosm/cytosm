@@ -1,5 +1,6 @@
 package org.cytosm.cypher2sql.lowering.typeck.expr;
 
+import org.cytosm.cypher2sql.lowering.rendering.RenderingContext;
 import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
 
 import java.util.List;
@@ -52,9 +53,10 @@ public class ExprFn implements Expr {
     }
 
 
-    public String toSQLString(RenderingHelper helper) {
+    public String toSQLString(RenderingContext ctx) {
+        RenderingContext fnCtx = new RenderingContext(ctx, RenderingContext.Location.FunctionArgs);
         String args = this.args.stream()
-                .map(x -> x.toSQLString(helper))
+                .map(x -> x.toSQLString(fnCtx))
                 .collect(Collectors.joining(", "));
         if (name.equals(Name.COUNT)) {
             return "count(" + args + ")";

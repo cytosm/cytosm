@@ -25,7 +25,7 @@ public class ExprWalk {
         void visitBinaryOperator(ExprTree.LhsRhs expr);
         void visitUnaryOperator(ExprTree.Unary expr);
         void visitPropertyAccess(ExprTree.PropertyAccess expr);
-        void visitVariable(Var expr);
+        void visitVariable(ExprVar expr);
         void visitMapExpr(ExprTree.MapExpr expr);
         void visitLiteral(ConstVal.Literal expr);
         void visitFn(ExprFn expr);
@@ -83,9 +83,9 @@ public class ExprWalk {
         }
 
         @Override
-        public void visitVariable(Var expr) {
-            if (expr instanceof AliasVar) {
-                walk(this, ((AliasVar) expr).aliased);
+        public void visitVariable(ExprVar expr) {
+            if (expr.var instanceof AliasVar) {
+                walk(this, ((AliasVar) expr.var).aliased);
             }
         }
     }
@@ -103,8 +103,8 @@ public class ExprWalk {
             visitor.visitLiteral((ConstVal.Literal) expr);
         } else if (expr instanceof ExprTree.MapExpr) {
             visitor.visitMapExpr((ExprTree.MapExpr) expr);
-        } else if (expr instanceof Var) {
-            visitor.visitVariable((Var) expr);
+        } else if (expr instanceof ExprVar) {
+            visitor.visitVariable((ExprVar) expr);
         } else if (expr instanceof ExprTree.CaseExpr) {
             visitor.visitCaseExpr((ExprTree.CaseExpr) expr);
         } else if (expr instanceof ExprTree.AliasExpr) {
@@ -123,7 +123,7 @@ public class ExprWalk {
         T foldBinaryOperator(ExprTree.LhsRhs expr) throws E;
         T foldUnaryOperator(ExprTree.Unary expr) throws E;
         T foldPropertyAccess(ExprTree.PropertyAccess expr) throws E;
-        T foldVariable(Var expr) throws E;
+        T foldVariable(ExprVar expr) throws E;
         T foldMapExpr(ExprTree.MapExpr expr) throws E;
         T foldLiteral(ConstVal.Literal expr) throws E;
         T foldFn(ExprFn expr) throws E;
@@ -241,8 +241,8 @@ public class ExprWalk {
         }
 
         @Override
-        public Expr foldVariable(Var expr) throws E {
-            return expr;
+        public Expr foldVariable(ExprVar expr) throws E {
+            return new ExprVar(expr.var);
         }
 
         @Override
@@ -266,8 +266,8 @@ public class ExprWalk {
             return folder.foldLiteral((ConstVal.Literal) expr);
         } else if (expr instanceof ExprTree.MapExpr) {
             return folder.foldMapExpr((ExprTree.MapExpr) expr);
-        } else if (expr instanceof Var) {
-            return folder.foldVariable((Var) expr);
+        } else if (expr instanceof ExprVar) {
+            return folder.foldVariable((ExprVar) expr);
         } else if (expr instanceof ExprTree.CaseExpr) {
             return folder.foldCaseExpr((ExprTree.CaseExpr) expr);
         } else if (expr instanceof ExprTree.AliasExpr) {

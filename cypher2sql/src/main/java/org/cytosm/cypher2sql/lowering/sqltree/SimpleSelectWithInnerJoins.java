@@ -1,6 +1,6 @@
 package org.cytosm.cypher2sql.lowering.sqltree;
 
-import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
+import org.cytosm.cypher2sql.lowering.rendering.RenderingContext;
 import org.cytosm.cypher2sql.lowering.sqltree.from.FromItem;
 import org.cytosm.cypher2sql.lowering.sqltree.join.BaseJoin;
 import org.cytosm.cypher2sql.lowering.sqltree.join.InnerJoin;
@@ -20,12 +20,12 @@ public class SimpleSelectWithInnerJoins extends SimpleSelect {
     public List<InnerJoin> joins = new ArrayList<>();
 
     @Override
-    protected String joins(RenderingHelper helper) {
+    protected String joins(RenderingContext ctx) {
         if (joins.isEmpty()) {
             return "";
         }
         return joins.stream()
-                .map(j -> j.toSQLString(helper) + "\n")
+                .map(j -> j.toSQLString(ctx) + "\n")
                 .reduce("", String::concat);
     }
 

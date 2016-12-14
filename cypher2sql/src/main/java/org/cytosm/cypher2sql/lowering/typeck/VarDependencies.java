@@ -1,6 +1,7 @@
 package org.cytosm.cypher2sql.lowering.typeck;
 
 import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.rel.Relationship;
 import org.cytosm.cypher2sql.lowering.typeck.var.*;
 import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
@@ -246,7 +247,7 @@ public class VarDependencies {
                 ReturnItem rt = iter.next();
                 if (rt instanceof ReturnItem.Aliased) {
                     AliasVar var = new AliasVar((ReturnItem.Aliased) rt, availablesVariables);
-                    returnExprs.add(var);
+                    returnExprs.add(new ExprVar(var));
                     newAvailablesVariables.add(var);
                 } else if (rt instanceof ReturnItem.Unaliased) {
                     ReturnItem.Unaliased urt = (ReturnItem.Unaliased) rt;

@@ -4,6 +4,7 @@ import org.cytosm.cypher2sql.lowering.exceptions.Cypher2SqlException;
 import org.cytosm.cypher2sql.lowering.sqltree.ScopeSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.SimpleSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.types.BoolType;
 import org.cytosm.cypher2sql.lowering.typeck.types.NumberType;
 import org.cytosm.cypher2sql.lowering.typeck.types.StringType;
@@ -60,9 +61,9 @@ public class UnwrapAliasVar {
         private ConstExprFolder folder = new ConstExprFolder();
 
         @Override
-        public Expr foldVariable(Var expr) throws Cypher2SqlException {
-            if (expr instanceof AliasVar) {
-                AliasVar var = (AliasVar) expr;
+        public Expr foldVariable(ExprVar expr) throws Cypher2SqlException {
+            if (expr.var instanceof AliasVar) {
+                AliasVar var = (AliasVar) expr.var;
                 if (var.type() instanceof NumberType ||
                         var.type() instanceof StringType ||
                         var.type() instanceof BoolType) {

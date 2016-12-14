@@ -5,6 +5,7 @@ import org.cytosm.cypher2sql.lowering.sqltree.*;
 import org.cytosm.cypher2sql.lowering.sqltree.join.BaseJoin;
 import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
 import org.cytosm.cypher2sql.lowering.typeck.VarDependencies;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.NodeVar;
 import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
@@ -82,6 +83,7 @@ public class ComputeExports {
         public void visitSimpleSelect(SimpleSelect simpleSelect) throws Cypher2SqlException {
             simpleSelect.exportedItems = vars.getUsedAndIndirectUsedVars(simpleSelect.varId)
                     .stream().filter(MutateExportsInSelects::isVariableOfInterest)
+                    .map(ExprVar::new)
                     .collect(Collectors.toList());
         }
 
@@ -108,15 +110,19 @@ public class ComputeExports {
 
         @Override
         public void visitPropertyAccess(ExprTree.PropertyAccess expr) {
-            if (expr.expression instanceof NodeVar) {
-                NodeVar node = (NodeVar) expr.expression;
-                node.propertiesRequired.add(expr.propertyAccessed);
-            } else if (expr.expression instanceof AliasVar) {
-                AliasVar alias = (AliasVar) expr.expression;
-                visitPropertyAccess(new ExprTree.PropertyAccess(expr.propertyAccessed, alias.aliased));
-            } else {
-                super.visitPropertyAccess(expr);
+            if (expr.expression instanceof ExprVar) {
+                ExprVar exprVar = (ExprVar) expr.expression;
+                if (exprVar.var instanceof NodeVar) {
+                    NodeVar node = (NodeVar) exprVar.var;
+                    node.propertiesRequired.add(expr.propertyAccessed);
+                    return;
+                } else if (exprVar.var instanceof AliasVar) {
+                    AliasVar alias = (AliasVar) exprVar.var;
+                    visitPropertyAccess(new ExprTree.PropertyAccess(expr.propertyAccessed, alias.aliased));
+                    return;
+                }
             }
+            super.visitPropertyAccess(expr);
         }
     }
 }

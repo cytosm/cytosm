@@ -7,6 +7,7 @@ import org.cytosm.cypher2sql.lowering.sqltree.WithSelect;
 import org.cytosm.cypher2sql.lowering.sqltree.from.FromItem;
 import org.cytosm.cypher2sql.lowering.sqltree.visitor.Walk;
 import org.cytosm.cypher2sql.lowering.typeck.VarDependencies;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
 import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.var.NodeOrRelVar;
@@ -125,7 +126,7 @@ public class ComputeFromItems {
                 Expr expr = aliasVar.aliased;
                 ExprWalk.BaseVisitor visitor = new ExprWalk.BaseVisitor() {
                     @Override
-                    public void visitVariable(Var var) {
+                    public void visitVariable(ExprVar expr) {
 
                         // Search for the FromItem that provide the variable var
                         // The main difference with the first loop is that we are
@@ -133,7 +134,7 @@ public class ComputeFromItems {
                         FromItem fromItem = new FromItem();
                         fromItem.variables.add(aliasVar);
 
-                        WithSelect source = whereToGetTheVar.get(var.uniqueName);
+                        WithSelect source = whereToGetTheVar.get(expr.var.uniqueName);
                         fromItem.source = source;
                         Optional<FromItem> existingFromItem = fromItems.stream()
                                 .filter(x -> x.source == source)

@@ -2,6 +2,7 @@ package org.cytosm.cypher2sql.lowering;
 
 import org.cytosm.cypher2sql.lowering.sqltree.*;
 import org.cytosm.cypher2sql.lowering.typeck.VarDependencies;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.NodeVar;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
 import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
@@ -73,7 +74,7 @@ public class MoveRestrictionInPattern {
     private static Expr mergePredicate(Expr whereCondition, NodeVar var) {
         for (Map.Entry<String, Expr> entry: var.predicate.props.entrySet()) {
             ExprTree.PropertyAccess prop = new ExprTree.PropertyAccess(
-                    entry.getKey(), var
+                    entry.getKey(), new ExprVar(var)
             );
             whereCondition = and(whereCondition,
                     new ExprTree.Eq(prop, entry.getValue())

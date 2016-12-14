@@ -4,14 +4,11 @@ import org.cytosm.cypher2sql.lowering.exceptions.BugFound;
 import org.cytosm.cypher2sql.lowering.exceptions.Cypher2SqlException;
 import org.cytosm.cypher2sql.lowering.exceptions.TypeError;
 import org.cytosm.cypher2sql.lowering.exceptions.Unimplemented;
+import org.cytosm.cypher2sql.lowering.typeck.expr.*;
 import org.cytosm.cypher2sql.lowering.typeck.types.*;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
-import org.cytosm.cypher2sql.lowering.typeck.expr.Expr;
 import org.cytosm.cypher2sql.lowering.typeck.var.Var;
 import org.cytosm.cypher2sql.lowering.typeck.constexpr.ConstVal;
-import org.cytosm.cypher2sql.lowering.typeck.expr.ExprFn;
-import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
-import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 
 import static org.cytosm.cypher2sql.lowering.exceptions.fns.LambdaExceptionUtil.rethrowConsumer;
 
@@ -84,11 +81,11 @@ public class ComputeAliasVarType {
         }
 
         @Override
-        public AType foldVariable(Var expr) throws Cypher2SqlException {
-            if (expr instanceof AliasVar) {
-                return ExprWalk.fold(this, ((AliasVar) expr).aliased);
+        public AType foldVariable(ExprVar expr) throws Cypher2SqlException {
+            if (expr.var instanceof AliasVar) {
+                return ExprWalk.fold(this, ((AliasVar) expr.var).aliased);
             } else {
-                return expr.type();
+                return expr.var.type();
             }
         }
 

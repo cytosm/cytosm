@@ -1,6 +1,5 @@
 package org.cytosm.cypher2sql.lowering.typeck.var;
 
-import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
 import org.cytosm.cypher2sql.lowering.typeck.AvailableVariables;
 import org.cytosm.cypher2sql.lowering.typeck.NameProvider;
 import org.cytosm.cypher2sql.lowering.typeck.types.AType;
@@ -54,15 +53,5 @@ public class NodeVar extends NodeOrRelVar {
                     mapExpression, vars
             );
         }
-    }
-
-    @Override
-    public String toSQLString(RenderingHelper helper) {
-        return renderPropertiesWithVarContext(helper, this);
-    }
-
-    public String renderPropertiesWithVarContext(RenderingHelper helper, Var context) {
-        return propertiesRequired.stream().map(prop -> helper.renderVariableForExport(context, prop))
-                .collect(Collectors.joining(", "));
     }
 }

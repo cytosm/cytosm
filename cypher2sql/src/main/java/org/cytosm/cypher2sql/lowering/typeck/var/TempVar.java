@@ -1,6 +1,5 @@
 package org.cytosm.cypher2sql.lowering.typeck.var;
 
-import org.cytosm.cypher2sql.lowering.rendering.RenderingHelper;
 import org.cytosm.cypher2sql.lowering.typeck.NameProvider;
 import org.cytosm.cypher2sql.lowering.typeck.types.AType;
 import org.cytosm.cypher2sql.lowering.typeck.types.NodeType;
@@ -20,10 +19,5 @@ public class TempVar extends NodeOrTempOrRelVar {
 
     public TempVar() {
         this.uniqueName = NameProvider.getUniqueTempVarName();
-    }
-
-    @Override
-    public String toSQLString(RenderingHelper _ignored) {
-        throw new RuntimeException("Temporary variable can't be rendered. Only property they contains can.");
     }
 }
