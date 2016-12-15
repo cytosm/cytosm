@@ -2,7 +2,7 @@
 
 Cytosm was originally developed by researchers and engineers working on the graph analytics on a variety of databases. 
 
-If you'd like to contribute to Cytosm, be sure to review the [contribution guidelines](CONTRIBUTING.md.
+If you'd like to contribute to Cytosm, be sure to review the [contribution guidelines](CONTRIBUTING.md).
 
 **We use [GitHub issues](https://github.com/cytosm/cytosm/issues) for tracking, requests, and bugs.**
 
