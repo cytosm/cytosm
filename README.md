@@ -27,3 +27,46 @@ The following would be nice to have:
   are not supported
 - Improve `CypherConverter` and `pathfinder` to generate AST nodes instead of using intermediary string representations.
 - Improve the `pathfinder` related code to use the full information available about the variable and their type.
+
+
+## Overview
+
+A Cypher string goes into several transformations in it journey through Cytsom:
+
+* Parsing (auto generated ANTLR parsed based on OpenCypher EBNF grammar). It creates an AST to be used later on.
+* PathFinder navigates the AST, given a graph topology file, in order to make Cypher queries more concrete.
+* Cypher2SQL. The module where all the magic happens. 
+
+
+### Path Finder
+
+A set of simple optimisations that try to make Cypher queries more concrete (avoiding the mapper from exploring patterns in the Cypher queries that 
+are logically correct, but impossible in the light of the database Tables that exist in the database).
+ 
+This way, the mapping process is simpler and we make SQL queries more efficient.
+
+See [PathFinder](pathfinder/README.md)
+
+### Cypher2SQL
+
+This module takes the concreted Cypher queries that the PathFinder module spits out and
+ 
+ * analises dependencies between Cypher variables and tracks their scope.
+ * creates an intermediate language representation of the query (something closer to SQL, but quite there yet). This is a hierarchical representation. 
+ * from the hierarchy created in the previous stage, it builds a sequence of nested joins and unions in SQL to represent the graph patterns indicated in Cypher.
+
+
+### Common
+
+#### Graph Topology Files (gTop)
+
+A description of the graph hiding in your relational database. It also includes how to mapp from abstract node/edges in the graph into specific databse tables/columns. 
+
+Find more details about [gTop](common/README.md)
+ 
+A gTop file can be automatically discovered by the "Graph Extraction" module (to be opensourced soon).
+
+## Benchmarks
+
+Cytosm queries have been run on a variety of backends, obtaining quite suprising results. Please find more details in 
+the sibling repo for [Cytosm benchmarking](https://github.com/Alnaimi-/database-benchmark). 
