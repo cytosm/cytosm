@@ -1,4 +1,4 @@
-#CYpher TO Sql Mapper (Cytosm)# 
+#CYpher TO Sql Mapper (Cytosm)
 
 [![Build Status](https://travis-ci.org/cytosm/cytosm.svg?branch=master)](https://travis-ci.org/cytosm/cytosm.svg?branch=master)
 
