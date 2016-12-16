@@ -39,7 +39,7 @@ This module takes the concreted Cypher queries that the PathFinder module spits 
  * creates an intermediate language representation of the query (something closer to SQL, but quite there yet). This is a hierarchical representation. 
  * from the hierarchy created in the previous stage, it builds a sequence of nested joins and unions in SQL to represent the graph patterns indicated in Cypher.
 
-See [PathFinder](cypher2sql/README.md)
+See [Cypher2SQL](cypher2sql/README.md)
 
 ### Common
 
