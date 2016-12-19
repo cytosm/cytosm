@@ -15,8 +15,8 @@ import org.cytosm.cypher2sql.lowering.typeck.constexpr.ConstExprFolder;
 import org.cytosm.cypher2sql.lowering.typeck.expr.ExprWalk;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static org.cytosm.cypher2sql.lowering.exceptions.fns.LambdaExceptionUtil.rethrowConsumer;
 
 
 /**
@@ -80,34 +80,40 @@ public class UnwrapAliasVar {
 
         final Map<ScopeSelect, Map<AliasVar, Integer>> useCount = new HashMap<>();
         private ScopeSelect currentScopeSelect;
+        private int defaultCountValue = 0;
 
         @Override
         public void visitScopeSelect(ScopeSelect scopeSelect) throws Cypher2SqlException {
             ScopeSelect parentScope = currentScopeSelect;
             currentScopeSelect = scopeSelect;
             useCount.put(scopeSelect, new HashMap<>());
-            super.visitScopeSelect(scopeSelect);
+            scopeSelect.withQueries.forEach(rethrowConsumer(this::visitWithSelect));
+            defaultCountValue = 1;
+            this.visitSimpleSelect(scopeSelect.ret);
+            defaultCountValue = 0;
             currentScopeSelect = parentScope;
         }
 
         @Override
         protected ExprWalk.Visitor makeExprVisitor() {
-            return new CollectUnusedAliasVar(useCount.get(currentScopeSelect));
+            return new CollectUnusedAliasVar(useCount.get(currentScopeSelect), defaultCountValue);
         }
     }
 
     private static class CollectUnusedAliasVar extends ExprWalk.BaseVisitor {
 
         private final Map<AliasVar, Integer> useCount;
+        private final int defaultCountValue;
 
-        CollectUnusedAliasVar(Map<AliasVar, Integer> useCount) {
+        CollectUnusedAliasVar(Map<AliasVar, Integer> useCount, int defaultCountValue) {
             this.useCount = useCount;
+            this.defaultCountValue = defaultCountValue;
         }
 
         @Override
         public void visitVariable(ExprVar expr) {
             if (expr.var instanceof AliasVar) {
-                useCount.put((AliasVar) expr.var, useCount.getOrDefault(expr.var, 0) + 1);
+                useCount.put((AliasVar) expr.var, useCount.getOrDefault(expr.var, defaultCountValue) + 1);
             }
         }
     }
