@@ -13,7 +13,10 @@ Return a.registry_numbe
 The original Cypher Abstract Syntax Tree (AST), generated when parsing a query, is analysed using the visitor pattern in order 
 to build an intermediate SQL representation tree, as shown under the label "pass 1" in the Figure below. The intermediate SQL tree is made of items that ressemble SQL statements and are used in order to render the SQL query at the end of the translation process.
 
-![1st pass][docs/cypher2sqlexpansion1.png]
+
+<p align="center">
+  <img src="../docs/cypher2sqlexpansion1.png?raw=true" alt="1stpass"/>
+</p>
 
 In the first pass, all the Cypher information can be generically represented as a outer SELECT item with multiple nested WITH items in the intermediate SQL tree. Each of these WITH tree items contain other SELECT items. This process is shown in Figure~\ref{fig:cypher2sql:pass12}, pass 1. In this stage, there is only one scope. 
 
@@ -38,7 +41,9 @@ Through this analysis, it is possible to uncover an undirect dependency of `SELE
 As shown below, a third analysis of the intermediate SQL tree uses gTop implementation layer information in order reference RDBMS tables. 
 `SELECT (1)` in the first Figure above becomes `UNION (1)`, since nodes of type Pet are actually split into tables Cat and Dog in the RDBMS.
 
-![2nd pass][docs/cypher2sqlexpansion2.png]
+<p align="center">
+  <img src="../docs/cypher2sqlexpansion2.png?raw=true" alt="2ndpass"/>
+</p>
 
 #Merging Unions
 
