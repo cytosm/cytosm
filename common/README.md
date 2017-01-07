@@ -9,13 +9,13 @@ In Grapher, property graphs follows a graph topology file (gTop) - it is a set o
 An example of gTop file is presented in figure below.
 
 <p align="center">
-  <img src="../docs/gtop.png?raw=true" alt="gtop"/>
+  <img src="./docs/gtop.png" alt="gtop"/>
 </p>
 
 The following graph could be modeled by the gtop above.
 
 <p align="center">
-  <img src="../docs/gtopgraph.png?raw=true" alt="gtopgraph"/>
+  <img src="./docs/gtopgraph.png" alt="gtopgraph"/>
 </p>
 
 ## Gtop Features

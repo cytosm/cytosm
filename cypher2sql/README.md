@@ -15,7 +15,7 @@ to build an intermediate SQL representation tree, as shown under the label "pass
 
 
 <p align="center">
-  <img src="../docs/cypher2sqlexpansion1.png?raw=true" alt="1stpass"/>
+  <img src="./docs/cypher2sqlexpansion1.png" alt="1stpass"/>
 </p>
 
 In the first pass, all the Cypher information can be generically represented as a outer SELECT item with multiple nested WITH items in the intermediate SQL tree. Each of these WITH tree items contain other SELECT items. This process is shown in Figure~\ref{fig:cypher2sql:pass12}, pass 1. In this stage, there is only one scope. 
@@ -42,7 +42,7 @@ As shown below, a third analysis of the intermediate SQL tree uses gTop implemen
 `SELECT (1)` in the first Figure above becomes `UNION (1)`, since nodes of type Pet are actually split into tables Cat and Dog in the RDBMS.
 
 <p align="center">
-  <img src="../docs/cypher2sqlexpansion2.png?raw=true" alt="2ndpass"/>
+  <img src="./docs/cypher2sqlexpansion2.png" alt="2ndpass"/>
 </p>
 
 #Merging Unions
