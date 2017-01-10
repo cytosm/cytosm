@@ -2,7 +2,7 @@
 
 ##Overview:
 
-In Grapher, property graphs follows a graph topology file (gTop) - it is a set of rules where every edge or vertex from the graph can be assigned at least one edge or vertex type. Vertices or edges of the same type share the same property keys, having possibly different values for those keys. The file format supports mixed graphs (that are graphs that can contain both undirected and directed edges) and parallel edges. Through the use of the gTop, it is possible to map a GQL into the relational domain.
+In Cytosm, property graphs follows a graph topology file (gTop) - it is a set of rules where every edge or vertex from the graph can be assigned at least one edge or vertex type. Vertices or edges of the same type share the same property keys, having possibly different values for those keys. The file format supports mixed graphs (that are graphs that can contain both undirected and directed edges) and parallel edges. Through the use of the gTop, it is possible to map a GQL into the relational domain.
 
 ##Example:
 

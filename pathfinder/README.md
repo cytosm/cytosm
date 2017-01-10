@@ -9,10 +9,10 @@ Without a well defined topological mapping between the relational and the proper
 
 ## Black Box Example
 
-The Path Finder module acts as a pre-planner in order to provide any relational system query planner with graph topology information. It trims out any unnecessary join that would either return an impossible graph traversal - by impossible graph traversal one can understand a sequence of nodes and edges that would not follow the model described in the graph topology file. The Path Finder algorithm is designed to be independently parallelizable in two stages. One of the benefits of having this pre-computation layer is that badly formatted or model invalid queries can be invalidated before even being sent to the RDBMS, reducing drastically the response time.
+The Path Finder module acts as a pre-planner in order to provide any relational system query planner with graph topology information. It trims out any unnecessary join that would either return an impossible graph traversal - by impossible graph traversal one can understand a sequence of nodes and edges that would not follow the model described in the graph topology file. The Path Finder algorithm is designed to be independently parallelizable. One of the benefits of having this pre-computation layer is that badly formatted or model invalid queries can be invalidated before even being sent to the RDBMS, reducing drastically the response time.
 
 <p align="center">
-  <img src="../docs/gtop.png?raw=true" alt="gtop"/>
+  <img src="../common/docs/gtop.png?raw=true" alt="gtop"/>
 </p>
 
 
@@ -128,7 +128,7 @@ Cypher version: CYPHER 2.3, planner: COST. <b>1678093696 total db hits</b> in <b
 The equivalent plan is:
 
 <p align="center">
-  <img src="docs/pathFinderPlanning/neo4j2_3_4/regEdgePlan/plan.png?raw=true" alt="Regular Edge Expression Plan"/>
+  <img src="./docs/pathFinderPlanning/neo4j2_3_4/regEdgePlan/plan.png?raw=true" alt="Regular Edge Expression Plan"/>
 </p>
 
 ###3. Path Finder:
