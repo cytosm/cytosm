@@ -1,0 +1,132 @@
+{
+  "version" : "1.0",
+  "abstractionLevel" : {
+    "abstractionNodes" : [ {
+      "synonyms" : [ "movie" ],
+      "attributes" : [ "id", "title", "released", "tagline" ]
+    }, {
+      "synonyms" : [ "person" ],
+      "attributes" : [ "id", "name", "born" ]
+    } ],
+    "abstractionEdges" : [ {
+      "synonyms" : [ "person_id_directed_person_id" ],
+      "attributes" : [ ],
+      "sourceType" : [ "person" ],
+      "destinationType" : [ "movie" ],
+      "directed" : true
+    }, {
+      "synonyms" : [ "person_id_acted_in_person_id" ],
+      "attributes" : [ "role" ],
+      "sourceType" : [ "person" ],
+      "destinationType" : [ "movie" ],
+      "directed" : true
+    }, {
+      "synonyms" : [ "person_id_produced_person_id" ],
+      "attributes" : [ ],
+      "sourceType" : [ "person" ],
+      "destinationType" : [ "movie" ],
+      "directed" : true
+    } ]
+  },
+  "implementationLevel" : {
+    "graphMetadata" : {
+      "storageLayout" : "IGNORETIME"
+    },
+    "implementationNodes" : [ {
+      "synonyms" : [ "movie" ],
+      "tableName" : "movie",
+      "id" : [ {
+        "columnName" : "id",
+        "datatype" : "INTEGER",
+        "concatenationPosition" : 1
+      } ],
+      "attributes" : [ {
+        "columnName" : "id",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "id"
+      }, {
+        "columnName" : "title",
+        "dataType" : "VARCHAR(100)",
+        "abstractionLevelName" : "title"
+      }, {
+        "columnName" : "released",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "released"
+      }, {
+        "columnName" : "tagline",
+        "dataType" : "VARCHAR(100)",
+        "abstractionLevelName" : "tagline"
+      } ],
+      "restrictions" : [ ]
+    }, {
+      "synonyms" : [ "person" ],
+      "tableName" : "person",
+      "id" : [ {
+        "columnName" : "id",
+        "datatype" : "INTEGER",
+        "concatenationPosition" : 1
+      } ],
+      "attributes" : [ {
+        "columnName" : "id",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "id"
+      }, {
+        "columnName" : "name",
+        "dataType" : "VARCHAR(100)",
+        "abstractionLevelName" : "name"
+      }, {
+        "columnName" : "born",
+        "dataType" : "INTEGER",
+        "abstractionLevelName" : "born"
+      } ],
+      "restrictions" : [ ]
+    } ],
+    "implementationEdges" : [ {
+      "synonyms" : [ "person_id_directed_person_id" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "person",
+          "sourceTableColumn" : "id",
+          "joinTableSourceColumn" : "person_id",
+          "joinTableName" : "directed",
+          "joinTableDestinationColumn" : "movie_id",
+          "destinationTableColumn" : "id",
+          "destinationTableName" : "movie",
+          "attributes" : [ ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "person_id_acted_in_person_id" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "person",
+          "sourceTableColumn" : "id",
+          "joinTableSourceColumn" : "person_id",
+          "joinTableName" : "acted_in",
+          "joinTableDestinationColumn" : "movie_id",
+          "destinationTableColumn" : "id",
+          "destinationTableName" : "movie",
+          "attributes" : [ {
+            "columnName" : "role",
+            "dataType" : "varchar(100)",
+            "abstractionLevelName" : "role"
+          } ]
+        } ]
+      } ]
+    }, {
+      "synonyms" : [ "person_id_produced_person_id" ],
+      "paths" : [ {
+        "traversalHops" : [ {
+          "sourceTableName" : "person",
+          "sourceTableColumn" : "id",
+          "joinTableSourceColumn" : "person_id",
+          "joinTableName" : "produced",
+          "joinTableDestinationColumn" : "movie_id",
+          "destinationTableColumn" : "id",
+          "destinationTableName" : "movie",
+          "attributes" : [ ]
+        } ]
+      } ]
+    } ]
+  }
+}
