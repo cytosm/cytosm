@@ -6,9 +6,9 @@ import java.util.List;
  */
 public class ListExpression extends Expression {
 
-    public List<Expression> elts;
+    public List<Expression> exprs;
 
-    public ListExpression(final List<Expression> elts) {
-        this.elts = elts;
+    public ListExpression(final List<Expression> exprs) {
+        this.exprs = exprs;
     }
 }

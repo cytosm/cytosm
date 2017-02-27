@@ -9,7 +9,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 import org.cytosm.cypher2sql.cypher.ast.expression.*;
 import org.cytosm.cypher2sql.cypher.ast.expression.Binary.*;
-import org.cytosm.cypher2sql.cypher.ast.expression.Many.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +84,7 @@ public class ExprTreeBuilder {
         }
 
         @Override
-        public Expr foldCollection(Collection expression) throws ExprTreeException {
+        public Expr foldListExpression(ListExpression expression) throws ExprTreeException {
             // FIXME
             throw new UnimplementedException();
         }
@@ -211,18 +210,6 @@ public class ExprTreeBuilder {
         public Expr foldUnaryAdd(Unary.Add expression) throws ExprTreeException {
             return new ExprTree.UnaryAdd(Walk.foldExpression(this, expression.lhs));
 
-        }
-
-        @Override
-        public Expr foldAnds(Ands expression) throws ExprTreeException {
-            // FIXME
-            throw new UnimplementedException();
-        }
-
-        @Override
-        public Expr foldOrs(Ors expression) throws ExprTreeException {
-            // FIXME
-            throw new UnimplementedException();
         }
 
         @Override

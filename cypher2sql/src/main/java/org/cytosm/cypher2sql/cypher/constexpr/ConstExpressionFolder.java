@@ -2,7 +2,6 @@ package org.cytosm.cypher2sql.cypher.constexpr;
 
 import org.cytosm.cypher2sql.cypher.visitor.Walk;
 import org.cytosm.cypher2sql.cypher.ast.expression.Binary.*;
-import org.cytosm.cypher2sql.cypher.ast.expression.Many.*;
 import org.cytosm.cypher2sql.cypher.ast.expression.*;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -549,7 +548,7 @@ public class ConstExpressionFolder implements Walk.ExpressionFolder<ConstExpress
         // FIXME
         throw new UnimplementedException();
     }
-    public ConstExprValue foldCollection(final Collection expression) throws ConstExprException {
+    public ConstExprValue foldListExpression(final ListExpression expression) throws ConstExprException {
         List<ConstExprValue> res = new ArrayList<>();
         Iterator<Expression> iter = expression.exprs.iterator();
         while (iter.hasNext()) {
@@ -590,22 +589,6 @@ public class ConstExpressionFolder implements Walk.ExpressionFolder<ConstExpress
     }
     public ConstExprValue foldUnaryAdd(final Unary.Add expression) throws ConstExprException {
         return Walk.foldExpression(this, expression.lhs);
-    }
-    public ConstExprValue foldAnds(final Ands expression) throws ConstExprException {
-        Iterator<Expression> iter = expression.exprs.iterator();
-        ConstExprValue firstValue = Walk.foldExpression(this, iter.next());
-        while (iter.hasNext()) {
-            firstValue = firstValue.and(Walk.foldExpression(this, iter.next()));
-        }
-        return firstValue;
-    }
-    public ConstExprValue foldOrs(final Ors expression) throws ConstExprException {
-        Iterator<Expression> iter = expression.exprs.iterator();
-        ConstExprValue firstValue = Walk.foldExpression(this, iter.next());
-        while (iter.hasNext()) {
-            firstValue = firstValue.or(Walk.foldExpression(this, iter.next()));
-        }
-        return firstValue;
     }
     // Booleans operations
     public ConstExprValue foldGreaterThan(final GreaterThan expression) throws ConstExprException {

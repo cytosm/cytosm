@@ -126,8 +126,8 @@ public class FullStructureTests {
 
         ListExpression list = (ListExpression) in.rhs;
 
-        Assert.assertEquals(2, list.elts.size());
-        Assert.assertEquals("foo", ((Literal.StringLiteral) list.elts.get(0)).value);
-        Assert.assertEquals("bar", ((Literal.StringLiteral) list.elts.get(1)).value);
+        Assert.assertEquals(2, list.exprs.size());
+        Assert.assertEquals("foo", ((Literal.StringLiteral) list.exprs.get(0)).value);
+        Assert.assertEquals("bar", ((Literal.StringLiteral) list.exprs.get(1)).value);
     }
 }

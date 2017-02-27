@@ -1,6 +1,5 @@
 package org.cytosm.cypher2sql.cypher.visitor;
 
-import org.cytosm.cypher2sql.cypher.ast.expression.Many.Collection;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 import org.cytosm.cypher2sql.cypher.ast.*;
@@ -10,7 +9,6 @@ import org.cytosm.cypher2sql.cypher.ast.clause.projection.*;
 import org.cytosm.cypher2sql.cypher.ast.clause.match.*;
 import org.cytosm.cypher2sql.cypher.ast.expression.*;
 import org.cytosm.cypher2sql.cypher.ast.expression.Binary.*;
-import org.cytosm.cypher2sql.cypher.ast.expression.Many.*;
 
 import java.util.*;
 
@@ -44,7 +42,7 @@ public class Walk {
         void visitOr(final Or or);
         void visitProperty(final Property property);
         void visitIn(final In in);
-        void visitCollection(final Collection collection);
+        void visitListExpression(final ListExpression collection);
         void visitNot(final Unary.Not not);
         void visitInvalidNotEquals(final InvalidNotEquals invalidNotEquals);
         void visitMapExpression(final MapExpression mapExpression);
@@ -57,8 +55,6 @@ public class Walk {
         void visitLessThanOrEqual(final LessThanOrEqual lessThanOrEqual);
         void visitPatternExpression(final PatternExpression patternExpression);
         void visitUnaryAdd(Unary.Add expression);
-        void visitAnds(Ands expression);
-        void visitOrs(Ors expression);
         void visitXor(Xor expression);
         void visitSubtract(Subtract expression);
         void visitAdd(Add expression);
@@ -228,14 +224,10 @@ public class Walk {
         // N-ary operators
         } else if (expression instanceof CaseExpression) {
             visitor.visitCaseExpression((CaseExpression) expression);
-        } else if (expression instanceof Ands) {
-            visitor.visitAnds((Ands) expression);
-        } else if (expression instanceof Ors) {
-            visitor.visitOrs((Ors) expression);
         } else if (expression instanceof FunctionInvocation) {
             visitor.visitFunctionInvocation((FunctionInvocation) expression);
-        } else if (expression instanceof Collection) {
-            visitor.visitCollection((Collection) expression);
+        } else if (expression instanceof ListExpression) {
+            visitor.visitListExpression((ListExpression) expression);
         } else if (expression instanceof MapExpression) {
             visitor.visitMapExpression((MapExpression) expression);
 
@@ -632,23 +624,7 @@ public class Walk {
         }
 
         @Override
-        public void visitCollection(Collection expression) {
-            Iterator<Expression> iter = expression.exprs.iterator();
-            while (iter.hasNext()) {
-                Walk.walkExpression(this, iter.next());
-            }
-        }
-
-        @Override
-        public void visitAnds(Ands expression) {
-            Iterator<Expression> iter = expression.exprs.iterator();
-            while (iter.hasNext()) {
-                Walk.walkExpression(this, iter.next());
-            }
-        }
-
-        @Override
-        public void visitOrs(Ors expression) {
+        public void visitListExpression(ListExpression expression) {
             Iterator<Expression> iter = expression.exprs.iterator();
             while (iter.hasNext()) {
                 Walk.walkExpression(this, iter.next());
@@ -674,7 +650,7 @@ public class Walk {
         T foldOr(final Or  expression) throws E;
         T foldProperty(final Property  expression) throws E;
         T foldIn(final In  expression) throws E;
-        T foldCollection(final Collection expression) throws E;
+        T foldListExpression(final ListExpression expression) throws E;
         T foldNot(final Unary.Not  expression) throws E;
         T foldInvalidNotEquals(final InvalidNotEquals  expression) throws E;
         T foldMapExpression(final MapExpression  expression) throws E;
@@ -686,8 +662,6 @@ public class Walk {
         T foldLessThanOrEqual(final LessThanOrEqual  expression) throws E;
         T foldPatternExpression(final PatternExpression  expression) throws E;
         T foldUnaryAdd(Unary.Add  expression) throws E;
-        T foldAnds(Ands  expression) throws E;
-        T foldOrs(Ors expression) throws E;
         T foldXor(Xor expression) throws E;
         T foldSubtract(Subtract  expression) throws E;
         T foldAdd(Add  expression) throws E;
@@ -765,14 +739,10 @@ public class Walk {
             // N-ary operators
         } else if (expression instanceof CaseExpression) {
             return folder.foldCaseExpression((CaseExpression) expression);
-        } else if (expression instanceof Ands) {
-            return folder.foldAnds((Ands) expression);
-        } else if (expression instanceof Ors) {
-            return folder.foldOrs((Ors) expression);
         } else if (expression instanceof FunctionInvocation) {
             return folder.foldFunctionInvocation((FunctionInvocation) expression);
-        } else if (expression instanceof Collection) {
-            return folder.foldCollection((Collection) expression);
+        } else if (expression instanceof ListExpression) {
+            return folder.foldListExpression((ListExpression) expression);
         } else if (expression instanceof MapExpression) {
             return folder.foldMapExpression((MapExpression) expression);
 
