@@ -26,6 +26,7 @@ public class ExprWalk {
         void visitUnaryOperator(ExprTree.Unary expr);
         void visitPropertyAccess(ExprTree.PropertyAccess expr);
         void visitVariable(ExprVar expr);
+        void visitListExpr(ExprTree.ListExpr expr);
         void visitMapExpr(ExprTree.MapExpr expr);
         void visitLiteral(ConstVal.Literal expr);
         void visitFn(ExprFn expr);
@@ -57,6 +58,11 @@ public class ExprWalk {
 
         @Override
         public void visitLiteral(ConstVal.Literal expr) {}
+
+        @Override
+        public void visitListExpr(ExprTree.ListExpr expr) {
+            expr.exprs.forEach(x -> walk(this, x));
+        }
 
         @Override
         public void visitMapExpr(ExprTree.MapExpr expr) {
@@ -101,6 +107,8 @@ public class ExprWalk {
             visitor.visitFn((ExprFn) expr);
         } else if (expr instanceof ConstVal.Literal) {
             visitor.visitLiteral((ConstVal.Literal) expr);
+        } else if (expr instanceof ExprTree.ListExpr) {
+            visitor.visitListExpr((ExprTree.ListExpr) expr);
         } else if (expr instanceof ExprTree.MapExpr) {
             visitor.visitMapExpr((ExprTree.MapExpr) expr);
         } else if (expr instanceof ExprVar) {
@@ -110,7 +118,7 @@ public class ExprWalk {
         } else if (expr instanceof ExprTree.AliasExpr) {
             visitor.visitAliasExpr((ExprTree.AliasExpr) expr);
         } else {
-            throw new RuntimeException("Unreahable code reached in walk.");
+            throw new RuntimeException("Unreachable code reached in walk.");
         }
     }
 
@@ -124,6 +132,7 @@ public class ExprWalk {
         T foldUnaryOperator(ExprTree.Unary expr) throws E;
         T foldPropertyAccess(ExprTree.PropertyAccess expr) throws E;
         T foldVariable(ExprVar expr) throws E;
+        T foldListExpr(ExprTree.ListExpr expr) throws E;
         T foldMapExpr(ExprTree.MapExpr expr) throws E;
         T foldLiteral(ConstVal.Literal expr) throws E;
         T foldFn(ExprFn expr) throws E;
@@ -181,6 +190,17 @@ public class ExprWalk {
                 args.add(fold(this, oldArg));
             }
             return new ExprFn(expr.name, args);
+        }
+
+        @Override
+        public Expr foldListExpr(ExprTree.ListExpr expr) throws E {
+            ExprTree.ListExpr res = new ExprTree.ListExpr();
+
+            for (Expr e: expr.exprs) {
+                res.exprs.add(fold(this, e));
+            }
+
+            return res;
         }
 
         @Override
@@ -256,6 +276,8 @@ public class ExprWalk {
             return null;
         } else if (expr instanceof ExprTree.LhsRhs) {
             return folder.foldBinaryOperator((ExprTree.LhsRhs) expr);
+        } else if (expr instanceof ExprTree.ListExpr) {
+            return folder.foldListExpr((ExprTree.ListExpr) expr);
         } else if (expr instanceof ExprTree.Unary) {
             return folder.foldUnaryOperator((ExprTree.Unary) expr);
         } else if (expr instanceof ExprTree.PropertyAccess) {

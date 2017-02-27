@@ -40,6 +40,7 @@ public class ComputeAliasVarType {
 
         @Override
         public AType foldBinaryOperator(ExprTree.LhsRhs expr) throws Cypher2SqlException {
+            // FIXME: this doesn't check the entire expression
             if (expr instanceof ExprTree.GreaterThan ||
                 expr instanceof ExprTree.GreaterThanOrEqueal ||
                 expr instanceof ExprTree.LessThan ||
@@ -87,6 +88,11 @@ public class ComputeAliasVarType {
             } else {
                 return expr.var.type();
             }
+        }
+
+        @Override
+        public AType foldListExpr(ExprTree.ListExpr expr) throws Cypher2SqlException {
+            throw new Unimplemented();
         }
 
         @Override

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  */
@@ -85,8 +86,12 @@ public class ExprTreeBuilder {
 
         @Override
         public Expr foldListExpression(ListExpression expression) throws ExprTreeException {
-            // FIXME
-            throw new UnimplementedException();
+            ExprTree.ListExpr list = new ExprTree.ListExpr();
+
+            for (Expression expr: expression.exprs) {
+                list.exprs.add(Walk.foldExpression(this, expr));
+            }
+            return list;
         }
 
         @Override

@@ -1,6 +1,7 @@
 package org.cytosm.cypher2sql.lowering.typeck.constexpr;
 
 import org.cytosm.cypher2sql.lowering.exceptions.Cypher2SqlException;
+import org.cytosm.cypher2sql.lowering.typeck.expr.ExprTree;
 import org.cytosm.cypher2sql.lowering.typeck.expr.ExprVar;
 import org.cytosm.cypher2sql.lowering.typeck.types.MapType;
 import org.cytosm.cypher2sql.lowering.typeck.var.AliasVar;
@@ -92,6 +93,11 @@ public class ConstExprFolder implements ExprWalk.Folder<ConstVal.Literal, Cypher
             return ExprWalk.fold(this, ((AliasVar) expr.var).aliased);
         }
         throw new UnknownOperation("Can't fold var.");
+    }
+
+    @Override
+    public ConstVal.Literal foldListExpr(ListExpr expr) throws Cypher2SqlException {
+        throw new UnknownOperation("Can't fold list expr.");
     }
 
     @Override
