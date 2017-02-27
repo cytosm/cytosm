@@ -200,6 +200,13 @@ mapKeyValuePair returns [Pair<PropertyKeyName, Expression> res]
         $res = new ImmutablePair($p.res, $e.res);
     };
 
+listLiteral returns [ListExpression res]: l=listLit_nospan { $res = $l.res; $res.span = makeSpan($l.start, $l.stop); };
+
+listLit_nospan returns [ListExpression res]:
+    '[' sp? (vs+=expression ( ',' sp? vs+=expression )* )? ']' {
+        $res = new ListExpression($vs.stream().map(v -> v.res).collect(Collectors.toList()));
+    };
+
 expression returns [Expression res]: e=expression12 { $res = $e.res; $res.span = makeSpan($e.start, $e.stop); };
 
 expression12 returns [Expression res]: l=expression11 (sp OR sp oths+=expression11)* {
@@ -346,6 +353,7 @@ atom returns [Expression res]
     | NULL        { $res = new Literal.Null(); }
     | (COUNT '(' '*' ')')       { $res = null;   } // TODO
     | m=mapLiteral              { $res = $m.res; }
+    | l=listLiteral             { $res = $l.res; }
     | p=parenthesizedExpression { $res = $p.res; }
     | f=functionInvocation      { $res = $f.res; }
     | v=variable                { $res = $v.res; };

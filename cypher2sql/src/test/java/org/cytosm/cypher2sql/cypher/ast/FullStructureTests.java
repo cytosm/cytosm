@@ -109,4 +109,25 @@ public class FullStructureTests {
         Assert.assertEquals(rc.relationship.types.size(), 1);
         Assert.assertEquals(rc.relationship.types.get(0).name, "TEST");
     }
+
+    @Test
+    public void testListExpressions() {
+        String cypher = "MATCH (a) WHERE a.lastName IN ['foo','bar'] RETURN a.firstName";
+        Statement st = ASTBuilder.parse(cypher);
+        List<Clause> clauses = ((SingleQuery) st.query.part).clauses;
+        Match m = (Match) clauses.get(0);
+
+        Assert.assertTrue(m.where.isPresent());
+        Assert.assertTrue(m.where.get().expression instanceof Binary.In);
+
+        Binary.In in = (Binary.In) m.where.get().expression;
+
+        Assert.assertTrue(in.rhs instanceof ListExpression);
+
+        ListExpression list = (ListExpression) in.rhs;
+
+        Assert.assertEquals(2, list.elts.size());
+        Assert.assertEquals("foo", ((Literal.StringLiteral) list.elts.get(0)).value);
+        Assert.assertEquals("bar", ((Literal.StringLiteral) list.elts.get(1)).value);
+    }
 }
