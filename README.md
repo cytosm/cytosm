@@ -62,7 +62,8 @@ Cytosm queries have been run on a variety of backends, obtaining quite surprisin
 - Arbitrary hops that could be defined in the gtop (similarly to the previous dot, more detail can be found in `PopulateJoins`)
 - Proper handling of the `COUNT` function (we only support limited use cases)
 - `SKIP`, `LIMIT` and `ORDER BY` are not propagated appropriately on "wide" query - that is queries involving at least one UNION in the generated SQL.
-- Improve the type-checker to compute correctly the type-checker of any expressions. The current version is incomplete.
+- Improve the type-checker to compute verify the correctness of any expressions before rendering. 
+  The current version is incomplete.
 
 The following would be nice to have:
 
