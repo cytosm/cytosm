@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Compound nodes
@@ -91,6 +92,17 @@ public class ExprTree {
                         "' on type " + expression.getClass()
                 );
             }
+        }
+    }
+
+    public static class ListExpr implements Expr {
+
+        public List<Expr> exprs = new ArrayList<>();
+
+        @Override
+        public String toSQLString(RenderingContext ctx) {
+            return "(" + exprs.stream().map(e -> e.toSQLString(ctx))
+                    .collect(Collectors.joining(",")) + ")";
         }
     }
 

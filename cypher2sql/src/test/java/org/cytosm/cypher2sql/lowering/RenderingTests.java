@@ -134,6 +134,14 @@ public class RenderingTests extends BaseLDBCTests {
     }
 
     @Test
+    public void testInExpression() throws Exception {
+        String cypher = "" +
+                "MATCH (a:Person) WHERE a.firstName IN ['foo', 'bar']\n" +
+                "RETURN a.firstName";
+        cypher2sql(cypher);
+    }
+
+    @Test
     public void testAliasVarInUnions() throws Exception {
         String cypher = "" +
                 "MATCH (a:Message)\n" +
