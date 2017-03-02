@@ -125,16 +125,16 @@ public class GtopTest {
          * Restriction("tableName.columnName", "pattern"); restrictions.add(restriction);
          *
          * node.setAttributes(attributes); node.setTableName("tableName");
-         * node.setIdColumn("idColumn"); node.setSynonyms(labels);
+         * node.setIdColumn("idColumn"); node.setTypes(labels);
          * node.setRestrictions(restrictions); nodes.add(node);
          *
          * Edge edge = new Edge(); edge.setEdgeMappedTable("edgeTable");
          * edge.setDestinationTableColumn("destination"); edge.setSourceTableName("tableName");
-         * edge.setSourceTableColumn("columnName"); List<String> synonyms = new ArrayList<>();
-         * synonyms.add("myEdgeTable");
+         * edge.setSourceTableColumn("columnName"); List<String> types = new ArrayList<>();
+         * types.add("myEdgeTable");
          *//*
            *
-           * edge.setSynonyms(synonyms);
+           * edge.setTypes(types);
            *
            * edges.add(edge);
            */
@@ -164,28 +164,28 @@ public class GtopTest {
 
         // abstract edges:
 
-        Assert.assertEquals(gInterface.getAbstractionEdgesBySynonym("edge1").get(0).getDestinationType().get(0),
-                gInterfaceFromString.getAbstractionEdgesBySynonym("edge1").get(0).getDestinationType().get(0));
+        Assert.assertEquals(gInterface.getAbstractionEdgesByTypes("edge1").get(0).getDestinationType().get(0),
+                gInterfaceFromString.getAbstractionEdgesByTypes("edge1").get(0).getDestinationType().get(0));
 
-        Assert.assertEquals(gInterface.getAbstractionEdgesBySynonym("edge1").get(0).getSourceType().get(0),
-                gInterfaceFromString.getAbstractionEdgesBySynonym("edge1").get(0).getSourceType().get(0));
+        Assert.assertEquals(gInterface.getAbstractionEdgesByTypes("edge1").get(0).getSourceType().get(0),
+                gInterfaceFromString.getAbstractionEdgesByTypes("edge1").get(0).getSourceType().get(0));
 
-        Assert.assertEquals(gInterface.getAbstractionEdgesBySynonym("edge1").get(0).isDirected(), gInterfaceFromString
-                .getAbstractionEdgesBySynonym("edge1").get(0).isDirected());
+        Assert.assertEquals(gInterface.getAbstractionEdgesByTypes("edge1").get(0).isDirected(), gInterfaceFromString
+                .getAbstractionEdgesByTypes("edge1").get(0).isDirected());
 
-        Assert.assertEquals(gInterface.getAbstractionEdgesBySynonym("edge1").get(0).getSynonyms().get(0), gInterfaceFromString
-                .getAbstractionEdgesBySynonym("edge1").get(0).getSynonyms().get(0));
+        Assert.assertEquals(gInterface.getAbstractionEdgesByTypes("edge1").get(0).getTypes().get(0), gInterfaceFromString
+                .getAbstractionEdgesByTypes("edge1").get(0).getTypes().get(0));
 
-        AbstractionNode nod1 = gInterface.getAbstractionNodesBySynonym("node1").get(0);
-        AbstractionNode nod2 = gInterface.getAbstractionNodesBySynonym("node2").get(0);
+        AbstractionNode nod1 = gInterface.getAbstractionNodesByTypes("node1").get(0);
+        AbstractionNode nod2 = gInterface.getAbstractionNodesByTypes("node2").get(0);
 
         List<AbstractionNode> allNodes = gInterface.getAbstractionNodes();
         List<AbstractionNode> sourceNodes =
-                gInterface.getSourceNodesForEdge(gInterface.getAbstractionEdgesBySynonym("edge1").get(0));
+                gInterface.getSourceNodesForEdge(gInterface.getAbstractionEdgesByTypes("edge1").get(0));
         List<AbstractionNode> destinationNodes =
-                gInterface.getDestinationNodesForEdge(gInterface.getAbstractionEdgesBySynonym("edge1").get(0));
+                gInterface.getDestinationNodesForEdge(gInterface.getAbstractionEdgesByTypes("edge1").get(0));
         List<AbstractionNode> allNodesFromEdge =
-                gInterface.getNodesForEdge(gInterface.getAbstractionEdgesBySynonym("edge1").get(0));
+                gInterface.getNodesForEdge(gInterface.getAbstractionEdgesByTypes("edge1").get(0));
 
         Assert.assertTrue(allNodes.contains(nod1) && allNodes.contains(nod2));
         Assert.assertTrue(sourceNodes.contains(nod1) && sourceNodes.size() == 1);
@@ -196,11 +196,11 @@ public class GtopTest {
         //Assert.assertEquals(impedg1, impedg2);
 
         // abstract Nodes:
-        Assert.assertEquals(gInterface.getAbstractionNodesBySynonym("node1"),
-                gInterfaceFromString.getAbstractionNodesBySynonym("node1"));
+        Assert.assertEquals(gInterface.getAbstractionNodesByTypes("node1"),
+                gInterfaceFromString.getAbstractionNodesByTypes("node1"));
 
-        Assert.assertNotEquals(gInterface.getAbstractionNodesBySynonym("node1"),
-                gInterfaceFromString.getAbstractionNodesBySynonym("node2"));
+        Assert.assertNotEquals(gInterface.getAbstractionNodesByTypes("node1"),
+                gInterfaceFromString.getAbstractionNodesByTypes("node2"));
 
         //Assert.assertEquals(gTop.getAbstractionNodes(), gtopFromString.getAbstractionNodes());
 

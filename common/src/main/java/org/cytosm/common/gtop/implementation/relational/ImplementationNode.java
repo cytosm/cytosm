@@ -10,9 +10,9 @@ import java.util.List;
 public class ImplementationNode {
 
     /***
-     * List of synonyms of tables, as used in graph query languages e.g. Cypher, Gremlin.
+     * List of types used to reference that node, as used in Graph Query Languages e.g. labels in Cypher.
      */
-    private List<String> synonyms = new ArrayList<>();
+    private List<String> types = new ArrayList<>();
 
     /***
      * Simple identifier for table name e.g. “person” or “ab-21-78”. This specifies the name of the
@@ -45,7 +45,7 @@ public class ImplementationNode {
      * Creates an empty implementation node.
      */
     public ImplementationNode() {
-        synonyms = new ArrayList<>();
+        types = new ArrayList<>();
         tableName = "";
         id = new ArrayList<>();
         attributes = new ArrayList<>();
@@ -54,15 +54,15 @@ public class ImplementationNode {
 
     /***
      * Generates an implementation Node.
-     * @param synonyms synonyms used on the abstraction level for this implementation Node
+     * @param types types used on the abstraction level for this implementation Node
      * @param tableName table where this node information comes from
      * @param id List of id items that compose the ID of that node
      * @param attributes list of attributes in that node
      * @param restrictions restrictions to assume that a tuple is a node of this type.
      */
-    public ImplementationNode(final List<String> synonyms, final String tableName, final List<NodeIdImplementation> id,
-            final List<Attribute> attributes, final List<RestrictionClauses> restrictions) {
-        this.synonyms = synonyms;
+    public ImplementationNode(final List<String> types, final String tableName, final List<NodeIdImplementation> id,
+                              final List<Attribute> attributes, final List<RestrictionClauses> restrictions) {
+        this.types = types;
         this.tableName = tableName;
         this.id = id;
         this.attributes = attributes;
@@ -81,10 +81,10 @@ public class ImplementationNode {
     }
 
     /**
-     * @param synonyms the synonyms to set
+     * @param types the types to set
      */
-    public void setSynonyms(final List<String> synonyms) {
-        this.synonyms = synonyms;
+    public void setTypes(final List<String> types) {
+        this.types = types;
     }
 
     /**
@@ -102,10 +102,10 @@ public class ImplementationNode {
     }
 
     /**
-     * @return the synonyms
+     * @return the types
      */
-    public List<String> getSynonyms() {
-        return synonyms;
+    public List<String> getTypes() {
+        return types;
     }
 
     /**

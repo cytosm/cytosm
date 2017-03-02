@@ -2,26 +2,26 @@
   "version" : "1.0",
   "abstractionLevel" : {
     "abstractionNodes" : [ {
-      "synonyms" : [ "movie" ],
+      "types" : [ "movie" ],
       "attributes" : [ "id", "title", "released", "tagline" ]
     }, {
-      "synonyms" : [ "person" ],
+      "types" : [ "person" ],
       "attributes" : [ "id", "name", "born" ]
     } ],
     "abstractionEdges" : [ {
-      "synonyms" : [ "person_id_directed_person_id" ],
+      "types" : [ "person_id_directed_person_id" ],
       "attributes" : [ ],
       "sourceType" : [ "person" ],
       "destinationType" : [ "movie" ],
       "directed" : true
     }, {
-      "synonyms" : [ "person_id_acted_in_person_id" ],
+      "types" : [ "person_id_acted_in_person_id" ],
       "attributes" : [ "role" ],
       "sourceType" : [ "person" ],
       "destinationType" : [ "movie" ],
       "directed" : true
     }, {
-      "synonyms" : [ "person_id_produced_person_id" ],
+      "types" : [ "person_id_produced_person_id" ],
       "attributes" : [ ],
       "sourceType" : [ "person" ],
       "destinationType" : [ "movie" ],
@@ -33,7 +33,7 @@
       "storageLayout" : "IGNORETIME"
     },
     "implementationNodes" : [ {
-      "synonyms" : [ "movie" ],
+      "types" : [ "movie" ],
       "tableName" : "movie",
       "id" : [ {
         "columnName" : "id",
@@ -59,7 +59,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "person" ],
+      "types" : [ "person" ],
       "tableName" : "person",
       "id" : [ {
         "columnName" : "id",
@@ -82,7 +82,7 @@
       "restrictions" : [ ]
     } ],
     "implementationEdges" : [ {
-      "synonyms" : [ "person_id_directed_person_id" ],
+      "types" : [ "person_id_directed_person_id" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "person",
@@ -96,7 +96,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "person_id_acted_in_person_id" ],
+      "types" : [ "person_id_acted_in_person_id" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "person",
@@ -114,7 +114,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "person_id_produced_person_id" ],
+      "types" : [ "person_id_produced_person_id" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "person",

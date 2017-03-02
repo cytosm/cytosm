@@ -51,13 +51,13 @@ public class ExpansionEdge extends ExpansionElement {
      * @param attributes attributes from the edge
      * @param cypherInformation additional edge information available in the cypher
      */
-    public ExpansionEdge(final List<String> synonyms, final Map<String, String> attributes,
+    public ExpansionEdge(final List<String> types, final Map<String, String> attributes,
                          final Direction direction, final OptionalLong minimumRange,
                          final OptionalLong maximumRange, final boolean matchall,
                          final Optional<String> variable) {
-        super(synonyms, attributes);
+        super(types, attributes);
 
-        if (!synonyms.isEmpty()) {
+        if (!types.isEmpty()) {
             hintAvailable = true;
         }
         if (direction.equals(Direction.Right) || direction.equals(Direction.Left)) {
@@ -90,7 +90,7 @@ public class ExpansionEdge extends ExpansionElement {
      * @param expansionEdge original expansion edge to be cloned
      */
     public ExpansionEdge(final ExpansionEdge expansionEdge) {
-        synonyms.addAll(expansionEdge.getSynonyms());
+        types.addAll(expansionEdge.getTypes());
 
         if (expansionEdge.directed) {
             directed = true;

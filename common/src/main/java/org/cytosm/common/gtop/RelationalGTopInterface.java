@@ -132,43 +132,43 @@ public class RelationalGTopInterface extends GTopInterfaceImpl {
     }
 
     /***
-     * Finds an Implementation Node by synonym.
+     * Finds an Implementation Node by type.
      *
-     * @param synonym
+     * @param type
      * @return
      */
     @Override
     @JsonIgnore
-    public List<ImplementationNode> getImplementationNodesBySynonym(final String synonym) {
+    public List<ImplementationNode> getImplementationNodesByType(final String type) {
         List<ImplementationNode> foundNodes = new ArrayList<>();
-        if (synonym == null) {
+        if (type == null) {
             return foundNodes;
         }
         foundNodes = gtop
-                .getImplementationLevel().getImplementationNodes().stream().filter(node -> node.getSynonyms().stream()
-                        .map(String::toLowerCase).collect(Collectors.toList()).contains(synonym.toLowerCase()))
+                .getImplementationLevel().getImplementationNodes().stream().filter(node -> node.getTypes().stream()
+                        .map(String::toLowerCase).collect(Collectors.toList()).contains(type.toLowerCase()))
                 .collect(Collectors.toList());
 
         return foundNodes;
     }
 
     /***
-     * Finds an Implementation edge by synonym.
+     * Finds an Implementation edge by type.
      *
-     * @param synonym
+     * @param type
      * @return
      */
     @Override
     @JsonIgnore
-    public List<ImplementationEdge> getImplementationEdgeBySynonym(final String synonym) {
+    public List<ImplementationEdge> getImplementationEdgeByType(final String type) {
         List<ImplementationEdge> foundEdge = new ArrayList<>();
-        if (synonym == null) {
+        if (type == null) {
             return foundEdge;
         }
 
         foundEdge = gtop
-                .getImplementationLevel().getImplementationEdges().stream().filter(edge -> edge.getSynonyms().stream()
-                        .map(String::toLowerCase).collect(Collectors.toList()).contains(synonym.toLowerCase()))
+                .getImplementationLevel().getImplementationEdges().stream().filter(edge -> edge.getTypes().stream()
+                        .map(String::toLowerCase).collect(Collectors.toList()).contains(type.toLowerCase()))
                 .collect(Collectors.toList());
 
         return foundEdge;
@@ -185,9 +185,9 @@ public class RelationalGTopInterface extends GTopInterfaceImpl {
     public List<ImplementationNode> findNodeImplementations(final AbstractionNode node) {
         List<ImplementationNode> implementation = new ArrayList<>();
 
-        // if the implementation matches any of the abstraction level synonyms, append to list.
+        // if the implementation matches any of the abstraction level types, append to list.
         implementation = gtop.getImplementationLevel().getImplementationNodes().stream()
-                .filter(filteredNode -> !Collections.disjoint(filteredNode.getSynonyms(), node.getSynonyms()))
+                .filter(filteredNode -> !Collections.disjoint(filteredNode.getTypes(), node.getTypes()))
                 .collect(Collectors.toList());
 
         return implementation;
@@ -207,7 +207,7 @@ public class RelationalGTopInterface extends GTopInterfaceImpl {
         ImplementationEdge implementation = null;
 
         for (ImplementationEdge analyzedEdge : gtop.getImplementationLevel().getImplementationEdges()) {
-            if (!Collections.disjoint(edge.getSynonyms(), analyzedEdge.getSynonyms())) {
+            if (!Collections.disjoint(edge.getTypes(), analyzedEdge.getTypes())) {
                 implementation = analyzedEdge;
                 break;
             }
@@ -236,7 +236,7 @@ public class RelationalGTopInterface extends GTopInterfaceImpl {
     public AbstractionNode createAbstractionNodeFromImplementation(final ImplementationNode node) {
         List<String> attributsList = node.getAttributes().stream().map(attribute -> attribute.getAbstractionLevelName())
                 .collect(Collectors.toList());
-        return new AbstractionNode(node.getSynonyms(), attributsList);
+        return new AbstractionNode(node.getTypes(), attributsList);
     }
 
     @Override
@@ -250,7 +250,7 @@ public class RelationalGTopInterface extends GTopInterfaceImpl {
         // Removes duplicates
         List<String> filteredAttributes = attributesList.stream().distinct().collect(Collectors.toList());
 
-        return new AbstractionEdge(edge.getSynonyms(), filteredAttributes, new ArrayList<String>(),
+        return new AbstractionEdge(edge.getTypes(), filteredAttributes, new ArrayList<String>(),
                 new ArrayList<String>(), false);
     }
 }

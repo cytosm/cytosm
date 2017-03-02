@@ -55,7 +55,7 @@
 							}
 						}
 					},
-					"synonyms": {
+					"types": {
 						"type": "array",
 						"items": {
 							"type": "string"
@@ -118,7 +118,7 @@
 							}
 						}
 					},
-					"synonyms": {
+					"types": {
 						"type": "array",
 						"items": {
 							"type": "string"

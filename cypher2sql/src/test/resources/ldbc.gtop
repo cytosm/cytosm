@@ -2,179 +2,179 @@
 	"version": "1.0",
 	"abstractionLevel": {
 		"abstractionNodes": [{
-			"synonyms": ["person"],
+			"types": ["person"],
 			"attributes": ["id", "creationDate", "firstName", "lastName", "gender", "birthday", "browserUsed", "locationIP"]
 		}, {
-			"synonyms": ["university"],
+			"types": ["university"],
 			"attributes": ["id", "name"]
 		}, {
-			"synonyms": ["company"],
+			"types": ["company"],
 			"attributes": ["id", "name"]
 		}, {
-			"synonyms": ["city"],
+			"types": ["city"],
 			"attributes": ["id", "name"]
 		}, {
-			"synonyms": ["country"],
+			"types": ["country"],
 			"attributes": ["id", "name"]
 		}, {
-			"synonyms": ["continent"],
+			"types": ["continent"],
 			"attributes": ["id", "name"]
 		}, {
-			"synonyms": ["comment", "message"],
+			"types": ["comment", "message"],
 			"attributes": ["id", "creationDate", "browserUsed", "locationIP", "content", "length"]
 		}, {
-			"synonyms": ["post", "message"],
+			"types": ["post", "message"],
 			"attributes": ["id", "creationDate", "browserUsed", "locationIP", "content", "length", "language", "imageFile"]
 		}, {
-			"synonyms": ["forum"],
+			"types": ["forum"],
 			"attributes": ["id", "title", "creationDate"]
 		}, {
-			"synonyms": ["tag"],
+			"types": ["tag"],
 			"attributes": ["id", "name"]
 		}, {
-			"synonyms": ["tagclass"],
+			"types": ["tagclass"],
 			"attributes": ["id", "name"]
 		}],
 		"abstractionEdges": [{
-			"synonyms": ["knows"],
+			"types": ["knows"],
 			"attributes": ["creationDate"],
 			"sourceType": ["person"],
 			"destinationType": ["person"],
 			"directed": true
 		}, {
-			"synonyms": ["has_interest"],
+			"types": ["has_interest"],
 			"attributes": [],
 			"sourceType": ["person"],
 			"destinationType": ["tag"],
 			"directed": true
 		}, {
-			"synonyms": ["has_type"],
+			"types": ["has_type"],
 			"attributes": [],
 			"sourceType": ["tag"],
 			"destinationType": ["tagclass"],
 			"directed": true
 		}, {
-			"synonyms": ["has_moderator"],
+			"types": ["has_moderator"],
 			"attributes": [],
 			"sourceType": ["forum"],
 			"destinationType": ["person"],
 			"directed": true
 		}, {
-			"synonyms": ["has_member"],
+			"types": ["has_member"],
 			"attributes": ["joinDate"],
 			"sourceType": ["forum"],
 			"destinationType": ["person"],
 			"directed": true
 		}, {
-			"synonyms": ["container_of"],
+			"types": ["container_of"],
 			"attributes": [],
 			"sourceType": ["forum"],
 			"destinationType": ["post"],
 			"directed": true
 		}, {
-			"synonyms": ["has_tag"],
+			"types": ["has_tag"],
 			"attributes": [],
 			"sourceType": ["post"],
 			"destinationType": ["tag"],
 			"directed": true
 		}, {
-			"synonyms": ["has_tag"],
+			"types": ["has_tag"],
 			"attributes": [],
 			"sourceType": ["comment"],
 			"destinationType": ["tag"],
 			"directed": true
 		},{
-			"synonyms": ["is_subclass_of"],
+			"types": ["is_subclass_of"],
 			"attributes": [],
 			"sourceType": ["tagclass"],
 			"destinationType": ["tagclass"],
 			"directed": true
 		}, {
-			"synonyms": ["has_creator"],
+			"types": ["has_creator"],
 			"attributes": [],
 			"sourceType": ["post"],
 			"destinationType": ["person"],
 			"directed": true
 		}, {
-			"synonyms": ["has_creator"],
+			"types": ["has_creator"],
 			"attributes": [],
 			"sourceType": ["comment"],
 			"destinationType": ["person"],
 			"directed": true
 		}, {
-			"synonyms": ["likes"],
+			"types": ["likes"],
 			"attributes": ["creationDate"],
 			"sourceType": ["person"],
 			"destinationType": ["post"],
 			"directed": true
 		},{
-			"synonyms": ["likes"],
+			"types": ["likes"],
 			"attributes": ["creationDate"],
 			"sourceType": ["person"],
 			"destinationType": ["comment"],
 			"directed": true
 		}, {
-			"synonyms": ["reply_of"],
+			"types": ["reply_of"],
 			"attributes": [],
 			"sourceType": ["comment"],
 			"destinationType": ["post"],
 			"directed": true
 		},{
-			"synonyms": ["reply_of"],
+			"types": ["reply_of"],
 			"attributes": [],
 			"sourceType": ["comment"],
 			"destinationType": ["comment"],
 			"directed": true
 		}, {
-			"synonyms": ["is_located_in"],
+			"types": ["is_located_in"],
 			"attributes": [],
 			"sourceType": ["post"],
 			"destinationType": ["country"],
 			"directed": true
 		}, {
-			"synonyms": ["is_located_in"],
+			"types": ["is_located_in"],
 			"attributes": [],
 			"sourceType": ["comment"],
 			"destinationType": ["country"],
 			"directed": true
 		}, {
-			"synonyms": ["works_at"],
+			"types": ["works_at"],
 			"attributes": ["workFrom"],
 			"sourceType": ["person"],
 			"destinationType": ["company"],
 			"directed": true
 		}, {
-			"synonyms": ["study_at"],
+			"types": ["study_at"],
 			"attributes": ["classYear"],
 			"sourceType": ["person"],
 			"destinationType": ["university"],
 			"directed": true
 		}, {
-			"synonyms": ["is_located_in"],
+			"types": ["is_located_in"],
 			"attributes": [],
 			"sourceType": ["university"],
 			"destinationType": ["city"],
 			"directed": true
 		}, {
-			"synonyms": ["is_located_in"],
+			"types": ["is_located_in"],
 			"attributes": [],
 			"sourceType": ["company"],
 			"destinationType": ["country"],
 			"directed": true
 		}, {
-			"synonyms": ["is_located_in"],
+			"types": ["is_located_in"],
 			"attributes": [],
 			"sourceType": ["person"],
 			"destinationType": ["city"],
 			"directed": true
 		}, {
-			"synonyms": ["is_part_of"],
+			"types": ["is_part_of"],
 			"attributes": [],
 			"sourceType": ["city"],
 			"destinationType": ["country"],
 			"directed": true
 		}, {
-			"synonyms": ["is_part_of"],
+			"types": ["is_part_of"],
 			"attributes": [],
 			"sourceType": ["country"],
 			"destinationType": ["continent"],
@@ -186,7 +186,7 @@
 			"storageLayout": "IGNORETIME"
 		},
 		"implementationNodes": [{
-			"synonyms": ["Person"],
+			"types": ["Person"],
 			"tableName": "Person",
 			"id": [{
 				"columnName": "id",
@@ -224,7 +224,7 @@
 			}],
 			"restrictions": []
 		}, {
-			"synonyms": ["university"],
+			"types": ["university"],
 			"tableName": "University",
 			"id": [{
 				"columnName": "id",
@@ -238,7 +238,7 @@
 			}],
 			"restrictions": []
 		}, {
-			"synonyms": ["company"],
+			"types": ["company"],
 			"tableName": "Company",
 			"id": [{
 				"columnName": "id",
@@ -252,7 +252,7 @@
 			}],
 			"restrictions": []
 		}, {
-			"synonyms": ["city"],
+			"types": ["city"],
 			"tableName": "City",
 			"id": [{
 				"columnName": "id",
@@ -266,7 +266,7 @@
 			}],
 			"restrictions": []
 		}, {
-			"synonyms": ["country"],
+			"types": ["country"],
 			"tableName": "Country",
 			"id": [{
 				"columnName": "id",
@@ -280,7 +280,7 @@
 			}],
 			"restrictions": []
 		}, {
-			"synonyms": ["continent"],
+			"types": ["continent"],
 			"tableName": "Continent",
 			"id": [{
 				"columnName": "id",
@@ -294,7 +294,7 @@
 			}],
 			"restrictions": []
 		}, {
-			"synonyms": ["forum"],
+			"types": ["forum"],
 			"tableName": "Forum",
 			"id": [{
 				"columnName": "id",
@@ -312,7 +312,7 @@
 			}],
 			"restrictions": []
 		}, {
-			"synonyms": ["tag"],
+			"types": ["tag"],
 			"tableName": "Tag",
 			"id": [{
 				"columnName": "id",
@@ -326,7 +326,7 @@
 			}],
 			"restrictions": []
 		}, {
-			"synonyms": ["tagclass"],
+			"types": ["tagclass"],
 			"tableName": "TagClass",
 			"id": [{
 				"columnName": "id",
@@ -340,7 +340,7 @@
 			}],
 			"restrictions": []
 		}, {
-			"synonyms": ["post", "message"],
+			"types": ["post", "message"],
 			"tableName": "Post",
 			"id": [{
 				"columnName": "id",
@@ -378,7 +378,7 @@
 			}],
 			"restrictions": []
 		}, {
-			"synonyms": ["comment", "message"],
+			"types": ["comment", "message"],
 			"tableName": "Comment",
 			"id": [{
 				"columnName": "id",
@@ -409,7 +409,7 @@
 			"restrictions": []
 		}],
 		"implementationEdges": [{
-				"synonyms": ["knows"],
+				"types": ["knows"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Person",
@@ -427,7 +427,7 @@
 					}]
 				}]
 			}, {
-				"synonyms": ["has_interest"],
+				"types": ["has_interest"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Person",
@@ -441,7 +441,7 @@
 					}]
 				}]
 			}, {
-				"synonyms": ["has_moderator"],
+				"types": ["has_moderator"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Forum",
@@ -457,7 +457,7 @@
 			},
 
 			{
-				"synonyms": ["has_member"],
+				"types": ["has_member"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Forum",
@@ -477,7 +477,7 @@
 			},
 
 			{
-				"synonyms": ["likes"],
+				"types": ["likes"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Person",
@@ -496,7 +496,7 @@
 				}]
 			},
 			{
-				"synonyms": ["likes"],
+				"types": ["likes"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Person",
@@ -515,7 +515,7 @@
 				}]
 			},
 			{
-				"synonyms": ["has_type"],
+				"types": ["has_type"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Tag",
@@ -529,7 +529,7 @@
 					}]
 				}]
 			}, {
-				"synonyms": ["is_subclass_of"],
+				"types": ["is_subclass_of"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "TagClass",
@@ -543,7 +543,7 @@
 					}]
 				}]
 			}, {
-				"synonyms": ["has_creator"],
+				"types": ["has_creator"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Post",
@@ -557,7 +557,7 @@
 					}]
 				}]
 			}, {
-				"synonyms": ["has_creator"],
+				"types": ["has_creator"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Comment",
@@ -571,7 +571,7 @@
 					}]
 				}]
 			}, {
-				"synonyms": ["is_located_in"],
+				"types": ["is_located_in"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Comment",
@@ -585,7 +585,7 @@
 					}]
 				}]
 			},{
-				"synonyms": ["is_located_in"],
+				"types": ["is_located_in"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Post",
@@ -599,7 +599,7 @@
 					}]
 				}]
 			}, {
-				"synonyms": ["reply_of"],
+				"types": ["reply_of"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Comment",
@@ -613,7 +613,7 @@
 					}]
 				}]
 			},  {
-				"synonyms": ["reply_of"],
+				"types": ["reply_of"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Comment",
@@ -627,7 +627,7 @@
 					}]
 				}]
 			}, {
-				"synonyms": ["has_tag"],
+				"types": ["has_tag"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Post",
@@ -641,7 +641,7 @@
 					}]
 				}]
 			}, {
-				"synonyms": ["has_tag"],
+				"types": ["has_tag"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Comment",
@@ -655,7 +655,7 @@
 					}]
 				}]
 			},{
-				"synonyms": ["is_located_in"],
+				"types": ["is_located_in"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Company",
@@ -669,7 +669,7 @@
 					}]
 				}]
 			}, {
-				"synonyms": ["is_located_in"],
+				"types": ["is_located_in"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "University",
@@ -685,7 +685,7 @@
 			},
 
 			{
-				"synonyms": ["is_part_of"],
+				"types": ["is_part_of"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "City",
@@ -701,7 +701,7 @@
 			},
 
 			{
-				"synonyms": ["is_part_of"],
+				"types": ["is_part_of"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Country",
@@ -717,7 +717,7 @@
 			},
 
 			{
-				"synonyms": ["is_located_in"],
+				"types": ["is_located_in"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Person",
@@ -731,7 +731,7 @@
 					}]
 				}]
 			}, {
-				"synonyms": ["works_at"],
+				"types": ["works_at"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Person",
@@ -751,7 +751,7 @@
 					}]
 				}]
 			}, {
-				"synonyms": ["study_at"],
+				"types": ["study_at"],
 				"paths": [{
 					"traversalHops": [{
 						"sourceTableName": "Person",

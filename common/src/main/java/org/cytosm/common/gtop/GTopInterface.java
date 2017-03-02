@@ -74,53 +74,53 @@ interface GTopInterface {
     void setImplementationEdges(final List<ImplementationEdge> edges);
 
     /***
-     * @return a deduplicated edge synonyms list.
+     * @return a deduplicated edge types list.
      */
     @JsonIgnore
-    List<String> getAllEdgeSynonyms();
+    List<String> getAllEdgeTypes();
 
     /***
-     * @return a deduplicated edge synonyms list.
+     * @return a deduplicated edge types list.
      */
     @JsonIgnore
-    List<String> getAllNodeSynonyms();
+    List<String> getAllNodeTypes();
 
     /***
-     * Finds the Abstraction Edges for a given synonym.
+     * Finds the Abstraction Edges for a given types.
      *
-     * @param synonym
+     * @param types
      * @return
      */
     @JsonIgnore
-    List<AbstractionEdge> getAbstractionEdgesBySynonym(final String synonym);
+    List<AbstractionEdge> getAbstractionEdgesByTypes(final String types);
 
 
     /**
-     * Finds an abstract node by synonyms.
+     * Finds an abstract node by types.
      *
-     * @param synonym
+     * @param types
      * @return
      */
     @JsonIgnore
-    List<AbstractionNode> getAbstractionNodesBySynonym(final String synonym);
+    List<AbstractionNode> getAbstractionNodesByTypes(final String types);
 
     /**
-     * Finds an Implementation nodes by synonym.
+     * Finds an Implementation nodes by type.
      *
-     * @param synonym
+     * @param type
      * @return
      */
     @JsonIgnore
-    List<ImplementationNode> getImplementationNodesBySynonym(final String synonym);
+    List<ImplementationNode> getImplementationNodesByType(final String type);
 
     /***
-     * Finds an Implementation edges by synonym.
+     * Finds an Implementation edges by type.
      *
-     * @param synonym
+     * @param type
      * @return
      */
     @JsonIgnore
-    List<ImplementationEdge> getImplementationEdgeBySynonym(final String synonym);
+    List<ImplementationEdge> getImplementationEdgeByType(final String type);
 
     /***
      * Return the implementations for a given node. The node can be represented in several tables.
@@ -167,7 +167,7 @@ interface GTopInterface {
      * @return list of Abstraction Edges
      */
     @JsonIgnore
-    List<AbstractionEdge> getAllAbstractEdgesForNodeSynonms(final List<String> synonms);
+    List<AbstractionEdge> getAllAbstractEdgesForNodeTypes(final List<String> types);
 
     /**
      * Get the edges that connect nodeA to nodeB and are directed.
@@ -193,7 +193,7 @@ interface GTopInterface {
      * Return destination node types for a given edge.
      *
      * @param edge edge to lookup
-     * @return list node synonyms that this edge directs to
+     * @return list node types that this edge directs to
      */
     @JsonIgnore
     List<AbstractionNode> getDestinationNodesForEdge(final AbstractionEdge analyzedEdge);
@@ -202,7 +202,7 @@ interface GTopInterface {
      * Return all node types associated with a given edge.
      *
      * @param edge edge to lookup
-     * @return List of nodes synonyms associated with this edge
+     * @return List of nodes types associated with this edge
      */
     @JsonIgnore
     List<AbstractionNode> getNodesForEdge(final AbstractionEdge edge);
