@@ -2,116 +2,116 @@
   "version" : "1.0",
   "abstractionLevel" : {
     "abstractionNodes" : [ {
-      "synonyms" : [ "orders" ],
+      "types" : [ "orders" ],
       "attributes" : [ "OrderID", "OrderDate", "RequiredDate", "ShippedDate", "Freight", "ShipName", "ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry" ]
     }, {
-      "synonyms" : [ "products" ],
+      "types" : [ "products" ],
       "attributes" : [ "ProductID", "ProductName", "QuantityPerUnit", "UnitPrice", "UnitsInStock", "UnitsOnOrder", "ReorderLevel", "Discontinued" ]
     }, {
-      "synonyms" : [ "categories" ],
+      "types" : [ "categories" ],
       "attributes" : [ "CategoryID", "CategoryName", "Description", "Picture" ]
     }, {
-      "synonyms" : [ "shippers" ],
+      "types" : [ "shippers" ],
       "attributes" : [ "ShipperID", "CompanyName", "Phone" ]
     }, {
-      "synonyms" : [ "employees" ],
+      "types" : [ "employees" ],
       "attributes" : [ "EmployeeID", "LastName", "FirstName", "Title", "TitleOfCourtesy", "BirthDate", "HireDate", "Address", "City", "Region", "PostalCode", "Country", "HomePhone", "Extension", "Photo", "Notes", "PhotoPath" ]
     }, {
-      "synonyms" : [ "regions" ],
+      "types" : [ "regions" ],
       "attributes" : [ "RegionID", "RegionDescription" ]
     }, {
-      "synonyms" : [ "territories" ],
+      "types" : [ "territories" ],
       "attributes" : [ "TerritoryID", "TerritoryDescription" ]
     }, {
-      "synonyms" : [ "customerdemographics" ],
+      "types" : [ "customerdemographics" ],
       "attributes" : [ "CustomerTypeID", "CustomerDesc" ]
     }, {
-      "synonyms" : [ "suppliers" ],
+      "types" : [ "suppliers" ],
       "attributes" : [ "SupplierID", "CompanyName", "ContactName", "ContactTitle", "Address", "City", "Region", "PostalCode", "Country", "Phone", "Fax", "HomePage" ]
     }, {
-      "synonyms" : [ "customers" ],
+      "types" : [ "customers" ],
       "attributes" : [ "CustomerID", "CompanyName", "ContactName", "ContactTitle", "Address", "City", "Region", "PostalCode", "Country", "Phone", "Fax" ]
     } ],
     "abstractionEdges" : [ {
-      "synonyms" : [ "customerid_orders_employeeid" ],
+      "types" : [ "customerid_orders_employeeid" ],
       "attributes" : [ "OrderDate", "RequiredDate", "ShippedDate", "Freight", "ShipName", "ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry" ],
       "sourceType" : [ "Customers" ],
       "destinationType" : [ "Employees" ],
       "directed" : false
     }, {
-      "synonyms" : [ "employeeid_orders_shipvia" ],
+      "types" : [ "employeeid_orders_shipvia" ],
       "attributes" : [ "OrderDate", "RequiredDate", "ShippedDate", "Freight", "ShipName", "ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry" ],
       "sourceType" : [ "Employees" ],
       "destinationType" : [ "Shippers" ],
       "directed" : false
     }, {
-      "synonyms" : [ "customerid_orders_shipvia" ],
+      "types" : [ "customerid_orders_shipvia" ],
       "attributes" : [ "OrderDate", "RequiredDate", "ShippedDate", "Freight", "ShipName", "ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry" ],
       "sourceType" : [ "Customers" ],
       "destinationType" : [ "Shippers" ],
       "directed" : false
     }, {
-      "synonyms" : [ "employees_employeeid_orders_employeeid" ],
+      "types" : [ "employees_employeeid_orders_employeeid" ],
       "attributes" : [ ],
       "sourceType" : [ "Orders" ],
       "destinationType" : [ "Employees" ],
       "directed" : false
     }, {
-      "synonyms" : [ "customers_customerid_orders_customerid" ],
+      "types" : [ "customers_customerid_orders_customerid" ],
       "attributes" : [ ],
       "sourceType" : [ "Orders" ],
       "destinationType" : [ "Customers" ],
       "directed" : false
     }, {
-      "synonyms" : [ "shipvia_shipvia_shippers_shipperid" ],
+      "types" : [ "shipvia_shipvia_shippers_shipperid" ],
       "attributes" : [ ],
       "sourceType" : [ "Orders" ],
       "destinationType" : [ "Shippers" ],
       "directed" : false
     }, {
-      "synonyms" : [ "categoryid_products_supplierid" ],
+      "types" : [ "categoryid_products_supplierid" ],
       "attributes" : [ "ProductName", "QuantityPerUnit", "UnitPrice", "UnitsInStock", "UnitsOnOrder", "ReorderLevel", "Discontinued" ],
       "sourceType" : [ "Categories" ],
       "destinationType" : [ "Suppliers" ],
       "directed" : false
     }, {
-      "synonyms" : [ "categories_categoryid_products_categoryid" ],
+      "types" : [ "categories_categoryid_products_categoryid" ],
       "attributes" : [ ],
       "sourceType" : [ "Products" ],
       "destinationType" : [ "Categories" ],
       "directed" : false
     }, {
-      "synonyms" : [ "supplierid_supplierid_suppliers_supplierid" ],
+      "types" : [ "supplierid_supplierid_suppliers_supplierid" ],
       "attributes" : [ ],
       "sourceType" : [ "Products" ],
       "destinationType" : [ "Suppliers" ],
       "directed" : false
     }, {
-      "synonyms" : [ "employees_employeeid_employees_reportsto" ],
+      "types" : [ "employees_employeeid_employees_reportsto" ],
       "attributes" : [ ],
       "sourceType" : [ "Employees" ],
       "destinationType" : [ "Employees" ],
       "directed" : false
     }, {
-      "synonyms" : [ "regions_regionid_territories_regionid" ],
+      "types" : [ "regions_regionid_territories_regionid" ],
       "attributes" : [ ],
       "sourceType" : [ "Territories" ],
       "destinationType" : [ "Regions" ],
       "directed" : false
     }, {
-      "synonyms" : [ "customerid_customercustomerdemo_customerid" ],
+      "types" : [ "customerid_customercustomerdemo_customerid" ],
       "attributes" : [ ],
       "sourceType" : [ "Customers" ],
       "destinationType" : [ "CustomerDemographics" ],
       "directed" : false
     }, {
-      "synonyms" : [ "employeeid_employeeterritories_employeeid" ],
+      "types" : [ "employeeid_employeeterritories_employeeid" ],
       "attributes" : [ ],
       "sourceType" : [ "Employees" ],
       "destinationType" : [ "Territories" ],
       "directed" : false
     }, {
-      "synonyms" : [ "orderid_orderdetails_orderid" ],
+      "types" : [ "orderid_orderdetails_orderid" ],
       "attributes" : [ "UnitPrice", "Quantity", "Discount" ],
       "sourceType" : [ "Orders" ],
       "destinationType" : [ "Products" ],
@@ -123,7 +123,7 @@
       "storageLayout" : "IGNORETIME"
     },
     "implementationNodes" : [ {
-      "synonyms" : [ "orders" ],
+      "types" : [ "orders" ],
       "tableName" : "Orders",
       "id" : [ {
         "columnName" : "OrderID",
@@ -177,7 +177,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "products" ],
+      "types" : [ "products" ],
       "tableName" : "Products",
       "id" : [ {
         "columnName" : "ProductID",
@@ -219,7 +219,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "categories" ],
+      "types" : [ "categories" ],
       "tableName" : "Categories",
       "id" : [ {
         "columnName" : "CategoryID",
@@ -245,7 +245,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "shippers" ],
+      "types" : [ "shippers" ],
       "tableName" : "Shippers",
       "id" : [ {
         "columnName" : "ShipperID",
@@ -267,7 +267,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "employees" ],
+      "types" : [ "employees" ],
       "tableName" : "Employees",
       "id" : [ {
         "columnName" : "EmployeeID",
@@ -345,7 +345,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "regions" ],
+      "types" : [ "regions" ],
       "tableName" : "Regions",
       "id" : [ {
         "columnName" : "RegionID",
@@ -363,7 +363,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "territories" ],
+      "types" : [ "territories" ],
       "tableName" : "Territories",
       "id" : [ {
         "columnName" : "TerritoryID",
@@ -381,7 +381,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "customerdemographics" ],
+      "types" : [ "customerdemographics" ],
       "tableName" : "CustomerDemographics",
       "id" : [ {
         "columnName" : "CustomerTypeID",
@@ -399,7 +399,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "suppliers" ],
+      "types" : [ "suppliers" ],
       "tableName" : "Suppliers",
       "id" : [ {
         "columnName" : "SupplierID",
@@ -457,7 +457,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "customers" ],
+      "types" : [ "customers" ],
       "tableName" : "Customers",
       "id" : [ {
         "columnName" : "CustomerID",
@@ -512,7 +512,7 @@
       "restrictions" : [ ]
     } ],
     "implementationEdges" : [ {
-      "synonyms" : [ "customerid_orders_employeeid" ],
+      "types" : [ "customerid_orders_employeeid" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Customers",
@@ -566,7 +566,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "employeeid_orders_shipvia" ],
+      "types" : [ "employeeid_orders_shipvia" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Employees",
@@ -620,7 +620,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "customerid_orders_shipvia" ],
+      "types" : [ "customerid_orders_shipvia" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Customers",
@@ -674,7 +674,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "employees_employeeid_orders_employeeid" ],
+      "types" : [ "employees_employeeid_orders_employeeid" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Orders",
@@ -688,7 +688,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "customers_customerid_orders_customerid" ],
+      "types" : [ "customers_customerid_orders_customerid" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Orders",
@@ -702,7 +702,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "shipvia_shipvia_shippers_shipperid" ],
+      "types" : [ "shipvia_shipvia_shippers_shipperid" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Orders",
@@ -716,7 +716,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "categoryid_products_supplierid" ],
+      "types" : [ "categoryid_products_supplierid" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Categories",
@@ -758,7 +758,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "categories_categoryid_products_categoryid" ],
+      "types" : [ "categories_categoryid_products_categoryid" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Products",
@@ -772,7 +772,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "supplierid_supplierid_suppliers_supplierid" ],
+      "types" : [ "supplierid_supplierid_suppliers_supplierid" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Products",
@@ -786,7 +786,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "employees_employeeid_employees_reportsto" ],
+      "types" : [ "employees_employeeid_employees_reportsto" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Employees",
@@ -800,7 +800,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "regions_regionid_territories_regionid" ],
+      "types" : [ "regions_regionid_territories_regionid" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Territories",
@@ -814,7 +814,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "customerid_customercustomerdemo_customerid" ],
+      "types" : [ "customerid_customercustomerdemo_customerid" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Customers",
@@ -828,7 +828,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "employeeid_employeeterritories_employeeid" ],
+      "types" : [ "employeeid_employeeterritories_employeeid" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Employees",
@@ -842,7 +842,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "orderid_orderdetails_orderid" ],
+      "types" : [ "orderid_orderdetails_orderid" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Orders",

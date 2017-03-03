@@ -147,7 +147,7 @@ public class CypherConverter extends CanonicalConverter {
         }
 
         // Types
-        List<String> synonyms = edge.types.stream().map(t -> t.name).collect(Collectors.toList());
+        List<String> types = edge.types.stream().map(t -> t.name).collect(Collectors.toList());
 
         // Variable
         if (edge.variable.isPresent()) {
@@ -171,7 +171,7 @@ public class CypherConverter extends CanonicalConverter {
             }
         }
 
-        return new ExpansionEdge(synonyms, attributes, direction,
+        return new ExpansionEdge(types, attributes, direction,
                 minimumRange, maximumRange, matchall, variable);
     }
 
@@ -211,7 +211,7 @@ public class CypherConverter extends CanonicalConverter {
     private static ExpansionNode convertToAbstractionNode(NodePattern node) {
 
 
-        List<String> synonymsList = new ArrayList<>();
+        List<String> typesList = new ArrayList<>();
         Map<String, String> attributes = new HashMap<>();
 
         // This code is missing the point really. It does not support the all
@@ -228,7 +228,7 @@ public class CypherConverter extends CanonicalConverter {
 
         Iterator<LabelName> iter = node.labels.iterator();
         while (iter.hasNext()) {
-            synonymsList.add(iter.next().name);
+            typesList.add(iter.next().name);
         }
 
         String variable = "";
@@ -237,6 +237,6 @@ public class CypherConverter extends CanonicalConverter {
             variable = node.variable.get().name;
         }
 
-        return new ExpansionNode(synonymsList, attributes, variable);
+        return new ExpansionNode(typesList, attributes, variable);
     }
 }

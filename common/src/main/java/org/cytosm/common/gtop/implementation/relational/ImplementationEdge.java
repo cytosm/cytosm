@@ -14,9 +14,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class ImplementationEdge {
 
     /***
-     * Names that this edge may be references on the abstraction level.
+     * Node types that this edge may be referenced on the abstraction level.
      */
-    private List<String> synonyms = new ArrayList<>();
+    private List<String> types = new ArrayList<>();
 
     /***
      * The path is a list of all the tables, that at the end would model analogous property graph's edges.
@@ -25,11 +25,11 @@ public class ImplementationEdge {
 
     /***
      * Generates an Implementation edge.
-     * @param synonyms synonyms used to refer to that edge on the abstraction level
+     * @param types types used to refer to that edge on the abstraction level
      * @param paths traversal paths that compose that edge
      */
-    public ImplementationEdge(final List<String> synonyms, final List<TraversalPath> paths) {
-        this.synonyms = synonyms;
+    public ImplementationEdge(final List<String> types, final List<TraversalPath> paths) {
+        this.types = types;
         this.paths = paths;
     }
 
@@ -40,7 +40,7 @@ public class ImplementationEdge {
     public ImplementationEdge() {
 
         paths = new ArrayList<>();
-        synonyms = new ArrayList<>();
+        types = new ArrayList<>();
 
         TraversalPath traversalPath = new TraversalPath();
         TraversalHop traversalHop = new TraversalHop();
@@ -55,17 +55,17 @@ public class ImplementationEdge {
     }
 
     /**
-     * @return the synonyms
+     * @return the types
      */
-    public List<String> getSynonyms() {
-        return synonyms;
+    public List<String> getTypes() {
+        return types;
     }
 
     /**
-     * @param synonyms the synonyms to set
+     * @param types the types to set
      */
-    public void setSynonyms(final List<String> synonyms) {
-        this.synonyms = synonyms;
+    public void setTypes(final List<String> types) {
+        this.types = types;
     }
 
     /**
@@ -85,7 +85,7 @@ public class ImplementationEdge {
     @Override
     @SuppressWarnings("checkstyle:magicnumber")
     public int hashCode() {
-        int result = synonyms != null ? synonyms.hashCode() : 0;
+        int result = types != null ? types.hashCode() : 0;
         result = 31 * result + (paths != null ? paths.hashCode() : 0);
         return result;
     }
@@ -101,10 +101,10 @@ public class ImplementationEdge {
 
         final ImplementationEdge that = (ImplementationEdge) o;
 
-        List<String> thatSynonyms = that.getSynonyms();
+        List<String> thatType = that.getTypes();
         List<TraversalPath> thatPaths = that.getPaths();
 
-        if (!synonyms.containsAll(thatSynonyms) || !thatSynonyms.containsAll(synonyms)) {
+        if (!types.containsAll(thatType) || !thatType.containsAll(types)) {
             return false;
         }
         if (!paths.containsAll(thatPaths) || !thatPaths.containsAll(paths)) {

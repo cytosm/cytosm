@@ -147,8 +147,8 @@ public abstract class AbstractEnumerator {
              * object.
              */
             if (element.getMatchedGtopAbstractionEntities().isEmpty()) {
-                if (!element.getSynonyms().isEmpty()) {
-                    solveSynonymsHint(element);
+                if (!element.getTypes().isEmpty()) {
+                    solveTypesHint(element);
                 }
 
                 // there are also attribute hints:
@@ -160,7 +160,7 @@ public abstract class AbstractEnumerator {
     }
 
     /***
-     * Solves matching Gtop candidates based on attributes, not on labels/synonyms.
+     * Solves matching Gtop candidates based on attributes, not on labels/types.
      *
      * @param element
      * @throws PathDescriptionException
@@ -168,7 +168,7 @@ public abstract class AbstractEnumerator {
     private void solveAttributesHint(final ExpansionElement element) throws PathDescriptionException {
 
         /***
-         * Should results were found when looking for synonyms, the attributes need to match what
+         * Should results were found when looking for types, the attributes need to match what
          * was found
          */
         boolean matchWithPreviousResult = !element.getMatchedGtopAbstractionEntities().isEmpty();
@@ -188,9 +188,9 @@ public abstract class AbstractEnumerator {
                  */
                 if (matchingEdge.isEmpty()) {
                     throw new PathDescriptionException(
-                            element.getSynonyms().toString() + element.getAttributeMap().keySet().toString());
+                            element.getTypes().toString() + element.getAttributeMap().keySet().toString());
                 } else {
-                    // The synonyms do not match the attribute list!
+                    // The types do not match the attribute list!
                     if (matchWithPreviousResult
                             && !element.getMatchedGtopAbstractionEntities().containsAll(matchingEdge)) {
 
@@ -207,11 +207,11 @@ public abstract class AbstractEnumerator {
 
                         if (!congruentAttributesWithLabels) {
                             // String str = matchingEdge.stream().map(list ->
-                            // list.getSynonyms()).map(Object::toString)
+                            // list.getTypes()).map(Object::toString)
                             // .collect(Collectors.joining(", "));
 
                             throw new PathDescriptionException(
-                                    element.getSynonyms().toString() + element.getAttributeMap().keySet().toString());
+                                    element.getTypes().toString() + element.getAttributeMap().keySet().toString());
                         }
                         // Otherwise just don't add anything - keeps the original match.
 
@@ -232,10 +232,10 @@ public abstract class AbstractEnumerator {
                 if (matchingNode.isEmpty()) {
 
                     throw new PathDescriptionException(
-                            element.getSynonyms().toString() + element.getAttributeMap().keySet().toString());
+                            element.getTypes().toString() + element.getAttributeMap().keySet().toString());
                 } else {
 
-                    // The synonyms do not match the attribute list!
+                    // The types do not match the attribute list!
                     if (matchWithPreviousResult
                             && !element.getMatchedGtopAbstractionEntities().containsAll(matchingNode)) {
 
@@ -252,7 +252,7 @@ public abstract class AbstractEnumerator {
 
                         if (!congruentAttributesWithLabels) {
                             throw new PathDescriptionException(
-                                    element.getSynonyms().toString() + element.getAttributeMap().keySet().toString());
+                                    element.getTypes().toString() + element.getAttributeMap().keySet().toString());
                         }
                         // Otherwise just don't add anything - keeps the original match.
                     } else {
@@ -321,29 +321,29 @@ public abstract class AbstractEnumerator {
 
 
     /***
-     * Search for Gtop Elements that matches the synonyms.
+     * Search for Gtop Elements that matches the types.
      *
      * @param element
      * @return if an element was found
      * @throws PathDescriptionException
      */
-    private void solveSynonymsHint(final ExpansionElement element) throws PathDescriptionException {
+    private void solveTypesHint(final ExpansionElement element) throws PathDescriptionException {
 
         List<AbstractionEdge> foundEquivalentEdge = null;
         List<AbstractionNode> foundEquivalentNode = null;
 
-        for (String synonym : element.getSynonyms()) {
+        for (String type : element.getTypes()) {
 
             if (!element.isNode()) {
                 // It's an edge
-                foundEquivalentEdge = gTopInter.getAbstractionEdgesBySynonym(synonym);
+                foundEquivalentEdge = gTopInter.getAbstractionEdgesByTypes(type);
                 if (foundEquivalentEdge != null) {
                     element.addMatchedGtopAbstractionEntities(
                             foundEquivalentEdge.stream().map(x -> x).collect(Collectors.toList()));
                 }
             } else {
                 // It's a node:
-                foundEquivalentNode = gTopInter.getAbstractionNodesBySynonym(synonym);
+                foundEquivalentNode = gTopInter.getAbstractionNodesByTypes(type);
 
                 if (foundEquivalentNode != null) {
                     element.addMatchedGtopAbstractionEntities(
@@ -351,10 +351,10 @@ public abstract class AbstractEnumerator {
                 }
             }
 
-            // wrong synonym given by the user on query time.
+            // wrong type given by the user on query time.
             if (foundEquivalentEdge == null && foundEquivalentNode == null) {
                 throw new PathDescriptionException(
-                        element.getSynonyms().toString() + element.getAttributeMap().keySet().toString());
+                        element.getTypes().toString() + element.getAttributeMap().keySet().toString());
             }
         }
     }
@@ -474,17 +474,17 @@ public abstract class AbstractEnumerator {
      */
     private boolean selfRelationshipsAllowed(final AbstractionNode currentNode, final AbstractionEdge edge,
             final List<AbstractionNode> nextNodeAbstractions) {
-        List<String> sourceSynonyms =
-                edge.getSourceType().stream().map(synonym -> synonym.toLowerCase()).collect(Collectors.toList());
-        List<String> destinationSynonyms =
-                edge.getDestinationType().stream().map(synonym -> synonym.toLowerCase()).collect(Collectors.toList());
-        List<String> currentNodeSynonyms =
-                currentNode.getSynonyms().stream().map(synonym -> synonym.toLowerCase()).collect(Collectors.toList());
+        List<String> sourceTypes =
+                edge.getSourceType().stream().map(type -> type.toLowerCase()).collect(Collectors.toList());
+        List<String> destinationTypes =
+                edge.getDestinationType().stream().map(type -> type.toLowerCase()).collect(Collectors.toList());
+        List<String> currentNodeTypes =
+                currentNode.getTypes().stream().map(type -> type.toLowerCase()).collect(Collectors.toList());
 
         boolean inBothLists = false;
 
-        if (sourceSynonyms.stream().anyMatch(node -> currentNodeSynonyms.contains(node))
-                && destinationSynonyms.stream().anyMatch(node -> currentNodeSynonyms.contains(node))) {
+        if (sourceTypes.stream().anyMatch(node -> currentNodeTypes.contains(node))
+                && destinationTypes.stream().anyMatch(node -> currentNodeTypes.contains(node))) {
             inBothLists = true;
         }
 
@@ -510,7 +510,7 @@ public abstract class AbstractEnumerator {
 
         // get abstract edges for given node.
         List<AbstractionEdge> possibleEdgesOnGtop =
-                gtopInter.getAllAbstractEdgesForNodeSynonms(currentNode.getSynonyms());
+                gtopInter.getAllAbstractEdgesForNodeTypes(currentNode.getTypes());
 
         // If next edge is undirected, add only undirected possibilities
         if (!routeEdge.isDirected()) {
@@ -540,10 +540,10 @@ public abstract class AbstractEnumerator {
 
                 if (routeEdge.isToRight()) {
                     // Then the current edge is pointing out of the current node
-                    return !Collections.disjoint(edge.getSourceType(), currentNode.getSynonyms());
+                    return !Collections.disjoint(edge.getSourceType(), currentNode.getTypes());
                 } else {
                     // then the current edge pointing in the current node
-                    return !Collections.disjoint(edge.getDestinationType(), currentNode.getSynonyms());
+                    return !Collections.disjoint(edge.getDestinationType(), currentNode.getTypes());
                 }
             }).collect(Collectors.toList());
         }

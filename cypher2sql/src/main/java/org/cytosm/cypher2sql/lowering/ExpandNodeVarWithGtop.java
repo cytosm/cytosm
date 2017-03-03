@@ -116,15 +116,15 @@ public class ExpandNodeVarWithGtop {
                             Comparator.comparing(ImplementationNode::getTableName)
                     );
 
-                    // Labels act as an AND. The ImplementationNodes found must have synonyms
+                    // Labels act as an AND. The ImplementationNodes found must have types
                     // for ALL the labels. So if we ask for 'message' and 'post', we will reject
-                    // the 'Comment' table because it does not satisfies the 'post' synonym.
+                    // the 'Comment' table because it does not satisfies the 'post' type.
                     for (String label: var.labels) {
-                        implNodes.addAll(gTopInterface.getImplementationNodesBySynonym(label));
+                        implNodes.addAll(gTopInterface.getImplementationNodesByType(label));
                     }
                     implNodes = implNodes.stream()
                             .filter(n -> var.labels.stream()
-                                    .allMatch(l -> n.getSynonyms().stream().anyMatch(s -> s.equalsIgnoreCase(l)))
+                                    .allMatch(l -> n.getTypes().stream().anyMatch(s -> s.equalsIgnoreCase(l)))
                             )
                             .collect(Collectors.toSet());
 

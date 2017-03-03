@@ -2,50 +2,50 @@
   "version" : "1.0",
   "abstractionLevel" : {
     "abstractionNodes" : [ {
-      "synonyms" : [ "orders" ],
+      "types" : [ "orders" ],
       "attributes" : [ "OrderID", "OrderDate", "RequiredDate", "ShippedDate", "Freight", "ShipName", "ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry" ]
     }, {
-      "synonyms" : [ "products" ],
+      "types" : [ "products" ],
       "attributes" : [ "ProductID", "ProductName", "QuantityPerUnit", "UnitPrice", "UnitsInStock", "UnitsOnOrder", "ReorderLevel", "Discontinued" ]
     }, {
-      "synonyms" : [ "categories" ],
+      "types" : [ "categories" ],
       "attributes" : [ "CategoryID", "CategoryName", "Description", "Picture" ]
     }, {
-      "synonyms" : [ "employees" ],
+      "types" : [ "employees" ],
       "attributes" : [ "EmployeeID", "LastName", "FirstName", "Title", "TitleOfCourtesy", "BirthDate", "HireDate", "Address", "City", "Region", "PostalCode", "Country", "HomePhone", "Extension", "Photo", "Notes", "PhotoPath" ]
     }, {
-      "synonyms" : [ "suppliers" ],
+      "types" : [ "suppliers" ],
       "attributes" : [ "SupplierID", "CompanyName", "ContactName", "ContactTitle", "Address", "City", "Region", "PostalCode", "Country", "Phone", "Fax", "HomePage" ]
     }, {
-      "synonyms" : [ "customers" ],
+      "types" : [ "customers" ],
       "attributes" : [ "CustomerID", "CompanyName", "ContactName", "ContactTitle", "Address", "City", "Region", "PostalCode", "Country", "Phone", "Fax" ]
     } ],
     "abstractionEdges" : [ {
-      "synonyms" : [ "sold" ],
+      "types" : [ "sold" ],
       "attributes" : [ ],
       "sourceType" : [ "employees" ],
       "destinationType" : [ "orders" ],
       "directed" : true
     }, {
-      "synonyms" : [ "purchased" ],
+      "types" : [ "purchased" ],
       "attributes" : [ ],
       "sourceType" : [ "customers" ],
       "destinationType" : [ "orders" ],
       "directed" : true
     }, {
-      "synonyms" : [ "part_of" ],
+      "types" : [ "part_of" ],
       "attributes" : [ ],
       "sourceType" : [ "products" ],
       "destinationType" : [ "categories" ],
       "directed" : true
     }, {
-      "synonyms" : [ "reports_to" ],
+      "types" : [ "reports_to" ],
       "attributes" : [ ],
       "sourceType" : [ "employees" ],
       "destinationType" : [ "employees" ],
       "directed" : true
     }, {
-      "synonyms" : [ "product" ],
+      "types" : [ "product" ],
       "attributes" : [ "UnitPrice", "Quantity", "Discount" ],
       "sourceType" : [ "orders" ],
       "destinationType" : [ "products" ],
@@ -57,7 +57,7 @@
       "storageLayout" : "IGNORETIME"
     },
     "implementationNodes" : [ {
-      "synonyms" : [ "orders" ],
+      "types" : [ "orders" ],
       "tableName" : "Orders",
       "id" : [ {
         "columnName" : "OrderID",
@@ -111,7 +111,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "products" ],
+      "types" : [ "products" ],
       "tableName" : "Products",
       "id" : [ {
         "columnName" : "ProductID",
@@ -153,7 +153,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "categories" ],
+      "types" : [ "categories" ],
       "tableName" : "Categories",
       "id" : [ {
         "columnName" : "CategoryID",
@@ -179,7 +179,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "employees" ],
+      "types" : [ "employees" ],
       "tableName" : "Employees",
       "id" : [ {
         "columnName" : "EmployeeID",
@@ -257,7 +257,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "suppliers" ],
+      "types" : [ "suppliers" ],
       "tableName" : "Suppliers",
       "id" : [ {
         "columnName" : "SupplierID",
@@ -315,7 +315,7 @@
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "customers" ],
+      "types" : [ "customers" ],
       "tableName" : "Customers",
       "id" : [ {
         "columnName" : "CustomerID",
@@ -370,7 +370,7 @@
       "restrictions" : [ ]
     } ],
     "implementationEdges" : [ {
-      "synonyms" : [ "SOLD" ],
+      "types" : [ "SOLD" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Employees",
@@ -384,7 +384,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "PURCHASED" ],
+      "types" : [ "PURCHASED" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Customers",
@@ -398,7 +398,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "PART_OF" ],
+      "types" : [ "PART_OF" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Products",
@@ -412,7 +412,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "SUPPLIES" ],
+      "types" : [ "SUPPLIES" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Suppliers",
@@ -426,7 +426,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "REPORTS_TO" ],
+      "types" : [ "REPORTS_TO" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Employees",
@@ -440,7 +440,7 @@
         } ]
       } ]
     }, {
-      "synonyms" : [ "PRODUCT" ],
+      "types" : [ "PRODUCT" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "Orders",

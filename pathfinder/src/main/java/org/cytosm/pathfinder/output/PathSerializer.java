@@ -31,7 +31,7 @@ public class PathSerializer implements Serializer {
                         sb.append(expansion.getVariable());
                     }
                     sb.append(":");
-                    sb.append(node.getSynonyms().get(0));
+                    sb.append(node.getTypes().get(0));
 
                     addAttributeMap(sb, expansion);
 
@@ -54,7 +54,7 @@ public class PathSerializer implements Serializer {
                     sb.append(expansion.getVariable());
                     sb.append(":");
                     AbstractionEdge edge = (AbstractionEdge) expansion.getEquivalentMaterializedGtop();
-                    sb.append(edge.getSynonyms().get(0));
+                    sb.append(edge.getTypes().get(0));
 
                     addAttributeMap(sb, expansion);
 

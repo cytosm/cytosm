@@ -131,26 +131,26 @@ Let's go for an example of the Abstraction Level gTop. The bipartite property-gr
 {
 "abstractionLevel" : {
     "abstractionNodes" : [ {
-      "synonyms" : [ "movie" ],
+      "types" : [ "movie" ],
       "attributes" : [ "id", "title", "released", "tagline" ]
     }, {
-      "synonyms" : [ "person" ],
+      "types" : [ "person" ],
       "attributes" : [ "id", "name", "born" ]
     } ],
     "abstractionEdges" : [ {
-      "synonyms" : [ "directed" ],
+      "types" : [ "directed" ],
       "attributes" : [ ],
       "sourceType" : [ "person" ],
       "destinationType" : [ "movie" ],
       "directed" : true
     }, {
-      "synonyms" : [ "acted_in" ],
+      "types" : [ "acted_in" ],
       "attributes" : [ "role" ],
       "sourceType" : [ "person" ],
       "destinationType" : [ "movie" ],
       "directed" : true
     }, {
-      "synonyms" : [ "produced" ],
+      "types" : [ "produced" ],
       "attributes" : [ ],
       "sourceType" : [ "person" ],
       "destinationType" : [ "movie" ],
@@ -160,7 +160,7 @@ Let's go for an example of the Abstraction Level gTop. The bipartite property-gr
 }
 ```
 
-There are two nodes types - called movie and person. The <strong>synonyms</strong> attribute labels a given node type - and the same type can have multiple labels, hence the origin of the attribute name "synonyms".
+There are two nodes types - called movie and person. The <strong>types</strong> attribute labels a given node type - and the same type can have multiple labels, hence the origin of the attribute name "types".
 The attributes of a node type are also listed. On the Abstraction layer, it is not important to define how an attribute is implemented (e.g. if it is an Integer, Text, etc).
 On the edge side, one can see that "acted_in" is a directed edge, with one attribute called "role". It also connects Person nodes towards Movie nodes.
 
@@ -181,7 +181,7 @@ The property-graph,serialized in the <strong>abstraction layer</strong> above, a
       "storageLayout" : "IGNORETIME"
     },
     "implementationNodes" : [ {
-      "synonyms" : [ "movie" ],
+      "types" : [ "movie" ],
       "tableName" : "movie",
       "id" : [ {
         "columnName" : "id",
@@ -207,7 +207,7 @@ The property-graph,serialized in the <strong>abstraction layer</strong> above, a
       } ],
       "restrictions" : [ ]
     }, {
-      "synonyms" : [ "person" ],
+      "types" : [ "person" ],
       "tableName" : "person",
       "id" : [ {
         "columnName" : "id",
@@ -230,7 +230,7 @@ The property-graph,serialized in the <strong>abstraction layer</strong> above, a
       "restrictions" : [ ]
     } ],
     "implementationEdges" : [ {
-      "synonyms" : [ "person_id_directed_person_id" ],
+      "types" : [ "person_id_directed_person_id" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "person",
@@ -244,7 +244,7 @@ The property-graph,serialized in the <strong>abstraction layer</strong> above, a
         } ]
       } ]
     }, {
-      "synonyms" : [ "person_id_acted_in_person_id" ],
+      "types" : [ "person_id_acted_in_person_id" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "person",
@@ -262,7 +262,7 @@ The property-graph,serialized in the <strong>abstraction layer</strong> above, a
         } ]
       } ]
     }, {
-      "synonyms" : [ "person_id_produced_person_id" ],
+      "types" : [ "person_id_produced_person_id" ],
       "paths" : [ {
         "traversalHops" : [ {
           "sourceTableName" : "person",
@@ -285,7 +285,7 @@ The mapping of every node is done in the "Implementation Node" attribute. For a 
 
 ```json
 {
-         "synonyms" : [ "person" ],
+         "types" : [ "person" ],
          "tableName" : "person",
          "id" : [ {
            "columnName" : "id",
@@ -309,7 +309,7 @@ The mapping of every node is done in the "Implementation Node" attribute. For a 
  }
 ```
        
-ImplementationNode JSON attribute defines how to extract nodes of synonym "Person" from a RDBMS. There may be many sources of nodes of type "Person" in the system. The GQL (OpenCypher) to SQL compiler should take care of retrieving all the nodes from the relational system.
+ImplementationNode JSON attribute defines how to extract nodes of type "Person" from a RDBMS. There may be many sources of nodes of type "Person" in the system. The GQL (OpenCypher) to SQL compiler should take care of retrieving all the nodes from the relational system.
 
 In this example, nodes of type "person" are stored in the table called "person". Cytosm assumes that every node may have an id. In this scenario, there is an id of type "INTEGER", from the table column called "id". In some special cases, UIDs may come from multiple columns, this is solved by the "concatenationPosition" that concatenates multiple columns together in order to generate an ID. Other operations to generate UIDs may be added in the future.
 
@@ -320,7 +320,7 @@ On the edge implementation side, there's the following example:
 
 ```json
 {
-         "synonyms" : [ "acted_in" ],
+         "types" : [ "acted_in" ],
          "paths" : [ {
            "traversalHops" : [ {
              "sourceTableName" : "person",

@@ -90,78 +90,78 @@ public abstract class GTopInterfaceImpl implements GTopInterface {
     // Interface-friendly methods
 
     /***
-     * @return a deduplicated edges synonyms list.
+     * @return a deduplicated edges types list.
      */
     @Override
     @JsonIgnore
-    public List<String> getAllEdgeSynonyms() {
-        final List<String> withDuplucationsAllEdgeSynonyms = new ArrayList<>();
+    public List<String> getAllEdgeTypes() {
+        final List<String> withDuplicationsAllEdgeTypes = new ArrayList<>();
 
         gtop.getAbstractionLevel().getAbstractionEdges()
-                .forEach(edge -> withDuplucationsAllEdgeSynonyms.addAll(edge.getSynonyms()));
+                .forEach(edge -> withDuplicationsAllEdgeTypes.addAll(edge.getTypes()));
 
         // de-duplicate:
-        List<String> allEdgesSynonyms =
-                withDuplucationsAllEdgeSynonyms.stream().distinct().collect(Collectors.toList());
+        List<String> allEdgesTypes =
+                withDuplicationsAllEdgeTypes.stream().distinct().collect(Collectors.toList());
 
-        return allEdgesSynonyms;
+        return allEdgesTypes;
     }
 
     /***
-     * @return a deduplicated nodes synonyms list.
+     * @return a deduplicated nodes types list.
      */
     @Override
     @JsonIgnore
-    public List<String> getAllNodeSynonyms() {
-        final List<String> withDuplucationsAllNodeSynonyms = new ArrayList<>();
+    public List<String> getAllNodeTypes() {
+        final List<String> withDuplucationsAllNodeTypes = new ArrayList<>();
 
         gtop.getAbstractionLevel().getAbstractionNodes()
-                .forEach(node -> withDuplucationsAllNodeSynonyms.addAll(node.getSynonyms()));
+                .forEach(node -> withDuplucationsAllNodeTypes.addAll(node.getTypes()));
 
         // de-duplicate:
-        List<String> allNodesSynonyms =
-                withDuplucationsAllNodeSynonyms.stream().distinct().collect(Collectors.toList());
+        List<String> allNodesTypes =
+                withDuplucationsAllNodeTypes.stream().distinct().collect(Collectors.toList());
 
-        return allNodesSynonyms;
+        return allNodesTypes;
     }
 
     /***
-     * Finds an Abstraction Edge by synonym.
+     * Finds an Abstraction Edge by type.
      *
-     * @param synonym
+     * @param types
      * @return
      */
     @Override
     @JsonIgnore
-    public List<AbstractionEdge> getAbstractionEdgesBySynonym(final String synonym) {
+    public List<AbstractionEdge> getAbstractionEdgesByTypes(final String types) {
 
         List<AbstractionEdge> edgeList = new ArrayList<>();
-        String synonymLower = synonym.toLowerCase();
+        String typeLower = types.toLowerCase();
 
         edgeList = gtop
-                .getAbstractionLevel().getAbstractionEdges().stream().filter(edge -> edge.getSynonyms().stream()
-                        .map(String::toLowerCase).collect(Collectors.toList()).contains(synonymLower))
+                .getAbstractionLevel().getAbstractionEdges().stream().filter(edge -> edge.getTypes().stream()
+                        .map(String::toLowerCase).collect(Collectors.toList()).contains(typeLower))
                 .collect(Collectors.toList());
 
         return edgeList;
     }
 
     /**
-     * Finds an abstract node by synonyms.
+     * Finds an abstract node by types.
      *
-     * @param synonym
+     * @param types
      * @return
      */
     @Override
     @JsonIgnore
-    public List<AbstractionNode> getAbstractionNodesBySynonym(final String synonym) {
+    public List<AbstractionNode> getAbstractionNodesByTypes(final String types) {
 
         List<AbstractionNode> nodeList = new ArrayList<>();
-        String synonymLower = synonym.toLowerCase();
+        String typeLower = types.toLowerCase();
 
         nodeList = gtop
-                .getAbstractionLevel().getAbstractionNodes().stream().filter(node -> node.getSynonyms().stream()
-                        .map(String::toLowerCase).collect(Collectors.toList()).contains(synonymLower))
+                .getAbstractionLevel().getAbstractionNodes().stream().filter(node -> node.getTypes().stream()
+                        .map(String::toLowerCase).collect(Collectors.toList()).contains(typeLower))
                 .collect(Collectors.toList());
 
         return nodeList;
@@ -178,9 +178,9 @@ public abstract class GTopInterfaceImpl implements GTopInterface {
     public List<AbstractionNode> findNodeAbstractions(final ImplementationNode node) {
         List<AbstractionNode> abstractions = new ArrayList<>();
 
-        // if the abstraction matches any of the implementation level synonyms, append to list.
+        // if the abstraction matches any of the implementation level types, append to list.
         abstractions = gtop.getAbstractionLevel().getAbstractionNodes().stream()
-                .filter(filteredNode -> !Collections.disjoint(filteredNode.getSynonyms(), node.getSynonyms()))
+                .filter(filteredNode -> !Collections.disjoint(filteredNode.getTypes(), node.getTypes()))
                 .collect(Collectors.toList());
 
 
@@ -215,21 +215,21 @@ public abstract class GTopInterfaceImpl implements GTopInterface {
     /**
      * Get the edges that start or end with node.
      *
-     * @param synonms synonyms that are going used in the search
+     * @param types types that are going used in the search
      * @return list of Abstraction Edges
      */
     @Override
     @JsonIgnore
-    public List<AbstractionEdge> getAllAbstractEdgesForNodeSynonms(final List<String> synonms) {
+    public List<AbstractionEdge> getAllAbstractEdgesForNodeTypes(final List<String> types) {
 
         List<AbstractionEdge> edgeList = new ArrayList<>();
 
-        if (synonms != null && !synonms.isEmpty()) {
+        if (types != null && !types.isEmpty()) {
             for (AbstractionEdge edge : gtop.getAbstractionLevel().getAbstractionEdges()) {
                 if (edge.getSourceType().stream()
-                        .anyMatch(type -> synonms.contains(type.toLowerCase()) || type.toCharArray().equals("all"))
+                        .anyMatch(type -> types.contains(type.toLowerCase()) || type.toCharArray().equals("all"))
                         || edge.getDestinationType().stream().anyMatch(
-                                type -> synonms.contains(type.toLowerCase()) || type.toCharArray().equals("all"))) {
+                                type -> types.contains(type.toLowerCase()) || type.toCharArray().equals("all"))) {
                     edgeList.add(edge);
                 }
             }
@@ -255,10 +255,10 @@ public abstract class GTopInterfaceImpl implements GTopInterface {
         if (sourceNode != null && destinationNode != null) {
             for (AbstractionEdge edge : gtop.getAbstractionLevel().getAbstractionEdges()) {
                 if (edge.getSourceType().stream()
-                        .anyMatch(type -> sourceNode.getSynonyms().contains(type.toLowerCase())
+                        .anyMatch(type -> sourceNode.getTypes().contains(type.toLowerCase())
                                 || type.toCharArray().equals("all"))
                         && edge.getDestinationType().stream()
-                                .anyMatch(type -> destinationNode.getSynonyms().contains(type.toLowerCase())
+                                .anyMatch(type -> destinationNode.getTypes().contains(type.toLowerCase())
                                         || type.toCharArray().equals("all"))) {
                     edgeList.add(edge);
                 }
@@ -289,7 +289,7 @@ public abstract class GTopInterfaceImpl implements GTopInterface {
                     duplicatedEdgeNodes.addAll(this.getAbstractionNodes());
                 } else {
                     edge.getSourceType().stream()
-                            .forEach(synonym -> duplicatedEdgeNodes.addAll(this.getAbstractionNodesBySynonym(synonym)));
+                            .forEach(type -> duplicatedEdgeNodes.addAll(this.getAbstractionNodesByTypes(type)));
                 }
             }
         }
@@ -304,7 +304,7 @@ public abstract class GTopInterfaceImpl implements GTopInterface {
      * Return destination node types for a given edge.
      *
      * @param analyzedEdge edge to lookup
-     * @return list node synonyms that this edge directs to
+     * @return list node types that this edge directs to
      */
     @Override
     @JsonIgnore
@@ -320,7 +320,7 @@ public abstract class GTopInterfaceImpl implements GTopInterface {
                     duplicatedEdgeNodes.addAll(this.getAbstractionNodes());
                 } else {
                     edge.getDestinationType().stream()
-                            .forEach(synonym -> duplicatedEdgeNodes.addAll(this.getAbstractionNodesBySynonym(synonym)));
+                            .forEach(type -> duplicatedEdgeNodes.addAll(this.getAbstractionNodesByTypes(type)));
                 }
             }
         }
@@ -335,7 +335,7 @@ public abstract class GTopInterfaceImpl implements GTopInterface {
      * Return all node types associated with a given edge.
      *
      * @param edge edge to lookup
-     * @return List of nodes synonyms associated with this edge
+     * @return List of nodes types associated with this edge
      */
     @Override
     @JsonIgnore
@@ -380,24 +380,24 @@ public abstract class GTopInterfaceImpl implements GTopInterface {
     public abstract void setImplementationEdges(final List<ImplementationEdge> edges);
 
     /***
-     * Finds an Implementation edge by synonym or table name reference.
+     * Finds an Implementation edge by type or table name reference.
      *
-     * @param synonym
+     * @param type
      * @return
      */
     @Override
     @JsonIgnore
-    public abstract List<ImplementationNode> getImplementationNodesBySynonym(final String synonym);
+    public abstract List<ImplementationNode> getImplementationNodesByType(final String type);
 
     /***
-     * Finds an Implementation edge by synonym or table name reference.
+     * Finds an Implementation edge by type or table name reference.
      *
-     * @param synonym
+     * @param type
      * @return
      */
     @Override
     @JsonIgnore
-    public abstract List<ImplementationEdge> getImplementationEdgeBySynonym(final String name);
+    public abstract List<ImplementationEdge> getImplementationEdgeByType(final String type);
 
     /***
      * Return the implementations for a given node. The node can be represented in several tables.

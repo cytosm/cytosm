@@ -11,9 +11,9 @@ import java.util.List;
 public abstract class AbstractionGraphComponent {
 
     /***
-     * List of synonyms used, on the graph query language, to reference edges of this edge type.
+     * List of types used, on the graph query language, to reference edges of this edge type.
      */
-    protected List<String> synonyms = new ArrayList<>();
+    protected List<String> types = new ArrayList<>();
 
     /***
      * List of of attributes, that an edge of this edge type, can be queried on.
@@ -21,17 +21,17 @@ public abstract class AbstractionGraphComponent {
     protected List<String> attributes = new ArrayList<>();
 
     /**
-     * @return the synonyms
+     * @return the types
      */
-    public List<String> getSynonyms() {
-        return synonyms;
+    public List<String> getTypes() {
+        return types;
     }
 
     /**
-     * @param synonyms the synonyms to set
+     * @param types the types to set
      */
-    public void setSynonyms(final List<String> synonyms) {
-        this.synonyms = synonyms;
+    public void setTypes(final List<String> types) {
+        this.types = types;
     }
 
     /**

@@ -130,7 +130,7 @@ public class PopulateJoins {
                 Var rightNode = rel.rightNode;
 
                 List<ImplementationEdge> edges = rel.labels.stream()
-                        .flatMap(l -> gTopInterface.getImplementationEdgeBySynonym(l).stream())
+                        .flatMap(l -> gTopInterface.getImplementationEdgeByType(l).stream())
                         .filter(edge -> {
                             TraversalHop hop = edge.getPaths().get(0).getTraversalHops().get(0);
                             return (hop.getSourceTableName().equals(leftNodeOriginTableName) &&

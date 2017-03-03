@@ -12,13 +12,13 @@ import java.util.List;
 public class AbstractionEdge extends AbstractionGraphComponent {
 
     /***
-     * Types of source nodes that can have this edge. It can be a list of node synonyms or the
+     * Types of source nodes that can have this edge. It can be a list of node types or the
      * classifier ALL.
      */
     protected List<String> sourceType = new ArrayList<>();
 
     /***
-     * Types of destination nodes that can have this edge. It can be a list of node synonyms or the
+     * Types of destination nodes that can have this edge. It can be a list of node types or the
      * classifier ALL.
      */
     protected List<String> destinationType = new ArrayList<>();
@@ -36,15 +36,15 @@ public class AbstractionEdge extends AbstractionGraphComponent {
     /***
      * Default constructor.
      *
-     * @param synonyms synonyms for that edge
+     * @param types types for that edge
      * @param attributes attributes of that edge.
      * @param sourceType source type of the edge
      * @param destinationType destionation type of the edge
      * @param directed is the edge directed?
      */
-    public AbstractionEdge(final List<String> synonyms, final List<String> attributes, final List<String> sourceType,
+    public AbstractionEdge(final List<String> types, final List<String> attributes, final List<String> sourceType,
             final List<String> destinationType, final boolean directed) {
-        this.synonyms = synonyms;
+        this.types = types;
         this.attributes = attributes;
         this.sourceType = sourceType;
         this.destinationType = destinationType;
@@ -97,12 +97,12 @@ public class AbstractionEdge extends AbstractionGraphComponent {
     @SuppressWarnings("checkstyle:magicnumber")
     public int hashCode() {
         // In order to produce the same hash code.
-        Collections.sort(synonyms);
+        Collections.sort(types);
         Collections.sort(attributes);
         Collections.sort(sourceType);
         Collections.sort(destinationType);
 
-        int result = synonyms != null ? synonyms.hashCode() : 0;
+        int result = types != null ? types.hashCode() : 0;
         result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
         result = 31 * result + (sourceType != null ? sourceType.hashCode() : 0);
         result = 31 * result + (destinationType != null ? destinationType.hashCode() : 0);

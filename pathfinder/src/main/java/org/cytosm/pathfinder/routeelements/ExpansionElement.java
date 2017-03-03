@@ -17,7 +17,7 @@ import org.cytosm.common.gtop.abstraction.AbstractionGraphComponent;
 public abstract class ExpansionElement {
 
     protected Map<String, String> attributeMap = new HashMap<>();
-    protected List<String> synonyms = new ArrayList<>();
+    protected List<String> types = new ArrayList<>();
 
     /***
      * possible gtop abstract entities that match the hints.
@@ -48,17 +48,17 @@ public abstract class ExpansionElement {
     /***
      * Default constructor.
      * 
-     * @param argSynonyms synonyms of the Expansion element
+     * @param argTypes types of the Expansion element
      * @param attributes Attributes of the expansion element
      */
-    public ExpansionElement(List<String> argSynonyms, Map<String, String> attributes) {
+    public ExpansionElement(List<String> argTypes, Map<String, String> attributes) {
         attributeMap = attributes;
-        this.synonyms.addAll(argSynonyms);
+        this.types.addAll(argTypes);
 
         /***
          * There are some hints provided by the user that restricts gtop possibilities
          */
-        if (!synonyms.isEmpty() || !attributes.isEmpty()) {
+        if (!types.isEmpty() || !attributes.isEmpty()) {
             hintAvailable = true;
         }
     }
@@ -102,17 +102,17 @@ public abstract class ExpansionElement {
     }
 
     /**
-     * @return the synonyms
+     * @return the types
      */
-    public List<String> getSynonyms() {
-        return synonyms;
+    public List<String> getTypes() {
+        return types;
     }
 
     /**
-     * @param synonyms the synonyms to set
+     * @param types the types to set
      */
-    public void setSynonyms(List<String> synonyms) {
-        this.synonyms = synonyms;
+    public void setTypes(List<String> types) {
+        this.types = types;
     }
 
     /***

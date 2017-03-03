@@ -126,7 +126,7 @@ public final class ExpandCypher {
     }
 
     /**
-     * Takes a query, parses out all the synonyms and types, and if they aren't consistent it rejects it.
+     * Takes a query, parses out all the types, and if they aren't consistent it rejects it.
      *
      * @param query the query to validate
      */

@@ -31,12 +31,12 @@ public class ExpansionNode extends ExpansionElement {
     /***
      * Default constructor.
      *
-     * @param synonyms node synonyms.
+     * @param types node types.
      * @param attributes attributes of the node
      * @param argVariable variables used to refer to given node
      */
-    public ExpansionNode(List<String> synonyms, Map<String, String> attributes, String argVariable) {
-        super(synonyms, attributes);
+    public ExpansionNode(List<String> types, Map<String, String> attributes, String argVariable) {
+        super(types, attributes);
         variable = argVariable;
     }
 
@@ -51,7 +51,7 @@ public class ExpansionNode extends ExpansionElement {
      * @param expansionNode original node
      */
     public ExpansionNode(ExpansionNode expansionNode) {
-        synonyms.addAll(expansionNode.getSynonyms());
+        types.addAll(expansionNode.getTypes());
         attributeMap = expansionNode.getAttributeMap();
         variable = expansionNode.getVariable();
     }
@@ -62,11 +62,11 @@ public class ExpansionNode extends ExpansionElement {
      * @return the anonymous node
      */
     public static ExpansionNode generateAnonymousNode() {
-        List<String> synonyms = new ArrayList<>();
+        List<String> types = new ArrayList<>();
         Map<String, String> attributes = new HashMap<>();
         String argVariable = null;
 
-        return new ExpansionNode(synonyms, attributes, argVariable);
+        return new ExpansionNode(types, attributes, argVariable);
     }
 
     /***
