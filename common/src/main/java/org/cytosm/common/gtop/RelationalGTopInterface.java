@@ -67,6 +67,7 @@ public class RelationalGTopInterface extends GTopInterfaceImpl {
 
         ObjectMapper mapper = new ObjectMapper();
         try {
+            System.out.println("Printing gtop: " + gTopStr);
             gtopLoaded = mapper.readValue(gTopStr, GTop.class);
         } catch (Exception e) {
             e.printStackTrace();
