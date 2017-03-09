@@ -120,7 +120,8 @@
   },
   "implementationLevel" : {
     "graphMetadata" : {
-      "storageLayout" : "IGNORETIME"
+      "storageLayout" : "IGNORETIME",
+      "backendSystem" : "RELATIONAL"
     },
     "implementationNodes" : [ {
       "types" : [ "orders" ],

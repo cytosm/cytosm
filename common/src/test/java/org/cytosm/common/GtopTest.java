@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.cytosm.common.gtop.implementation.graphmetadata.BackendSystem;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -45,7 +46,7 @@ public class GtopTest {
         // produce implementation section
         List<ImplementationNode> iNodes = new ArrayList<>();
         List<ImplementationEdge> iEdges = new ArrayList<>();
-        GraphMetadata gdata = new GraphMetadata(StorageLayout.IGNORETIME);
+        GraphMetadata gdata = new GraphMetadata(StorageLayout.IGNORETIME, BackendSystem.RELATIONAL);
         ImplementationLevelGtop implevel = new ImplementationLevelGtop(gdata, iNodes, iEdges);
 
         GTop gTop = new GTop(abslevel, implevel);
@@ -111,7 +112,7 @@ public class GtopTest {
 
         iEdges.add(iEdge);
 
-        GraphMetadata gdata = new GraphMetadata(StorageLayout.IGNORETIME);
+        GraphMetadata gdata = new GraphMetadata(StorageLayout.IGNORETIME, BackendSystem.RELATIONAL);
         ImplementationLevelGtop implevel = new ImplementationLevelGtop(gdata, iNodes, iEdges);
 
         /*

@@ -15,6 +15,11 @@ public class GraphMetadata {
      */
     private StorageLayout storageLayout = StorageLayout.IGNORETIME;
 
+    /***
+     * Backend-system type used on current implementation level gTop.
+     */
+    private BackendSystem backendSystem = BackendSystem.RELATIONAL;
+
     // Optional parameters for snapshot layout:
     /***
      * [OPTIONAL] This is valid only for snapshot layouts. All events that happen inside this unit
@@ -37,8 +42,9 @@ public class GraphMetadata {
      *
      * @param storageLayout how data is stored.
      */
-    public GraphMetadata(final StorageLayout storageLayout) {
+    public GraphMetadata(final StorageLayout storageLayout, final BackendSystem systemType) {
         this.storageLayout = storageLayout;
+        this.backendSystem = systemType;
     }
 
     /**
@@ -53,6 +59,21 @@ public class GraphMetadata {
      */
     public void setStorageLayout(final StorageLayout storageLayout) {
         this.storageLayout = storageLayout;
+    }
+
+    /**
+     * @return the backendSystem
+     */
+    public BackendSystem getBackendSystem() {
+        return backendSystem;
+    }
+
+    /**
+     * Define the backend system type.
+     * @param backendtype the backend system type to set
+     */
+    public void setBackendSystem(final BackendSystem backendtype) {
+        this.backendSystem = backendtype;
     }
 
     /**
@@ -90,6 +111,7 @@ public class GraphMetadata {
         int result = storageLayout != null ? storageLayout.hashCode() : 0;
         result = 31 * result + (snapshotConcatenationFactor != null ? snapshotConcatenationFactor.hashCode() : 0);
         result = 31 * result + (snapshotConcatenationUnit != null ? snapshotConcatenationUnit.hashCode() : 0);
+        result = 31 * result + (backendSystem != null ? backendSystem.hashCode() : 0);
         return result;
     }
 

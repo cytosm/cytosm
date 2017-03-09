@@ -29,7 +29,9 @@ The separation of gTop files in two layers enables flexibility in mapping. The <
 
 This layer describes how the information described in the abstraction level gTop is stored in the underlying relational system. Nodes of the same type can be found on multiple tables and edges can actually represent multiple table joins between the source and destination nodes.
 
-Also nodes and edges of the same type can coexist in multiple tables: nodes of type Person could have been stored inside the tables <i><b>proletariat</b></i> and <i><b>bourgeoisie</b></i> in the relational system. As long as both data tables were assigned the type Person on the implementation level gTop, the GQL will be agnostic of this structure and refer to the data of both of them by the type Person. This feature can be extended to resemble a type hierarchy from object-oriented languages: nodes of type Electricity Suppliers can also be of type Company. Similarly, restrictions can be applied based on table data rules. It provides support to split a single table into several different types of nodes/edges. It would make sense for a relational system to have the information of Companies and Electricity Suppliers in the same table. An extra aspect that implementation level sums is the possibility of representing an edge as a multiple sequential join of tables.
+Also nodes and edges of the same type can coexist in multiple tables: nodes of type Person could have been stored inside the tables <i><b>proletariat</b></i> and <i><b>bourgeoisie</b></i> in the relational system. As long as both data tables were assigned the type Person on the implementation level gTop, the GQL will be agnostic of this structure and refer to the data of both of them by the type Person. The types model also allows Electricity Suppliers can to be also of type Company.
+
+Similarly, restrictions can be applied based on table data rules. It provides support to split a single table into several different types of nodes/edges. It would make sense for a relational system to have the information of Companies and Electricity Suppliers in the same table. An extra aspect that implementation level sums is the possibility of representing an edge as a multiple sequential join of tables.
 
 ## Getting started
 
@@ -182,6 +184,7 @@ The property-graph, serialized in the <strong>abstraction level</strong> above, 
 {
 "implementationLevel" : {
     "graphMetadata" : {
+      "backendSystem" : "RELATIONAL"
     },
     "implementationNodes" : [ {
       "types" : [ "movie" ],
@@ -283,7 +286,7 @@ The property-graph, serialized in the <strong>abstraction level</strong> above, 
 }
   ```
 ####Graph Metadata  
-The GraphMetaData is an optional field for custom graph-wide mapping options that may be added in the future.
+The GraphMetaData contains information describing the data stored in the backend system. The field <strong>backendSystem</strong> defines which type of system the abstraction level gTop is going to be mapped to. Currently only <strong>Relational</strong> backends are supported, but more may be added in the future.
 
 ####Implementation Node
 The mapping of every node is done in the <strong>Implementation Node</strong> attribute. For a bit more information let's use the example below:
