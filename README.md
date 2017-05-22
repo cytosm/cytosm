@@ -20,7 +20,10 @@ A Cypher string goes into several transformations in it journey through Cytosm:
 
 * Parsing: It is an auto-generated ANTLR parser based on OpenCypher EBNF grammar. It creates an AST to be used later on.
 * PathFinder: It navigates the AST, given a graph topology file (gTop), in order to make Cypher queries more concrete.
-* Cypher2SQL: The module where all the magic happens. 
+* Cypher2SQL: The module where all the magic happens.
+
+## Whitepaper
+[Cytosm: Declarative Property Graph Queries Without Data Migration](https://event.cwi.nl/grades/2017/04-Steer.pdf) [Grades/2017]
 
 
 ### Path Finder
