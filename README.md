@@ -1,6 +1,6 @@
 # CYpher TO Sql Mapper (Cytosm)
 
-[![Build Status](https://travis-ci.org/cytosm/cytosm.svg?branch=master)](https://travis-ci.org/cytosm/cytosm.svg?branch=master)
+[![Build Status](https://travis-ci.org/cytosm/cytosm.svg?branch=master)](https://travis-ci.org/cytosm/cytosm.svg?branch=master) [![CLA assistant](https://cla-assistant.io/readme/badge/cytosm/cytosm)](https://cla-assistant.io/cytosm/cytosm)
 
 Cytosm is an open-source software library for converting Cypher queries into plain old SQL on-the-fly.
 
