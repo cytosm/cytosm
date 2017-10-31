@@ -1,10 +1,10 @@
-#Cytosm: gTop
+# Cytosm: gTop
 
-##Overview:
+## Overview:
 
 In Cytosm, property graphs follows a graph topology file (gTop) - it is a set of rules where every edge or vertex from the graph can be assigned at least one edge or vertex type. Vertices or edges of the same type share the same property keys, having possibly different values for those keys. The file format supports mixed graphs (that are graphs that can contain both undirected and directed edges) and parallel edges. Through the use of the gTop, it is possible to map a GQL into the relational domain.
 
-##Example:
+## Example:
 
 An example of gTop file is presented in figure below.
 
@@ -21,7 +21,7 @@ The following graph could be modeled by the gtop above.
 ## Gtop Features
 
 GTop enables:
- 
+
 * <b>Flexibility:</b> GQLs can run on RDBMS without implementation system details. A translation step having as input a gTop file associated with the GQL should be able to construct valid SQL for the RDBMS.
 * <b>Multiple Models:</b> it describes how data stored in the RDBMS would be visualised as a property graph, classifying information as node types and edge types as long as it fits certain interpretation rules. In other words, it maps relational tuple sets into nodes and edge types.
 
@@ -100,7 +100,7 @@ All these tables above can be modeled as the following property graph:
 </p>
 
 Someone a bit experienced in graph modeling would classify this model as a directed bipartite graph.
- 
+
 Keep in mind that <strong>nothing</strong> in the RDBMS data itself defines that the graph is directed. It is just how me, the person writing this documentation, decided to model it.
 
 Also, bear in mind that a single RDBMS system may be modeled in a plethora of different property graphs.
@@ -115,7 +115,7 @@ The root level of the gTop file is split into tree main attributes:
 ```
 {
     version	:	1.0
-    abstractionLevel		{...}	
+    abstractionLevel		{...}
     implementationLevel		{...}
 }
 ```
@@ -130,7 +130,7 @@ The <strong>abstraction level</strong> is a simple serialized description of the
 
 
 Let's go for an example of the Abstraction Level gTop. The bipartite property-graph defined above would be translated to:
- 
+
 ```json
 {
 "abstractionLevel" : {
@@ -284,11 +284,11 @@ The property-graph, serialized in the <strong>abstraction level</strong> above, 
     } ]
   }
 }
-  ```
-####Graph Metadata  
+```
+#### Graph Metadata  
 The GraphMetaData contains information describing the data stored in the backend system. The field <strong>backendSystem</strong> defines which type of system the abstraction level gTop is going to be mapped to. Currently only <strong>Relational</strong> backends are supported, but more may be added in the future.
 
-####Implementation Node
+#### Implementation Node
 The mapping of every node is done in the <strong>Implementation Node</strong> attribute. For a bit more information let's use the example below:
 
 ```json
@@ -316,7 +316,7 @@ The mapping of every node is done in the <strong>Implementation Node</strong> at
          "restrictions" : [ ]
  }
  ```
-       
+
 ImplementationNode JSON attribute defines how to extract nodes of type <strong>"Person"</strong> from a RDBMS. There may be many sources of nodes of type "Person" in the system. The GQL (OpenCypher) to SQL compiler should take care of retrieving all the nodes from the relational system.
 
 In this example, nodes of type "person" are stored in the table also called "person". Cytosm assumes that every node may (but is not mandatory to) have an id. In this scenario, there is an id of type "INTEGER", from the table column called "id". In some special cases, UIDs may come from multiple columns, this is solved by the "concatenationPosition" that concatenates multiple columns together in order to generate an ID. An example would be to concatenate the strings from the column "Name" and "Born", in order to generate a UID. In this case, that section would look like this:

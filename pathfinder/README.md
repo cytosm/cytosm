@@ -1,10 +1,10 @@
-#Cytosm: Path Finder
+# Cytosm: Path Finder
 
 ## Overview:
 
 "The" Path Finder is a parallelizable Regular Path Query solver, taking into consideration the graph topology in the gTop file. The Regular Path Query is the pattern/relationship-chain section on Cypher Language.
 
-##Context:
+## Context:
 Without a well defined topological mapping between the relational and the property graph models, certain queries can cause a combinatorial explosion of arrangements due to lack of understanding on the graph model layout underneath it. Many solutions would actually be impossible if not analysed in the light of the graph topology model. When every node and edge in the graph follows properly defined rules, the query planner can prune several impossible graph traversals before start executing the query - in a similar fashion to what the common relational systems planner does (or should do) with dead code.
 
 ## Black Box Example
@@ -35,7 +35,7 @@ A human reader, knowing the information on the gTop, would have correctly infere
 
 ## Detailed Example
 
-A more complex route path description would take to the human reader considerably more time to visualise and enumerate all the possible outcomes. Assume the following path description: 
+A more complex route path description would take to the human reader considerably more time to visualise and enumerate all the possible outcomes. Assume the following path description:
 
 ```
 ( )<--(m: {"passport_no"': "FD8X723"})-[*1..2 ]->(n)<--(c)
@@ -93,7 +93,7 @@ At the end of this process, the set of solutions described above are found.
 
 The following results compare the planning of 4 hops away-queries with and without the Path Finder. They are based in LDBC query number 6.
 
-###1. Four hops with anonymous node:
+### 1. Four hops with anonymous node:
 
 ```
 Profile MATCH (person:Person {id:2199023259437})-[:KNOWS]->()-[:KNOWS]->()-[:KNOWS]->()-[:KNOWS]->(friend:Person),
@@ -112,7 +112,7 @@ The equivalent plan is:
   <img src="docs/pathFinderPlanning/neo4j2_3_4/anonNodesPlan/plan.png?raw=true" alt="Anonymous Nodes Plan"/>
 </p>
 
-###2. Edge Expansion:
+### 2. Edge Expansion:
 
 ```
 Profile MATCH (person:Person {id:2199023259437})-[:KNOWS*4]->(friend:Person),
@@ -131,7 +131,7 @@ The equivalent plan is:
   <img src="./docs/pathFinderPlanning/neo4j2_3_4/regEdgePlan/plan.png?raw=true" alt="Regular Edge Expression Plan"/>
 </p>
 
-###3. Path Finder:
+### 3. Path Finder:
 
 ```
 Profile MATCH (person:Person {id:2199023259437})-[:KNOWS]->(:Person)-[:KNOWS]->(:Person)-[:KNOWS]->(:Person)-[:KNOWS]->(friend:Person),
