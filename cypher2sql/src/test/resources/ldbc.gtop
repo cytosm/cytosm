@@ -353,17 +353,17 @@
 				"dataType": "DATE",
 				"abstractionLevelName": "creationDate"
 			}, {
-				"columnName": "browser",
+				"columnName": "browserUsed",
 				"dataType": "VARCHAR(50)",
-				"abstractionLevelName": "browser"
+				"abstractionLevelName": "browserUsed"
 			}, {
 				"columnName": "locationIP",
 				"dataType": "VARCHAR(100)",
 				"abstractionLevelName": "locationIP"
 			}, {
-				"columnName": "context",
+				"columnName": "content",
 				"dataType": "VARCHAR(500)",
-				"abstractionLevelName": "context"
+				"abstractionLevelName": "content"
 			}, {
 				"columnName": "length",
 				"dataType": "INTEGER",
@@ -399,9 +399,9 @@
 				"dataType": "VARCHAR(15)",
 				"abstractionLevelName": "locationIP"
 			}, {
-				"columnName": "context",
+				"columnName": "content",
 				"dataType": "VARCHAR(500)",
-				"abstractionLevelName": "context"
+				"abstractionLevelName": "content"
 			}, {
 				"columnName": "length",
 				"dataType": "INTEGER",
